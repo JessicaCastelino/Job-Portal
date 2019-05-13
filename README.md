@@ -1,8 +1,8 @@
 # Group8
 Group 8 Project Repo
 
-Aniruddha Chitley
+* Aniruddha Chitley (B00808320)
 
-Sarmad Noor
+* Sarmad Noor
 
-Abinaya Raja
+* Abinaya Raja
