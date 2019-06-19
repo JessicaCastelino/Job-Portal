@@ -1,0 +1,27 @@
+.container{
+	margin-left: 30%;
+	width:50%;
+}
+
+.home-heading{
+	text-align:center;
+	margin-bottom: 25px;
+}
+
+.form-field{
+	margin-top: 5%;	
+	width:50%;
+	margin-left: 25%;
+}
+
+.form-input{
+	
+	margin: 10px;
+}
+.user-info{
+	display: block;
+}
+
+.user-select{
+	display: inline-block;
+}
