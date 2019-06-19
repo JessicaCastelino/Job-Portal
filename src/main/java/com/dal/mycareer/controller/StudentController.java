@@ -16,27 +16,17 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.dal.mycareer.DBConnection.DatabaseConnection;
-import com.dal.mycareer.model.Job;
+import com.dal.mycareer.DTO.Job;
 
 @Controller
 public class StudentController {
 	private static List<Job> jobs = new ArrayList<Job>();
-	private static DatabaseConnection dbConnection=new DatabaseConnection();
 	static Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 	
 	
 	@RequestMapping(value = { "/studentHome" }, method = RequestMethod.GET)
 	public String loadHome(Model model) {
-		
-		
-		  Job j1=new Job("J01","Analyst","Toronto","4","Job Type","22","37.5","4/08/2019","Random Description","Additional Info","Open","E01","Deloitte","4"); 
-		  Job j2=new Job("J02","Analyst","Toronto","4","Job Type","22","37.5","4/08/2019","Random Description","Additional Info","Open","E01","Deloitte","4");
-		  Job j3=new Job("J03","Analyst","Toronto","4","Job Type","22","37.5","4/08/2019","Random Description","Additional Info","Open","E01","Deloitte","4");
-		  jobs.add(j1); 
-		  jobs.add(j2); 
-		  jobs.add(j3);
-		 
-		Connection con=dbConnection.getConnection();
+		Connection con=DatabaseConnection.getConnection();
 		model.addAttribute("jobs",jobs);
 		return "studentView/homepage";
 	}

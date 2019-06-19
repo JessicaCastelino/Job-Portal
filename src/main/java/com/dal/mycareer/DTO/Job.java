@@ -1,4 +1,4 @@
-package com.dal.mycareer.model;
+package com.dal.mycareer.DTO;
 
 public class Job {
 private String id;

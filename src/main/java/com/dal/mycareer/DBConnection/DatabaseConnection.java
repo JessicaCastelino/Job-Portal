@@ -16,8 +16,7 @@ public class DatabaseConnection {
 	static Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 	private static Connection connection;
 
-	public DatabaseConnection() {
-
+	static{
 		try {
 			Properties dbProps = PropertiesParser.getPropertyMap();
 			String dbURL = dbProps.getProperty("devIntDbURL");
@@ -26,10 +25,9 @@ public class DatabaseConnection {
 			String driverClass = dbProps.getProperty("databaseDriverClass");
 			Class.forName(driverClass);
 			connection = DriverManager.getConnection(dbURL, dbUsername, dbPassword);
-
 			System.out.println("Connected to Database"+connection);
-
-		} catch (SQLException | ClassNotFoundException ex) {
+		} 
+		catch (SQLException | ClassNotFoundException ex) {
 			System.out.println("Error while connecting to db : " + ex.getMessage());
 		}
 	}

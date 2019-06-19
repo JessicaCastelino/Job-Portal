@@ -2,7 +2,7 @@ package com.dal.mycareer.DAO.Interface;
 
 import java.util.List;
 
-import com.dal.mycareer.model.Job;
+import com.dal.mycareer.DTO.Job;
 
 public interface IStudentDAO {
 public List<Job> getAllJobList();
