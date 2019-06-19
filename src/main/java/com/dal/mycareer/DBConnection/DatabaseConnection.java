@@ -16,23 +16,21 @@ public class DatabaseConnection {
 	static Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 	private static Connection connection;
 
-	static {
+	public DatabaseConnection() {
 
 		try {
 			Properties dbProps = PropertiesParser.getPropertyMap();
-
 			String dbURL = dbProps.getProperty("devIntDbURL");
 			String dbPassword = dbProps.getProperty("devIntDbPassword");
-			String dbUsername = dbProps.getProperty("devIntDbPassword");
+			String dbUsername = dbProps.getProperty("devIntDbUsername");
 			String driverClass = dbProps.getProperty("databaseDriverClass");
-
 			Class.forName(driverClass);
 			connection = DriverManager.getConnection(dbURL, dbUsername, dbPassword);
 
-			LOGGER.info("Connected to Database");
+			System.out.println("Connected to Database"+connection);
 
 		} catch (SQLException | ClassNotFoundException ex) {
-			LOGGER.error("Error while connecting to db : " + ex.getMessage());
+			System.out.println("Error while connecting to db : " + ex.getMessage());
 		}
 	}
 

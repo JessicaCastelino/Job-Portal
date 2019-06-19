@@ -26,17 +26,10 @@
 </head>
 <body>
 	<div class="home-heading">
-		<h1>Welcome to My Career</h1>
+		<h1>Job Details</h1>
 	</div>
 	<div class="container">
-		<ul class="nav nav-tabs" id="myTab" role="tablist">
-			<li class="nav-item"><a class="nav-link active" id="home-tab"
-				data-toggle="tab" href="#home" role="tab" aria-controls="home"
-				aria-selected="true">VIEW ALL JOBS</a></li>
-			<li class="nav-item"><a class="nav-link" id="profile-tab"
-				data-toggle="tab" href="#profile" role="tab" aria-controls="profile"
-				aria-selected="false">VIEW APPLIED JOBS</a></li>
-		</ul>
+
 		<div class="tab-content" id="myTabContent">
 			<div class="tab-pane fade show active" id="home" role="tabpanel"
 				aria-labelledby="home-tab">
@@ -44,34 +37,52 @@
       			<table border="1">
       			  <tr>
           			<th>Job ID</th>
-       				<th>Position</th>
-       				<th>Organization</th>
-       				<th>Location</th>
-       				<th>Co-op Term</th>
-       				<th>Deadline</th>
-       				<th>Action</th>
-       			  </tr>
-     			   <c:forEach items="${jobs}" var ="job">
-        			<tr>
-       				   <td>${job.id}</td>
-     				   <td>${job.openPosition}</td>
-     				   <td>${job.organization}</td>
-     				   <td>${job.location}</td>
-     				   <td>${job.term}</td>
-     				   <td>${job.applicationDeadline}</td>
-     				   <td><!-- View button -->
-						<div	 class="form-input">
-							<!-- <button class="btn btn-info btn-block my-4" type="submit">View</button> -->
-							<a href="/viewJob?id=${job.id}">View</a>
-						</div>
-						
-						<!-- Apply button -->
-						<div class="form-input">
-							<button class="btn btn-info btn-block my-4" type="submit" value="${job.id}">Apply</button>
-						</div>
-						</td>
-        			</tr>
-        		</c:forEach>
+          			<td>${job.id}</td>
+          		  </tr>
+          		  <tr>
+          			<th>Title</th>
+          			<td>${job.jobTitle}</td>
+          		  </tr>
+          		  <tr>
+          			<th>Organization</th>
+          			<td>${job.organization}</td>
+          		  </tr>
+          		  <tr>
+          			<th>Location</th>
+          			<td>${job.location}</td>
+          		  </tr>
+          		  <tr>
+          			<th>Job Type</th>
+          			<td>${job.jobType}</td>
+          		  </tr>
+          		  <tr>
+          			<th>Term</th>
+          			<td>${job.term}</td>
+          		  </tr>
+          		  <tr>
+          			<th>Open Position</th>
+          			<td>${job.openPosition}</td>
+          		  </tr>
+          		  <tr>
+          			<th>Hourly Wage</th>
+          			<td>${job.rateOfPay}</td>
+          		  </tr>
+          		  <tr>
+          			<th>Hours per Week</th>
+          			<td>${job.hoursPerWeek}</td>
+          		  </tr>
+          		  <tr>
+          			<th>Job Description</th>
+          			<td>${job.jobDescription}</td>
+          		  </tr>
+          		  <tr>
+          			<th>Additional Information</th>
+          			<td>${job.additionalInformation}</td>
+          		  </tr>
+          		  <tr>
+          			<th>Application Deadline</th>
+          			<td>${job.applicationDeadline}</td>
+          		  </tr>       			
       </table>
     </div>
 			</div>
@@ -81,6 +92,11 @@
 				
 
 			</div>
+			 <!-- View button -->
+						<div	 class="form-input">
+							<!-- <button class="btn btn-info btn-block my-4" type="submit">View</button> -->
+							<a href="/apply?id=${job.id}">Apply</a>
+						</div>
 		</div>
 	</div>
 
