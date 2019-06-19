@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>My Career</title>
+<title>My Career Home</title>
 
 <link href="css/homepage.css" rel="stylesheet">
 <link rel="stylesheet"
