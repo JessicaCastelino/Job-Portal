@@ -1,7 +1,19 @@
 package com.dal.mycareer.DAO.Impl;
 
-import com.dal.mycareer.DAO.Interface.ILoginDAO;
+import java.sql.Connection;
 
-public class LoginDAO implements ILoginDAO{
+import com.dal.mycareer.DAO.Interface.ILoginDAO;
+import com.dal.mycareer.DBConnection.DatabaseConnection;
+import com.dal.mycareer.DTO.UserLogin;
+
+public class LoginDAO implements ILoginDAO {
+
+	@Override
+	public boolean isValidUser(UserLogin user) {
+
+		Connection dbConn = DatabaseConnection.getConnection();
+		
+		return false;
+	}
 
 }
