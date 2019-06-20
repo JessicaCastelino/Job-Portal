@@ -1,7 +1,13 @@
 package com.dal.mycareer.DTO;
 
-public class Job {
+import java.io.InputStream;
+
+public class AppliedJob {
 private String id;
+private InputStream document;
+private String applicationStatus;
+private String studentId;
+private String jobId;
 private String jobTitle;
 private String location;
 private String openPosition;
@@ -16,17 +22,20 @@ private String employeeId;
 private String organization;
 private String term;
 
-
-
-public Job() {
+public AppliedJob() {
 	super();
 	// TODO Auto-generated constructor stub
 }
-public Job(String id, String jobTitle, String location, String openPosition, String jobType, String rateOfPay,
-		String hoursPerWeek, String applicationDeadline, String jobDescription, String additionalInformation,
-		String jobStatus, String employeeId, String organization, String term) {
+public AppliedJob(String id, InputStream document, String applicationStatus, String studentId, String jobId,
+		String jobTitle, String location, String openPosition, String jobType, String rateOfPay, String hoursPerWeek,
+		String applicationDeadline, String jobDescription, String additionalInformation, String jobStatus,
+		String employeeId, String organization, String term) {
 	super();
 	this.id = id;
+	this.document = document;
+	this.applicationStatus = applicationStatus;
+	this.studentId = studentId;
+	this.jobId = jobId;
 	this.jobTitle = jobTitle;
 	this.location = location;
 	this.openPosition = openPosition;
@@ -41,6 +50,32 @@ public Job(String id, String jobTitle, String location, String openPosition, Str
 	this.organization = organization;
 	this.term = term;
 }
+
+public InputStream getDocument() {
+	return document;
+}
+public void setDocument(InputStream document) {
+	this.document = document;
+}
+public String getApplicationStatus() {
+	return applicationStatus;
+}
+public void setApplicationStatus(String applicationStatus) {
+	this.applicationStatus = applicationStatus;
+}
+public String getStudentId() {
+	return studentId;
+}
+public void setStudentId(String studentId) {
+	this.studentId = studentId;
+}
+public String getJobId() {
+	return jobId;
+}
+public void setJobId(String jobId) {
+	this.jobId = jobId;
+}
+
 public String getId() {
 	return id;
 }

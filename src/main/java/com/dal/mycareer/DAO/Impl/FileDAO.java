@@ -10,15 +10,13 @@ import com.dal.mycareer.DBConnection.DatabaseConnection;
 public class FileDAO {
 	public int uploadFile(InputStream inputStream)
 	{
-		DatabaseConnection db=new DatabaseConnection();
-		Connection c=db.getConnection();
+		Connection c=DatabaseConnection.getConnection();
 		System.out.println("connection "+c);
 		String sql = "INSERT INTO appliedJobs(id, document, applicationStatus, studentId, jobId) values (?, ?, ?, ?, ?)";
         try {
         	PreparedStatement statement = c.prepareStatement(sql);
 			statement.setString(1, "1");
 			if (inputStream != null) {
-				System.out.println("Not null");
 	            statement.setBlob(2, inputStream);
 	        }
 			statement.setString(3, "Submited");

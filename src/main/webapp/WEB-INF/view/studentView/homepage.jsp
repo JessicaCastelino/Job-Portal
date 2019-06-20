@@ -67,7 +67,7 @@
 						
 						<!-- Apply button -->
 						<div class="form-input">
-							<button class="btn btn-info btn-block my-4" type="submit" value="${job.id}">Apply</button>
+							<button class="btn btn-info btn-block my-4" type="submit" value="${job.id}" onclick="window.open('/applyJob','Apply for job', 'width=500,height=500')">Apply</button>
 						</div>
 						</td>
         			</tr>
@@ -78,7 +78,35 @@
 			<div class="tab-pane fade" id="profile" role="tabpanel"
 				aria-labelledby="profile-tab">
 
-				
+				 <div>
+      			<table border="1">
+      			  <tr>
+          			<th>Job ID</th>
+       				<th>Position</th>
+       				<th>Organization</th>
+       				<th>Location</th>
+       				<th>Status</th>
+       				<th>Action</th>
+       			  </tr>
+     			   <c:forEach items="${appliedJobs}" var ="appliedJob">
+        			<tr>
+       				   <td>${appliedJob.id}</td>
+     				   <td>${appliedJob.openPosition}</td>
+     				   <td>${appliedJob.organization}</td>
+     				   <td>${appliedJob.location}</td>
+     				   <td>${appliedJob.applicationStatus}</td>
+     				   <td><!-- View button -->
+						
+						<!-- Apply button -->
+						<div class="form-input">
+							<button class="btn btn-info btn-block my-4" type="submit" value="${appliedJob.id}">Withdraw
+							</button>
+						</div>
+						</td>
+        			</tr>
+        		</c:forEach>
+      </table>
+    </div>
 
 			</div>
 		</div>
