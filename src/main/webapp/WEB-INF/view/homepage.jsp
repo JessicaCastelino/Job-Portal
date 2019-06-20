@@ -27,6 +27,7 @@
 <body>
 	<div class="home-heading">
 		<h1>Welcome to My Career</h1>
+		${name}
 	</div>
 	<div class="container">
 		<ul class="nav nav-tabs" id="myTab" role="tablist">
@@ -41,12 +42,12 @@
 			<div class="tab-pane fade show active" id="home" role="tabpanel"
 				aria-labelledby="home-tab">
 				<!-- Default form login -->
-				<form class="text-center border border-light p-5">
+				<form class="text-center border border-light p-5" action = "/login" method = "POST" modelAttribute = "userLogin">
 
 					<p class="h4 mb-4">Sign In</p>
 					<div class="form-field">
 						<div class="form-input">
-							<select class="form-control mb-4" id="exampleFormControlSelect1">
+							<select class="form-control mb-4" id="exampleFormControlSelect1" name="role">
 								<option>Student</option>
 								<option>Employer</option>
 								<option>Co-op Admin</option>
@@ -56,13 +57,13 @@
 						<!-- Email -->
 						<div class="form-input">
 							<input type="email" id="defaultLoginFormEmail"
-								class="form-control mb-4" placeholder="E-mail">
+								class="form-control mb-4" placeholder="E-mail" name="username">
 						</div>
 
 						<!-- Password -->
 						<div class="form-input">
 							<input type="password" id="defaultLoginFormPassword"
-								class="form-control mb-4" placeholder="Password">
+								class="form-control mb-4" placeholder="Password" name="password">
 						</div>
 						<div class="d-flex justify-content-around"></div>
 
