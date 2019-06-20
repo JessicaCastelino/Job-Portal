@@ -23,7 +23,7 @@ public class DatabaseConnection {
 
 			String dbURL = dbProps.getProperty("devIntDbURL");
 			String dbPassword = dbProps.getProperty("devIntDbPassword");
-			String dbUsername = dbProps.getProperty("devIntDbPassword");
+			String dbUsername = dbProps.getProperty("devIntDbUsername");
 			String driverClass = dbProps.getProperty("databaseDriverClass");
 
 			Class.forName(driverClass);
