@@ -56,7 +56,7 @@ public class EmployerJobsDAO implements IEmployerJobsDAO {
 		 con  = DatabaseConnection.getConnection();
 		 callStatement = con.prepareCall("{call sp_insertjobdetails(?,?,?,?,?,?,?)}"); 
 		 callStatement.setString("jobTitle", postedJobDetails.jobTitle);
-		 callStatement.setString("jobLocation", postedJobDetails.jobLocation);
+		 callStatement.setString("jobLocation", postedJobDetails.location);
 		 callStatement.setString("jobType", postedJobDetails.jobType);
 		 callStatement.setString("noOfPosition", Integer.toString(postedJobDetails.noOfPosition));
 		 callStatement.setString("rateOfPay", Integer.toString(postedJobDetails.rateOfPay));
