@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.dal.mycareer.DAO.Interface.IEmployerJobsDAO;
 import com.dal.mycareer.DTO.Job;
+import com.dal.mycareer.DTO.JobDetails;
 import com.dal.mycareer.imodel.IEmployerJobsModel;
 
 @Service
@@ -16,5 +17,9 @@ public class EmployerJobsModel implements IEmployerJobsModel {
 	
 	public List<Job> getActiveJobs(int employeeId) {
 		return employerJobsDAO.getActiveJobs(employeeId);
+	}
+	
+	public JobDetails InsertJobDetails(JobDetails postedJobDetails) {
+		return employerJobsDAO.InsertJobDetails(postedJobDetails);
 	}
 }
