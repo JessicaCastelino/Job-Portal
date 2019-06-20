@@ -22,13 +22,13 @@ import com.dal.mycareer.model.LoginModel;
 @Controller
 public class LoginController {
 
-	private static final String USER_LOGIN = "userLogin";
-
+	private static final String USERNAME = "username";
 	private static final String SESSION_NAME = "sessionName";
+
+	private static final String USER_LOGIN = "userLogin";
 
 	private final Logger LOGGER = LoggerFactory.getLogger(this.getClass());
 
-	
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public String Login(@Valid @ModelAttribute(USER_LOGIN) UserLogin ulogin, BindingResult result, Model model,
 			HttpServletRequest request) {
@@ -41,20 +41,20 @@ public class LoginController {
 
 		} else {
 
-			String userSessionName = request.getParameter("username");
-			HttpSession session = request.getSession();
-			session.setAttribute(SESSION_NAME, userSessionName);
-
-			model.addAttribute(USER_LOGIN, ulogin);
-			
 			ILoginModel loginModel = new LoginModel();
 			ILoginDAO loginDAO = new LoginDAO();
-			
-			Model controllerModel = loginModel.verifyLogin(model, ulogin, loginDAO);
-			
-			
 
-			return "homepage";
+			model = loginModel.verifyLogin(model, ulogin, loginDAO, request);
+
+			if (model.asMap().get("isValidUser").toString().equalsIgnoreCase("true")) {
+				String userSessionName = request.getParameter(USERNAME);
+				HttpSession session = request.getSession();
+				session.setAttribute(SESSION_NAME, userSessionName);
+			}
+
+			String page = model.asMap().get("nextPage").toString();
+
+			return page;
 
 		}
 
