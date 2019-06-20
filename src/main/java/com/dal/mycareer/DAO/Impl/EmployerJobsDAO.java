@@ -14,10 +14,12 @@ import org.springframework.stereotype.Repository;
 import com.dal.mycareer.DAO.Interface.IEmployerJobsDAO;
 import com.dal.mycareer.DBConnection.DatabaseConnection;
 import com.dal.mycareer.DTO.Job;
+import com.dal.mycareer.DTO.JobDetails;
 
 @Repository
 public class EmployerJobsDAO implements IEmployerJobsDAO {
 	private final Logger LOGGER = LoggerFactory.getLogger(this.getClass());
+	
 	@Override
 	public List<Job> getActiveJobs(int employeeId) {
 		List<Job> activeJobs = null;
@@ -45,5 +47,28 @@ public class EmployerJobsDAO implements IEmployerJobsDAO {
 		}
 		return activeJobs;
 	}
-
+	
+	public JobDetails InsertJobDetails(JobDetails postedJobDetails) {
+		CallableStatement callStatement = null;
+		Connection con= null;
+		try
+		{
+		 con  = DatabaseConnection.getConnection();
+		 callStatement = con.prepareCall("{call sp_insertjobdetails(?,?,?,?,?,?,?)}"); 
+		 callStatement.setString("jobTitle", postedJobDetails.jobTitle);
+		 callStatement.setString("jobLocation", postedJobDetails.jobLocation);
+		 callStatement.setString("jobType", postedJobDetails.jobType);
+		 callStatement.setString("noOfPosition", Integer.toString(postedJobDetails.noOfPosition));
+		 callStatement.setString("rateOfPay", Integer.toString(postedJobDetails.rateOfPay));
+		 callStatement.setString("hourPerWeek", Integer.toString(postedJobDetails.hourPerWeek));
+		 callStatement.setString("jobDescription", postedJobDetails.jobDescription);
+		 callStatement.executeUpdate();
+		}
+		catch(Exception ex)
+		{
+			LOGGER.error( "Error Occurred in InsertJobDetails :" + ex.getMessage());
+		}
+		
+		return postedJobDetails;
+	}
 }
