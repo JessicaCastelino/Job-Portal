@@ -80,5 +80,24 @@ public class RequestController {
 
 		return model.asMap().get("view").toString();
 	}
+	
+	@RequestMapping("/logout")
+	public String logout(Model model, HttpServletRequest request) {
+
+		LOGGER.info("Routed to Logout");
+
+		model.addAttribute("reqPage", PropertiesParser.getPropertyMap().get("logout").toString());
+		model.addAttribute("role", "guest");
+
+		IRoleModel roleModel = new RoleModel();
+
+		model = roleModel.getBasePage(model, request);
+		
+		//Invalidate Session
+		request.getSession().invalidate();
+		LOGGER.info("Session Invalidated and Logged out");
+
+		return model.asMap().get("view").toString();
+	}
 
 }
