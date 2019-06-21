@@ -15,11 +15,18 @@ public class EmployerJobsModel implements IEmployerJobsModel {
 	@Autowired
 	IEmployerJobsDAO employerJobsDAO;
 	
-	public List<Job> getActiveJobs(int employeeId) {
+	public List<Job> getActiveJobs(int employeeId) 
+	{
 		return employerJobsDAO.getActiveJobs(employeeId);
 	}
 	
 	public JobDetails InsertJobDetails(JobDetails postedJobDetails) {
 		return employerJobsDAO.InsertJobDetails(postedJobDetails);
+	}
+
+	@Override
+	public boolean updateJobStatus(int jobRecordId) 
+	{
+		return employerJobsDAO.updateJobStatus(jobRecordId);
 	}
 }

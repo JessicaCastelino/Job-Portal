@@ -71,4 +71,33 @@ public class EmployerJobsDAO implements IEmployerJobsDAO {
 		
 		return postedJobDetails;
 	}
+
+	@Override
+	public boolean updateJobStatus(int jobRecordId) 
+	{
+		boolean isUpdateSuccess = false;
+		CallableStatement callStatement = null;
+		Connection con= null;
+		try
+		{
+		 con  = DatabaseConnection.getConnection();
+		 callStatement = con.prepareCall("{call sp_closeactivejob(?)}"); 
+		 callStatement.setInt("jobRecordId", jobRecordId);
+		 int rowsAffected = callStatement.executeUpdate();
+		 if(rowsAffected > 0)
+		 {
+			isUpdateSuccess = true;
+		 }
+		 else
+		 {
+			 isUpdateSuccess = false;
+		 }
+		}
+		catch(Exception ex)
+		{
+			LOGGER.error( "Error Occurred in InsertJobDetails :" + ex.getMessage());
+		}
+		
+		return isUpdateSuccess;
+	}
 }
