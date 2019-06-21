@@ -50,10 +50,11 @@ public class LoginController {
 				String userSessionName = request.getParameter(USERNAME);
 				HttpSession session = request.getSession();
 				session.setAttribute(SESSION_NAME, userSessionName);
+				session.setAttribute("home", model.asMap().get("view").toString());
+				session.setAttribute("role", model.asMap().get("role").toString());
+				session.setAttribute("nextPage", model.asMap().get("nextPage").toString());
 			}
-
 			String page = model.asMap().get("nextPage").toString();
-
 			return page;
 
 		}
