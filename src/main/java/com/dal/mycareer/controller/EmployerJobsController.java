@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.dal.mycareer.DTO.Job;
@@ -44,5 +45,12 @@ public class EmployerJobsController {
 	public JobDetails saveJob(@RequestBody JobDetails postedjobDetails ) {
 		
 		return employerJobs.InsertJobDetails(postedjobDetails);
+	}
+
+	@ResponseBody
+	@RequestMapping( value="/closeJob", method=RequestMethod.PUT)
+	public boolean closeJob(@RequestParam(name = "id") int jobRecordId ) {
+		
+		return employerJobs.updateJobStatus(jobRecordId);
 	}
 }
