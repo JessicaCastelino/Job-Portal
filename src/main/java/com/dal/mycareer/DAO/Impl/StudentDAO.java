@@ -190,4 +190,24 @@ public class StudentDAO implements IStudentDAO {
 			}
 		}
 	}
+
+	@Override
+	public int withdrawApplication(int studentId, int jobId) {
+		Connection c = DatabaseConnection.getConnection();
+		System.out.println("connection applyForJob " + c);
+		String sql = "";
+		try {
+			callableStatement = con.prepareCall("{call withdrawApplication(" + studentId + "," + jobId + ")}");
+			boolean results = callableStatement.execute();
+			if (results)
+				return 1;
+			else
+				return 0;
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return 0;
+		}
+	}
 }

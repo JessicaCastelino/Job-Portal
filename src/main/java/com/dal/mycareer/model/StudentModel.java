@@ -74,4 +74,15 @@ public class StudentModel implements IStudentModel {
 
 		return model;
 	}
+
+	@Override
+	public Model withdrawApplication(Model model, int jobId, HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		dao = new StudentDAO();
+		int i = dao.withdrawApplication(student.getId(), jobId);
+		appliedJobs = dao.getAppliedJobList(student.getId());
+		model.addAttribute("jobs", jobs);
+		model.addAttribute("appliedJobs", appliedJobs);
+		return model;
+	}
 }
