@@ -33,20 +33,22 @@ public class RequestController {
 
 	}
 
-	@RequestMapping("/studentHome")
-	public String studentHome(Model model, HttpServletRequest request) {
-
-		LOGGER.info("Routed to StudentHome");
-
-		model.addAttribute("reqPage", PropertiesParser.getPropertyMap().get("studentHome").toString());
-		model.addAttribute("role", "student");
-
-		IRoleModel roleModel = new RoleModel();
-
-		model = roleModel.getBasePage(model, request);
-
-		return model.asMap().get("view").toString();
-	}
+	/*
+	 * @RequestMapping("/studentHome") public String studentHome(Model model,
+	 * HttpServletRequest request) {
+	 * 
+	 * LOGGER.info("Routed to StudentHome");
+	 * 
+	 * model.addAttribute("reqPage",
+	 * PropertiesParser.getPropertyMap().get("studentHome").toString());
+	 * model.addAttribute("role", "student");
+	 * 
+	 * IRoleModel roleModel = new RoleModel();
+	 * 
+	 * model = roleModel.getBasePage(model, request);
+	 * 
+	 * return model.asMap().get("view").toString(); }
+	 */
 
 	@RequestMapping("/employerHome")
 	public String employerHome(Model model, HttpServletRequest request) {

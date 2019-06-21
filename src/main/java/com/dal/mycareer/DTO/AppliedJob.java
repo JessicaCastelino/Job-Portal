@@ -1,36 +1,41 @@
 package com.dal.mycareer.DTO;
 
-import java.util.Date;
-import java.util.List;
+import java.io.InputStream;
 
-public class Job {
-private int id;
+public class AppliedJob {
+private String id;
+private InputStream document;
+private String applicationStatus;
+private String studentId;
+private String jobId;
 private String jobTitle;
 private String location;
 private String openPosition;
 private String jobType;
 private String rateOfPay;
 private String hoursPerWeek;
-private Date applicationDeadline;
+private String applicationDeadline;
 private String jobDescription;
 private String additionalInformation;
 private String jobStatus;
 private String employeeId;
 private String organization;
 private String term;
-public List<Integer> selectedCourseIds;
 
-
-
-public Job() {
+public AppliedJob() {
 	super();
 	// TODO Auto-generated constructor stub
 }
-public Job(int id, String jobTitle, String location, String openPosition, String jobType, String rateOfPay,
-		String hoursPerWeek, Date applicationDeadline, String jobDescription, String additionalInformation,
-		String jobStatus, String employeeId, String organization, String term) {
+public AppliedJob(String id, InputStream document, String applicationStatus, String studentId, String jobId,
+		String jobTitle, String location, String openPosition, String jobType, String rateOfPay, String hoursPerWeek,
+		String applicationDeadline, String jobDescription, String additionalInformation, String jobStatus,
+		String employeeId, String organization, String term) {
 	super();
 	this.id = id;
+	this.document = document;
+	this.applicationStatus = applicationStatus;
+	this.studentId = studentId;
+	this.jobId = jobId;
 	this.jobTitle = jobTitle;
 	this.location = location;
 	this.openPosition = openPosition;
@@ -45,10 +50,36 @@ public Job(int id, String jobTitle, String location, String openPosition, String
 	this.organization = organization;
 	this.term = term;
 }
-public int getId() {
+
+public InputStream getDocument() {
+	return document;
+}
+public void setDocument(InputStream document) {
+	this.document = document;
+}
+public String getApplicationStatus() {
+	return applicationStatus;
+}
+public void setApplicationStatus(String applicationStatus) {
+	this.applicationStatus = applicationStatus;
+}
+public String getStudentId() {
+	return studentId;
+}
+public void setStudentId(String studentId) {
+	this.studentId = studentId;
+}
+public String getJobId() {
+	return jobId;
+}
+public void setJobId(String jobId) {
+	this.jobId = jobId;
+}
+
+public String getId() {
 	return id;
 }
-public void setId(int id) {
+public void setId(String id) {
 	this.id = id;
 }
 public String getJobTitle() {
@@ -81,10 +112,10 @@ public String getHoursPerWeek() {
 public void setHoursPerWeek(String hoursPerWeek) {
 	this.hoursPerWeek = hoursPerWeek;
 }
-public Date getApplicationDeadline() {
+public String getApplicationDeadline() {
 	return applicationDeadline;
 }
-public void setApplicationDeadline(Date applicationDeadline) {
+public void setApplicationDeadline(String applicationDeadline) {
 	this.applicationDeadline = applicationDeadline;
 }
 public String getJobDescription() {
@@ -130,14 +161,5 @@ public void setTerm(String term) {
 	this.term = term;
 }
 
-
-	
-	/*
-	 * import java.util.Date; import java.util.List; public class Job { public int }
-	 * id; public String jobId; public String jobTitle; public String location;
-	 * public String jobType; public applicationDeadline; public String
-	 * organization;
-	 */
-	 
 
 }

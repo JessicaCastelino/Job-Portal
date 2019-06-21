@@ -32,13 +32,13 @@ public class EmployerJobsDAO implements IEmployerJobsDAO {
 			activeJobs = new ArrayList<>();
 			while(result.next()) {
 				job = new Job();
-				job.id = result.getInt("id");
-				job.jobId = result.getString("jobId");
-				job.jobTitle = result.getString("jobTitle");
-				job.jobType = result.getString("jobType");
-				job.location = result.getString("location");
-				job.organization = result.getString("organization");
-				job.applicationDeadline = result.getDate("applicationDeadline");
+				job.setId(result.getInt("id"));
+				//job.jobId = result.getString("jobId");
+				job.setJobTitle(result.getString("jobTitle"));
+				job.setJobType(result.getString("jobType"));
+				job.setLocation(result.getString("location"));
+				job.setOrganization(result.getString("organization"));
+				job.setApplicationDeadline(result.getDate("applicationDeadline"));
 				activeJobs.add(job);
 			}
 		} catch (SQLException e) {
@@ -55,10 +55,10 @@ public class EmployerJobsDAO implements IEmployerJobsDAO {
 		{
 		 con  = DatabaseConnection.getConnection();
 		 callStatement = con.prepareCall("{call sp_insertjobdetails(?,?,?,?,?,?,?)}"); 
-		 callStatement.setString("jobTitle", postedJobDetails.jobTitle);
-		 callStatement.setString("jobLocation", postedJobDetails.location);
-		 callStatement.setString("jobType", postedJobDetails.jobType);
-		 callStatement.setString("noOfPosition", Integer.toString(postedJobDetails.noOfPosition));
+		 callStatement.setString("jobTitle", postedJobDetails.getJobTitle());
+		 callStatement.setString("jobLocation", postedJobDetails.getLocation());
+		 callStatement.setString("jobType", postedJobDetails.getJobType());
+		 callStatement.setString("noOfPosition", postedJobDetails.getOpenPosition());
 		 callStatement.setString("rateOfPay", Integer.toString(postedJobDetails.rateOfPay));
 		 callStatement.setString("hourPerWeek", Integer.toString(postedJobDetails.hourPerWeek));
 		 callStatement.setString("jobDescription", postedJobDetails.jobDescription);
