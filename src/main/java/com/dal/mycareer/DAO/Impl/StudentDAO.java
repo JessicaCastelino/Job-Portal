@@ -75,7 +75,7 @@ public class StudentDAO implements IStudentDAO {
 		AppliedJob job = null;
 		List<AppliedJob> appliedJobs = new ArrayList<AppliedJob>();
 		try {
-			callableStatement = con.prepareCall("{call getAppliedJobList('" + studentId + "')}");
+			callableStatement = con.prepareCall("{call getAppliedJobList(" + studentId + ")}");
 			boolean results = callableStatement.execute();
 
 			while (results) {
@@ -101,7 +101,7 @@ public class StudentDAO implements IStudentDAO {
 					job.setTerm(rs.getString(18));
 					job.setOrganization(rs.getString(19));
 					appliedJobs.add(job);
-					System.out.println(job.getId());
+					System.out.println("GET APPLIED JOB: " + job.getId());
 				}
 
 				rs.close();
