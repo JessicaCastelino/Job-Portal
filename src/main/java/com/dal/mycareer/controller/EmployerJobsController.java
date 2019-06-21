@@ -24,8 +24,8 @@ public class EmployerJobsController {
 	
 	@RequestMapping("/employerdashboard")
 	public String activeJobs() {
-		LOGGER.info("Redirect to activejobs.jsp");
-		return "activejobs";
+		LOGGER.info("Redirect to employerdashboard.jsp");
+		return "employerdashboard";
 	}
 	
 	@ResponseBody
