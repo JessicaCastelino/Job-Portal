@@ -82,7 +82,7 @@ public class EmployerJobsDAO implements IEmployerJobsDAO {
 		{
 		 con  = DatabaseConnection.getConnection();
 		 callStatement = con.prepareCall("{call sp_closeactivejob(?)}"); 
-		 callStatement.setInt("id", jobRecordId);
+		 callStatement.setInt("jobRecordId", jobRecordId);
 		 int rowsAffected = callStatement.executeUpdate();
 		 if(rowsAffected > 0)
 		 {

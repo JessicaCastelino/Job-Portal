@@ -54,13 +54,17 @@ table {
 
 <script>
 	  const http = new XMLHttpRequest();
-	  var url = window.location.origin + '/activejobs';
+      var baseUrl = window.location.origin;
+      var url = baseUrl + '/activejobs';
 	  http.open('GET', url, true);
 	  http.send();
-	  http.onreadystatechange = function () {
-	    if (this.readyState === 4 && this.status === 200) {
+      http.onreadystatechange = function () 
+      {
+        if (this.readyState === 4 && this.status === 200) 
+        {
 	      var jobs = JSON.parse(http.response);
-	      jobs.forEach(job => {
+          jobs.forEach(job => 
+          {
 	        var activeJobsTable = document.getElementById('activeJobs');
 	        var row = activeJobs.insertRow();
 	        var colId = row.insertCell(0);
@@ -72,8 +76,8 @@ table {
             var colLocation = row.insertCell(5);
             var colAppDeadline = row.insertCell(6);
             var colPrereqCourses = row.insertCell(7);
-	        var colViewDetail = row.insertCell(8);
-	        var colDelete = row.insertCell(9);
+	        var colCloseJob = row.insertCell(8);
+	        var colViewApplicants = row.insertCell(9);
 	        colId.innerText = job.id;
 	        colJobId.innerText = job.jobId;
 	        colJobTitle.innerHTML = '<a href="javascript:void(0)" onclick="viewJob(this)">' + job.jobTitle + '</a>';
@@ -81,17 +85,46 @@ table {
             colOrg.innerText = job.organization;
             colLocation.innerText = job.location;
             colAppDeadline.innerText = job.applicationDeadline;
-	        colViewDetail.innerHTML = '<button class="closeJobBtn" onclick="closeJob(this)">Close Job</button>';
-	        colDelete.innerHTML = '<button class="viewApplicantsBtn" onclick="viewApplicants(this)">View Applicants</button>';
+	        colCloseJob.innerHTML = '<button class="closeJobBtn" onclick="closeJob(this)">Close Job</button>';
+	        colViewApplicants.innerHTML = '<button class="viewApplicantsBtn" onclick="viewApplicants(this)">View Applicants</button>';
 	      });
 	    }
 	  };
-	  http.onerror = function () {
+      http.onerror = function () 
+      {
 	    console.log(http.response);
       };
       
-      function viewJob(e) {
+      function viewJob(e) 
+      {
         console.log(e);
+      }
+
+      function closeJob(srcElement) 
+      {
+        const httpReq = new XMLHttpRequest();
+        var currentRowIndex = srcElement.closest('tr').rowIndex;
+        var activeJobsTable = document.getElementById('activeJobs');
+        var id = activeJobsTable.rows[currentRowIndex].cells[0].innerText;
+        var params = {id : 1};
+        
+        httpReq.open('PUT', baseUrl + '/closeJob', true);
+        httpReq.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        httpReq.send("id=" + id);
+        httpReq.onreadystatechange = function () 
+        {
+            if (this.readyState === 4 && this.status === 200) 
+            {
+                if(httpReq.responseText == "true")
+                {
+                    activeJobsTable.deleteRow(currentRowIndex);
+                }
+            }
+        };
+        httpReq.onerror = function () 
+        {
+            console.log(http.response);
+        };
       }
 </script>
 </body>
