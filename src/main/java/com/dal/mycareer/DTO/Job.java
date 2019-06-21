@@ -1,6 +1,7 @@
 package com.dal.mycareer.DTO;
 
 import java.util.Date;
+import java.util.List;
 	public class Job {
 	public int id;
 	public String jobId;
@@ -9,4 +10,5 @@ import java.util.Date;
 	public String jobType;
 	public Date applicationDeadline;
 	public String organization;
+	public List<Integer> selectedCourseIds;
 }
