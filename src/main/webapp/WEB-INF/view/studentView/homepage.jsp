@@ -26,7 +26,7 @@
 </head>
 <body>
 	<div class="home-heading">
-		<h1>Welcome to My Career</h1>
+		<h1>Welcome to MyCareer</h1>
 	</div>
 	<div class="container">
 		<ul class="nav nav-tabs" id="myTab" role="tablist">
@@ -41,8 +41,9 @@
 			<div class="tab-pane fade show active" id="home" role="tabpanel"
 				aria-labelledby="home-tab">
 				 <div>
-      			<table border="1">
-      			  <tr>
+				 <br/>
+      			<table border="1" class="table table-hover">
+      			  <tr class="table-info">
           			<th>Job ID</th>
        				<th>Position</th>
        				<th>Organization</th>
@@ -61,8 +62,8 @@
      				   <td>${job.applicationDeadline}</td>
      				   <td><!-- View button -->
 						<div	 class="form-input">
-							<!-- <button class="btn btn-info btn-block my-4" type="submit">View</button> -->
-							<a href="/viewJob?id=${job.id}">View</a>
+							<%-- <button class="btn btn-info btn-block my-4" type="submit" onclick="/viewJob?id='${job.id}'">View</button> --%>
+							<a class="btn btn-info btn-block my-4" href="/viewJob?id=${job.id}">View</a>
 						</div>
 						
 						<!-- Apply button -->
@@ -79,8 +80,9 @@
 				aria-labelledby="profile-tab">
 
 				 <div>
-      			<table border="1">
-      			  <tr>
+				  <br/>
+      			<table border="1" class="table table-hover">
+      			  <tr class="table-info">
           			<th>Job ID</th>
        				<th>Position</th>
        				<th>Organization</th>

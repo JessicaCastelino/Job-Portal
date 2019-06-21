@@ -15,13 +15,13 @@ public class FileDAO {
 		String sql = "INSERT INTO appliedJobs(id, document, applicationStatus, studentId, jobId) values (?, ?, ?, ?, ?)";
         try {
         	PreparedStatement statement = c.prepareStatement(sql);
-			statement.setString(1, "1");
+			statement.setString(1, "4");
 			if (inputStream != null) {
 	            statement.setBlob(2, inputStream);
 	        }
 			statement.setString(3, "Submited");
 			statement.setString(4, "1");
-			statement.setString(5, "1");
+			statement.setString(5, "2");
 			 int row = statement.executeUpdate();
 	            if (row > 0) {
 	            	 System.out.println("Inserted");

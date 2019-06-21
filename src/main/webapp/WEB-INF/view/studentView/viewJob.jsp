@@ -31,10 +31,10 @@
 	<div class="container">
 
 		<div class="tab-content" id="myTabContent">
-			<div class="tab-pane fade show active" id="home" role="tabpanel"
-				aria-labelledby="home-tab">
+			<div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
 				 <div>
-      			<table border="1">
+      			 <br/>
+      			<table border="1" class="table table-hover">
       			  <tr>
           			<th>Job ID</th>
           			<td>${job.id}</td>
@@ -84,19 +84,13 @@
           			<td>${job.applicationDeadline}</td>
           		  </tr>       			
       </table>
+      <div class="form-input">
+				<button class="btn btn-info btn-block my-4" type="submit" value="${job.id}" onclick="window.open('/applyJob','Apply for job', 'width=500,height=500')">Apply</button>
+			</div>
     </div>
 			</div>
-			<div class="tab-pane fade" id="profile" role="tabpanel"
-				aria-labelledby="profile-tab">
-
-				
-
-			</div>
-			 <!-- View button -->
-						<div	 class="form-input">
-							<!-- <button class="btn btn-info btn-block my-4" type="submit">View</button> -->
-							<a href="/apply?id=${job.id}">Apply</a>
-						</div>
+		
+			 
 		</div>
 	</div>
 

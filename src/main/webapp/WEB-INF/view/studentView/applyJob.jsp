@@ -26,25 +26,26 @@
 </head>
 <body>
 	<div class="home-heading">
-		<h1>Job Details</h1>
+		<h1>Apply for Job</h1>
 	</div>
 	<div class="container">
 
-		<form class="text-center border border-light p-5" method="POST" enctype="multipart/form-data" action="/upload">
+		<form class="text-center border border-dark p-5" method="POST" enctype="multipart/form-data" action="/upload">
 
-					<p class="h4 mb-4">Documents</p>
+					<p class="h4 mb-4 form-group">Documents</p>
+					<p class="h1 form-group">Please upload your cover letter, resume and transcripts as a single PDF.</p>
 					<div class="form-field">
 						<input type="file" name="file" />
 
 						
-						<div class="d-flex justify-content-around"></div>
+						<div class="d-flex justify-content-around form-group"></div>
 
-						 <div class="form-input">
-							<button class="btn btn-info btn-block my-4" type="submit">Close</button>
-						 </div>
-			             <div class="form-input">
-							<button class="btn btn-info btn-block my-4" type="submit">Apply</button>
+			             <div class="form-input form-group	">
+							<button class="btn btn-info btn-block my-4" type="submit">Submit application</button>
 			             </div>
+			             <div class="form-input form-group">
+							<button class="btn btn-info btn-block my-4" type="submit" onclick="window.close()">Close</button>
+						 </div>
 					</div>
 				</form>
 			
