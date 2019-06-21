@@ -8,6 +8,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -28,24 +31,33 @@ import com.dal.mycareer.DTO.Job;
 public class StudentController {
 	private static List<Job> jobs = new ArrayList<Job>();
 	private static List<AppliedJob> appliedJobs = new ArrayList<AppliedJob>();
+	private static final String SESSION_NAME = "sessionName";
 	static Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 	IStudentDAO dao=null;
 	
 	@RequestMapping(value = { "/studentHome" }, method = RequestMethod.GET)
-	public String loadHome(Model model) {
-		dao=new StudentDAO();
-		jobs=dao.getAllJobList();
-		appliedJobs=dao.getAppliedJobList();
-		model.addAttribute("jobs",jobs);
-		model.addAttribute("appliedJobs",appliedJobs);
-		return "studentView/homepage";
+	public String loadStudentHome(Model model,HttpServletRequest request) {
+		/*
+		 * HttpSession session = request.getSession(); String userSessionName=(String)
+		 * session.getAttribute(SESSION_NAME); if(userSessionName=="" ||
+		 * userSessionName==null) {
+		 */	
+			dao=new StudentDAO();
+			jobs=dao.getAllJobList();
+			appliedJobs=dao.getAppliedJobList();
+			model.addAttribute("jobs",jobs);
+			model.addAttribute("appliedJobs",appliedJobs);
+			return "studentView/homepage";
+		/*
+		 * } else { return "logout"; }
+		 */
 	}
 	
 	@RequestMapping(value = { "/viewJob" }, method = RequestMethod.GET)
-	public String viewJob(@RequestParam("id") String jobId, Model model) {
+	public String viewJob(@RequestParam("id") int jobId, Model model) {
 		System.out.println("JOB ID:"+jobId);
 		for (Job job : jobs) {
-			if(job.getId().equalsIgnoreCase(jobId))
+			if(job.getId()==jobId)
 			   model.addAttribute("job",job);
 			}
 		return "studentView/viewJob";
@@ -55,13 +67,13 @@ public class StudentController {
 	public String upload(@RequestParam("file") MultipartFile file) {
 		InputStream inputStream = null;
 		
-		FileDAO dao=new FileDAO();
+		dao=new StudentDAO();
 		if(file!=null)
 		{
 		 System.out.println(String.format("File name %s", file.getOriginalFilename()));
 		 try {
 			 inputStream = file.getInputStream();
-			 int i=dao.uploadFile(inputStream);
+			 int i=dao.applyForJob(inputStream);
 			 if(i==1)
 			 {
 				 System.out.println("File Uploaded..");

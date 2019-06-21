@@ -1,7 +1,9 @@
 package com.dal.mycareer.DAO.Impl;
 
+import java.io.InputStream;
 import java.sql.CallableStatement;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -30,14 +32,14 @@ public class StudentDAO implements IStudentDAO{
 		           ResultSet rs = callableStatement.getResultSet();
 		           while (rs.next()) {
 		        	   job=new Job();
-		               job.setId(Integer.toString(rs.getInt(1)));
+		               job.setId(rs.getInt(1));
 		               job.setJobTitle(rs.getString(2));
 		               job.setLocation(rs.getString(3));
 		               job.setOpenPosition(Integer.toString(rs.getInt(4)));
 		               job.setJobType(rs.getString(5));
 		               job.setRateOfPay(Integer.toString(rs.getInt(6)));
 		               job.setHoursPerWeek(Integer.toString(rs.getInt(7)));
-		               job.setApplicationDeadline(rs.getString(8));
+		               job.setApplicationDeadline(rs.getDate(8));
 		               job.setJobDescription(rs.getString(9));
 		               job.setAdditionalInformation(rs.getString(10));
 		               job.setJobStatus(rs.getString(11));
@@ -121,5 +123,36 @@ public class StudentDAO implements IStudentDAO{
 			}
 			}
 	}
-
+	public int applyForJob(InputStream inputStream)
+	{
+		Connection c=DatabaseConnection.getConnection();
+		System.out.println("connection applyForJob "+c);
+		String sql = "INSERT INTO appliedJobs(id, document, applicationStatus, studentId, jobId) values (?, ?, ?, ?, ?)";
+        try {
+        	PreparedStatement statement = c.prepareStatement(sql);
+			statement.setString(1, "4");
+			if (inputStream != null) {
+	            statement.setBlob(2, inputStream);
+	        }
+			statement.setString(3, "Submited");
+			statement.setString(4, "1");
+			statement.setString(5, "2");
+			 int row = statement.executeUpdate();
+	            if (row > 0) {
+	            	 System.out.println("Inserted");
+	                return 1;
+	            }
+	            else
+	            {
+	            	System.out.println("Not Inserted");
+	            	return 0;
+	            }
+			
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return 0;
+		}
+	}
 }
