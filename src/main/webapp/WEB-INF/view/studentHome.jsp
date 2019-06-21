@@ -101,8 +101,8 @@
 						
 						<!-- Apply button -->
 						<div class="form-input">
-							<button class="btn btn-info btn-block my-4" type="submit" value="${appliedJob.id}">Withdraw
-							</button>
+						<a class="btn btn-info btn-block my-4" href="/withdraw?id=${job.id}">Withdraw</a>
+							
 						</div>
 						</td>
         			</tr>
