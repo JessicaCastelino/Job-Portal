@@ -200,7 +200,7 @@ return selCourseArray;
 function saveJob()
 {
 	var  jobTitle = $('#txtjobtitle').val();
-	var  jobLocation = $('#txtLocation').val();
+	var  location = $('#txtLocation').val();
 	var  noOfPosition = $('#numOfOpenPosition').val();
 	var  jobType = $('#selJobType').val();
 	var  rateOfPay = $('#txtRateofPay').val();
@@ -208,7 +208,7 @@ function saveJob()
 	//var  applicationDeadline = $('#applicationDeadline').val();
 	var  jobDescription = $('#txtJobDesc').val();
 	var selectedCourseIds = fetchSelectedCourses();
-	var data = {jobTitle : jobTitle,jobLocation:jobLocation,noOfPosition:noOfPosition,jobType:jobType,rateOfPay:rateOfPay,hourPerWeek:hourPerWeek,jobDescription:jobDescription,selectedCourseIds:selectedCourseIds }
+	var data = {jobTitle : jobTitle,location:location,noOfPosition:noOfPosition,jobType:jobType,rateOfPay:rateOfPay,hourPerWeek:hourPerWeek,jobDescription:jobDescription,selectedCourseIds:selectedCourseIds }
 	var url = window.location.origin + "/saveJob";
 	fetch(url, {
 		  method: 'POST', // or 'PUT'

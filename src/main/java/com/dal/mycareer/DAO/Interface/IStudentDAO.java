@@ -5,12 +5,13 @@ import java.util.List;
 
 import com.dal.mycareer.DTO.AppliedJob;
 import com.dal.mycareer.DTO.Job;
+import com.dal.mycareer.DTO.JobDetails;
 import com.dal.mycareer.DTO.Student;
 
 public interface IStudentDAO {
 	public Student getStudentDetails(String userSessionName);
 
-	public List<Job> getAllJobList();
+	public List<JobDetails> getAllJobList();
 
 	public List<AppliedJob> getAppliedJobList(int studentId);
 
