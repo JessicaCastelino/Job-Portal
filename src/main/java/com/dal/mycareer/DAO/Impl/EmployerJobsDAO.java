@@ -21,32 +21,8 @@ public class EmployerJobsDAO implements IEmployerJobsDAO {
 	private final Logger LOGGER = LoggerFactory.getLogger(this.getClass());
 	
 	@Override
-	public List<Job> getActiveJobs(int employeeId) {
-		List<Job> activeJobs = null;
-		Connection conn = DatabaseConnection.getConnection();
-		try {
-			CallableStatement statement = conn.prepareCall("{CALL getActiveJobsForEmployer(?)}");
-			statement.setInt("employerid", employeeId);
-			ResultSet result = statement.executeQuery();
-			Job job;
-			activeJobs = new ArrayList<>();
-			while(result.next()) {
-				job = new Job();
-				job.setId(result.getInt("id"));
-				//job.jobId = result.getString("jobId");
-				job.setJobTitle(result.getString("jobTitle"));
-				job.setJobType(result.getString("jobType"));
-				job.setLocation(result.getString("location"));
-				job.setOrganization(result.getString("organization"));
-				job.setApplicationDeadline(result.getDate("applicationDeadline"));
-				job.setRequiredCourses(result.getString("requiredCourses"));
-				activeJobs.add(job);
-			}
-		} catch (SQLException e) {
-			LOGGER.error("Exception occurred at EmployerJobsDAO:getActiveJobs " + e.getMessage());
-			e.printStackTrace();
-		}
-		return activeJobs;
+	public List<Job> getActiveJobs(int employerId) {
+		return fetchJobByStatus(employerId, true);
 	}
 	
 	public JobDetails InsertJobDetails(JobDetails postedJobDetails) {
@@ -108,5 +84,47 @@ public class EmployerJobsDAO implements IEmployerJobsDAO {
 		}
 		
 		return isUpdateSuccess;
+	}
+
+	@Override
+	public List<Job> getClosedJobs(int employerId) {
+		return fetchJobByStatus(employerId, false);		
+	}
+
+	List<Job> fetchJobByStatus(int employerId, boolean isActive) {
+		List<Job> jobs = null;
+		Connection conn = null;
+		String procedureName = "";
+		if(isActive)
+		{
+			procedureName = "getActiveJobsForEmployer";
+		}
+		else
+		{
+			procedureName = "getClosedJobsForEmployer";
+		}
+		try {
+			conn = DatabaseConnection.getConnection();
+			CallableStatement statement = conn.prepareCall("{CALL " + procedureName +"(?)}");
+			statement.setInt("employerid", employerId);
+			ResultSet result = statement.executeQuery();
+			Job job;
+			jobs = new ArrayList<>();
+			while(result.next()) {
+				job = new Job();
+				job.setId(result.getInt("id"));
+				job.setJobTitle(result.getString("jobTitle"));
+				job.setJobType(result.getString("jobType"));
+				job.setLocation(result.getString("location"));
+				job.setOrganization(result.getString("organization"));
+				job.setApplicationDeadline(result.getDate("applicationDeadline"));
+				job.setRequiredCourses(result.getString("requiredCourses"));
+				jobs.add(job);
+			}
+		} catch (SQLException e) {
+			LOGGER.error("Exception occurred at EmployerJobsDAO:getActiveJobs " + e.getMessage());
+			e.printStackTrace();
+		}
+		return jobs;
 	}
 }

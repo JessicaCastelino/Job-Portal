@@ -78,6 +78,7 @@ table th, table td {
 	<button id="btnAddJob" data-toggle="modal" data-target="#modalpopup"
 		class="buttonmargin" onclick="loadPrerequisiteCourse()">Add
 		Job</button>
+	<button id="btnAddJob" onclick="window.location.href = window.location.origin + '/closedjobs'">View Closed Jobs</button>
 	<div class="modal fade" id="modalpopup" role="dialog">
 		<div class="modal-dialog modal-lg">
 			<div class="modal-content">
