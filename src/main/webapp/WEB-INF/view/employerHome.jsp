@@ -246,7 +246,7 @@ function saveJob()
 	        var colCloseJob = row.insertCell(8);
 	        var colViewApplicants = row.insertCell(9);
 	        colId.innerText = job.id;
-	        colJobId.innerText = job.jobId;
+	        colJobId.innerText = job.id;
 	        colJobTitle.innerHTML = '<a href="javascript:void(0)" onclick="viewJob(this)">' + job.jobTitle + '</a>';
 	        colJobType.innerText  = job.jobType;
             colOrg.innerText = job.organization;

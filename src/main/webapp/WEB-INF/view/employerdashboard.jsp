@@ -46,7 +46,7 @@ table th, table td {
 	background-color: #009933;
 	border-color: #00802b;
 	border-radius: 7px;
-	height: 40px;
+	height: 60px;
 	color: white;
 	width: 100px;
 }
@@ -247,8 +247,8 @@ function saveJob()
 	        var colCloseJob = row.insertCell(8);
 	        var colViewApplicants = row.insertCell(9);
 	        colId.innerText = job.id;
-	        colJobId.innerText = job.jobId;
-	        colJobTitle.innerHTML = '<a href="javascript:void(0)" onclick="viewJob(this)">' + job.jobTitle + '</a>';
+	        colJobId.innerText = job.id;
+	        colJobTitle.innerHTML = '<a href="' + window.location.origin + '/applicants?jobId=' + job.id + '" onclick="viewJob(this)">' + job.jobTitle + '</a>';
 	        colJobType.innerText  = job.jobType;
             colOrg.innerText = job.organization;
             colLocation.innerText = job.location;
@@ -263,9 +263,13 @@ function saveJob()
 	    console.log(http.response);
       };
       
-      function viewJob(e) 
+      function viewApplicants(srcElement) 
       {
-        console.log(e);
+		var currentRowIndex = srcElement.closest('tr').rowIndex;
+        var activeJobsTable = document.getElementById('activeJobs');
+        var id = activeJobsTable.rows[currentRowIndex].cells[0].innerText;
+      	var url = baseUrl + '/applications?jobId=' + id;
+		window.location.href = url;
       }
 
       function closeJob(srcElement) 
