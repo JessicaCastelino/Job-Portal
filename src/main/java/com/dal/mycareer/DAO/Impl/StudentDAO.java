@@ -13,6 +13,7 @@ import com.dal.mycareer.DAO.Interface.IStudentDAO;
 import com.dal.mycareer.DBConnection.DatabaseConnection;
 import com.dal.mycareer.DTO.AppliedJob;
 import com.dal.mycareer.DTO.Job;
+import com.dal.mycareer.DTO.JobDetails;
 import com.dal.mycareer.DTO.Student;
 
 public class StudentDAO implements IStudentDAO {
@@ -21,10 +22,10 @@ public class StudentDAO implements IStudentDAO {
 	CallableStatement callableStatement = null;
 
 	@Override
-	public List<Job> getAllJobList() {
+	public List<JobDetails> getAllJobList() {
 		con = DatabaseConnection.getConnection();
-		Job job = null;
-		List<Job> jobs = new ArrayList<Job>();
+		JobDetails job = null;
+		List<JobDetails> jobs = new ArrayList<JobDetails>();
 		try {
 			callableStatement = con.prepareCall("{call getAllJobList()}");
 			boolean results = callableStatement.execute();
@@ -32,20 +33,20 @@ public class StudentDAO implements IStudentDAO {
 			while (results) {
 				ResultSet rs = callableStatement.getResultSet();
 				while (rs.next()) {
-					job = new Job();
+					job = new JobDetails();
 					job.setId(rs.getInt(1));
 					job.setJobTitle(rs.getString(2));
 					job.setLocation(rs.getString(3));
-					job.setOpenPosition(Integer.toString(rs.getInt(4)));
+					job.setNoOfPosition((rs.getInt(4)));
 					job.setJobType(rs.getString(5));
-					job.setRateOfPay(Integer.toString(rs.getInt(6)));
-					job.setHoursPerWeek(Integer.toString(rs.getInt(7)));
+					job.setRateOfPay((rs.getInt(6)));
+					job.setHourPerWeek((rs.getInt(7)));
 					job.setApplicationDeadline(rs.getDate(8));
 					job.setJobDescription(rs.getString(9));
-					job.setAdditionalInformation(rs.getString(10));
-					job.setJobStatus(rs.getString(11));
-					job.setEmployeeId(Integer.toString(rs.getInt(12)));
-					job.setTerm(rs.getString(13));
+					//job.setAdditionalInformation(rs.getString(10));
+					//job.setJobStatus(rs.getString(11));
+					job.setEmployeeId((rs.getInt(12)));
+					//job.setTerm(rs.getString(13));
 					job.setOrganization(rs.getString(13));
 					jobs.add(job);
 					System.out.println(job.getId());

@@ -55,9 +55,9 @@ public class EmployerJobsDAO implements IEmployerJobsDAO {
 		{
 		 con  = DatabaseConnection.getConnection();
 		 callStatement = con.prepareCall("{call sp_insertjobdetails(?,?,?,?,?,?,?,?)}"); 
-		 callStatement.setString("jobTitle", postedJobDetails.jobTitle);
-		 callStatement.setString("jobLocation", postedJobDetails.location);
-		 callStatement.setString("jobType", postedJobDetails.jobType);
+		 callStatement.setString("jobTitle", postedJobDetails.getJobTitle());
+		 callStatement.setString("jobLocation", postedJobDetails.getLocation());
+		 callStatement.setString("jobType", postedJobDetails.getJobType());	
 		 callStatement.setString("noOfPosition", Integer.toString(postedJobDetails.noOfPosition));
 		 callStatement.setString("rateOfPay", Integer.toString(postedJobDetails.rateOfPay));
 		 callStatement.setString("hourPerWeek", Integer.toString(postedJobDetails.hourPerWeek));
@@ -65,7 +65,7 @@ public class EmployerJobsDAO implements IEmployerJobsDAO {
 		 callStatement.registerOutParameter(8, java.sql.Types.INTEGER);
 		 callStatement.executeUpdate();
 		 int jobId = callStatement.getInt(8);
-		 for (int courseId : postedJobDetails.selectedCourseIds) {
+		 for (int courseId : postedJobDetails.getSelectedCourseIds()) {
 			callStatement = con.prepareCall("{call sp_insertjobrequirement(?,?)}");
 			callStatement.setString("jobId", Integer.toString(jobId));
 			callStatement.setString("courseId",Integer.toString(courseId)); 
