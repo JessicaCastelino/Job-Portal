@@ -11,6 +11,7 @@ String location;
 String jobType;
 Date applicationDeadline;
 String organization;
+String requiredCourses;
 List<Integer> selectedCourseIds;
 int employeeId; 
 
@@ -76,5 +77,13 @@ int employeeId;
 
 	public void setEmployeeId(int employeeId) {
 		this.employeeId = employeeId;
+	}
+
+	public String getRequiredCourses() {
+		return requiredCourses;
+	}
+
+	public void setRequiredCourses(String requiredCourses) {
+		this.requiredCourses = requiredCourses;
 	}
 }

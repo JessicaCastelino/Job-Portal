@@ -78,6 +78,7 @@ table th, table td {
 	<button id="btnAddJob" data-toggle="modal" data-target="#modalpopup"
 		class="buttonmargin" onclick="loadPrerequisiteCourse()">Add
 		Job</button>
+	<button id="btnAddJob" onclick="window.location.href = window.location.origin + '/closedjobs'">View Closed Jobs</button>
 	<div class="modal fade" id="modalpopup" role="dialog">
 		<div class="modal-dialog modal-lg">
 			<div class="modal-content">
@@ -252,6 +253,7 @@ function saveJob()
 	        colJobType.innerText  = job.jobType;
             colOrg.innerText = job.organization;
             colLocation.innerText = job.location;
+			colPrereqCourses.innerText = job.requiredCourses;
             colAppDeadline.innerText = job.applicationDeadline;
 	        colCloseJob.innerHTML = '<button class="closeJobBtn" onclick="closeJob(this)">Close Job</button>';
 	        colViewApplicants.innerHTML = '<button class="viewApplicantsBtn" onclick="viewApplicants(this)">View Applicants</button>';

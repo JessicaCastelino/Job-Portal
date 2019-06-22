@@ -8,4 +8,6 @@ import com.dal.mycareer.DTO.Application;
 public interface IManageApplicationsDAO 
 {
 	List<Application> getApplications(int jobRecordId);
+
+	boolean updateApplicationStatus(int applicationId, String appStatus);
 }

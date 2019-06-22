@@ -19,28 +19,6 @@ import com.dal.mycareer.DTO.Application;
 public class ManageApplicationsDAO implements IManageApplicationsDAO {
 	private final Logger LOGGER = LoggerFactory.getLogger(this.getClass());
 
-	// @Override
-	public boolean updateApplicationStatus(int applicationId) {
-		boolean isUpdateSuccess = false;
-		CallableStatement callStatement = null;
-		Connection con = null;
-		try {
-			con = DatabaseConnection.getConnection();
-			callStatement = con.prepareCall("{call sp_closeactivejob(?)}");
-			callStatement.setInt("applicationId", applicationId);
-			int rowsAffected = callStatement.executeUpdate();
-			if (rowsAffected > 0) {
-				isUpdateSuccess = true;
-			} else {
-				isUpdateSuccess = false;
-			}
-		} catch (Exception ex) {
-			LOGGER.error("Error Occurred in ManageApplicantsDAO: updateApplicationStatus" + ex.getMessage());
-		}
-
-		return isUpdateSuccess;
-	}
-
 	@Override
 	public List<Application> getApplications(int jobRecordId) {
 		List<Application> applicants = null;
@@ -68,5 +46,28 @@ public class ManageApplicationsDAO implements IManageApplicationsDAO {
 			e.printStackTrace();
 		}
 		return applicants;
+	}
+
+	@Override
+	public boolean updateApplicationStatus(int applicationId, String appStatus) {
+		boolean isUpdateSuccess = false;
+		CallableStatement callStatement = null;
+		Connection con = null;
+		try {
+			con = DatabaseConnection.getConnection();
+			callStatement = con.prepareCall("{call sp_updateApplicationStatus(?, ?)}");
+			callStatement.setInt("applicationId", applicationId);
+			callStatement.setString("applicationStatus", appStatus);
+			int rowsAffected = callStatement.executeUpdate();
+			if (rowsAffected > 0) {
+				isUpdateSuccess = true;
+			} else {
+				isUpdateSuccess = false;
+			}
+		} catch (Exception ex) {
+			LOGGER.error("Error Occurred in ManageApplicationsDAO: updateApplicationStatus" + ex.getMessage());
+		}
+
+		return isUpdateSuccess;
 	}
 }

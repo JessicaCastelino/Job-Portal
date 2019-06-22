@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -32,10 +33,18 @@ public class EmployerJobsController {
 	@ResponseBody
 	@RequestMapping(value="/activejobs", method=RequestMethod.GET, produces="application/json")
 	public List<Job> getActiveJobs() {
-		LOGGER.info("Inside getActiveJobs controller");
+		LOGGER.info("Inside getActiveJobs");
 		return employerJobs.getActiveJobs(1);
 	}
-		@RequestMapping( value="/postjob", method=RequestMethod.GET)
+	
+	@RequestMapping(value="/closedjobs", method=RequestMethod.GET, produces="application/json")
+	public String getClosedJobs(ModelMap model) {
+		LOGGER.info("Inside getClosedJobs");
+		model.addAttribute("closedJobs", employerJobs.getClosedJobs(1));
+		return "closedjobs";
+	}
+	
+	@RequestMapping( value="/postjob", method=RequestMethod.GET)
 	public String postJob() {
 		
 		return "postjob";

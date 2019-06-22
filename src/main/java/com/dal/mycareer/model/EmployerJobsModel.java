@@ -15,9 +15,9 @@ public class EmployerJobsModel implements IEmployerJobsModel {
 	@Autowired
 	IEmployerJobsDAO employerJobsDAO;
 	
-	public List<Job> getActiveJobs(int employeeId) 
+	public List<Job> getActiveJobs(int employerId) 
 	{
-		return employerJobsDAO.getActiveJobs(employeeId);
+		return employerJobsDAO.getActiveJobs(employerId);
 	}
 	
 	public JobDetails InsertJobDetails(JobDetails postedJobDetails) {
@@ -28,5 +28,10 @@ public class EmployerJobsModel implements IEmployerJobsModel {
 	public boolean updateJobStatus(int jobRecordId) 
 	{
 		return employerJobsDAO.updateJobStatus(jobRecordId);
+	}
+
+	@Override
+	public List<Job> getClosedJobs(int employerId) {
+		return employerJobsDAO.getClosedJobs(employerId);
 	}
 }

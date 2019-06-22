@@ -30,11 +30,15 @@
             color: white;
             width: 100px;
         }
+
+        .hiddenStatus {
+            display: none;
+        }
     </style>
 </head>
 
 <body>
-    <table>
+    <table id="applications">
         <thead>
             <tr class="tablehdr">
                 <th style="display:none">ApplicationId</th>
@@ -56,12 +60,47 @@
                     <td>${applicant.email}</td>
                     <td>${applicant.completedCourses}</td>
                     <td></td>
-                    <td>${applicant.applicationStatus}</td>
-                    <td><button class="updateStatusBtn">updateStatus</button></td>
+                    <td>
+                        <select name="appStatus" id="appStatus">
+                            <c:forEach var="status" items="${appStatus}">
+                                <option value="${status}" ${status==applicant.applicationStatus ? 'selected' : '' }>
+                                    ${status}</option>
+                            </c:forEach>
+                        </select>
+                        <label class="hiddenStatus">${applicant.applicationStatus}</label>
+                    </td>
+                    <td><button class="updateStatusBtn" onclick="UpdateStatus(this)">updateStatus</button></td>
                 </tr>
             </c:forEach>
         </c:if>
     </table>
+    <script>
+        function UpdateStatus(srcElement) {
+            var currentRowIndex = srcElement.closest('tr').rowIndex;
+            var activeJobsTable = document.getElementById('applications');
+            var appId = activeJobsTable.rows[currentRowIndex].cells[0].innerText;
+            var appStatus = activeJobsTable.rows[currentRowIndex].cells[6];
+            if (appStatus.children[1].innerText == appStatus.children[0].value) {
+                alert("No changes to update !!!")
+            }
+            else {
+                const httpReq = new XMLHttpRequest();
+                httpReq.open('PUT', window.location.origin + '/updateApplicationStatus', true);
+                httpReq.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+                httpReq.send("applicationId=" + appId + "&appStatus=" + appStatus.children[0].value);
+                httpReq.onreadystatechange = function () {
+                    if (this.readyState === 4 && this.status === 200) {
+                        if (httpReq.responseText == "true") {
+                            alert('Application Status updated!!!')
+                        }
+                    }
+                };
+                httpReq.onerror = function () {
+                    console.log(http.response);
+                };
+            }
+        }
+    </script>
 </body>
 
 </html>

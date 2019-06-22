@@ -19,5 +19,10 @@ public class ManageApplicantsModel implements IManageApplicationsModel {
 	public List<Application> getApplications(int jobRecordId) {
 		return applicationsManagerDAO.getApplications(jobRecordId);
 	}
+
+	@Override
+	public boolean updateApplicationStatus(int applicationId, String appStatus) {
+		return applicationsManagerDAO.updateApplicationStatus(applicationId, appStatus);
+	}
 	
 }
