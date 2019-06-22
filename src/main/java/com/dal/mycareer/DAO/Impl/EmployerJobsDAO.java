@@ -39,6 +39,7 @@ public class EmployerJobsDAO implements IEmployerJobsDAO {
 				job.setLocation(result.getString("location"));
 				job.setOrganization(result.getString("organization"));
 				job.setApplicationDeadline(result.getDate("applicationDeadline"));
+				job.setRequiredCourses(result.getString("requiredCourses"));
 				activeJobs.add(job);
 			}
 		} catch (SQLException e) {

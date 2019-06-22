@@ -252,6 +252,7 @@ function saveJob()
 	        colJobType.innerText  = job.jobType;
             colOrg.innerText = job.organization;
             colLocation.innerText = job.location;
+			colPrereqCourses.innerText = job.requiredCourses;
             colAppDeadline.innerText = job.applicationDeadline;
 	        colCloseJob.innerHTML = '<button class="closeJobBtn" onclick="closeJob(this)">Close Job</button>';
 	        colViewApplicants.innerHTML = '<button class="viewApplicantsBtn" onclick="viewApplicants(this)">View Applicants</button>';
