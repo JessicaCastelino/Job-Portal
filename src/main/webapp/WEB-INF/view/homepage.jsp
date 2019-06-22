@@ -25,6 +25,15 @@
 
 </head>
 <body>
+	<div>
+		<nav class="navbar navbar-inverse">
+			<div class="container-fluid">
+				<div class="navbar-header">
+					<a class="navbar-brand" href="/homepage">My Career</a>
+				</div>
+			</div>
+		</nav>
+	</div>
 	<div class="home-heading">
 		<h1>Welcome to My Career</h1>
 		${name}

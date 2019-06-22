@@ -32,13 +32,13 @@ public class EmployerJobsDAO implements IEmployerJobsDAO {
 			activeJobs = new ArrayList<>();
 			while(result.next()) {
 				job = new Job();
-				job.id = result.getInt("id");
-				job.jobId = result.getString("jobId");
-				job.jobTitle = result.getString("jobTitle");
-				job.jobType = result.getString("jobType");
-				job.location = result.getString("location");
-				job.organization = result.getString("organization");
-				job.applicationDeadline = result.getDate("applicationDeadline");
+				job.setId(result.getInt("id"));
+				//job.jobId = result.getString("jobId");
+				job.setJobTitle(result.getString("jobTitle"));
+				job.setJobType(result.getString("jobType"));
+				job.setLocation(result.getString("location"));
+				job.setOrganization(result.getString("organization"));
+				job.setApplicationDeadline(result.getDate("applicationDeadline"));
 				activeJobs.add(job);
 			}
 		} catch (SQLException e) {
