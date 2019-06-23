@@ -29,8 +29,9 @@ public class EmployerJobsController
 	private final Logger LOGGER = LoggerFactory.getLogger(this.getClass());
 	
 	@RequestMapping("/employerdashboard")
-	public String activeJobs()
+	public String activeJobs(ModelMap model)
 	{
+		model.addAttribute("jobTypes", PropertiesParser.getPropertyMap().get("jobTypes").toString().split(","));
 		LOGGER.info("Redirect to employerdashboard.jsp");
 		return "employerHome";
 	}

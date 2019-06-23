@@ -44,7 +44,7 @@ public class RequestController {
 		IRoleModel roleModel = new RoleModel();
 
 		model = roleModel.getBasePage(model, request);
-
+		model.addAttribute("jobTypes", PropertiesParser.getPropertyMap().get("jobTypes").toString().split(","));
 		return model.asMap().get("view").toString();
 
 	}
