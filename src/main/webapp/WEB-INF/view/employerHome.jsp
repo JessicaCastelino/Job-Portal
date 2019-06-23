@@ -46,7 +46,7 @@ table th, table td {
 	background-color: #009933;
 	border-color: #00802b;
 	border-radius: 7px;
-	height: 40px;
+	height: 60px;
 	color: white;
 	width: 100px;
 }
@@ -61,6 +61,7 @@ table th, table td {
 </style>
 </head>
 <body>
+
 	<div>
 		<nav class="navbar navbar-inverse">
 			<div class="container-fluid">
@@ -77,6 +78,7 @@ table th, table td {
 	<button id="btnAddJob" data-toggle="modal" data-target="#modalpopup"
 		class="buttonmargin" onclick="loadPrerequisiteCourse()">Add
 		Job</button>
+	<button id="btnAddJob" onclick="window.location.href = window.location.origin + '/closedjobs'">View Closed Jobs</button>
 	<div class="modal fade" id="modalpopup" role="dialog">
 		<div class="modal-dialog modal-lg">
 			<div class="modal-content">
@@ -199,7 +201,7 @@ return selCourseArray;
 function saveJob()
 {
 	var  jobTitle = $('#txtjobtitle').val();
-	var  jobLocation = $('#txtLocation').val();
+	var  location = $('#txtLocation').val();
 	var  noOfPosition = $('#numOfOpenPosition').val();
 	var  jobType = $('#selJobType').val();
 	var  rateOfPay = $('#txtRateofPay').val();
@@ -207,7 +209,7 @@ function saveJob()
 	//var  applicationDeadline = $('#applicationDeadline').val();
 	var  jobDescription = $('#txtJobDesc').val();
 	var selectedCourseIds = fetchSelectedCourses();
-	var data = {jobTitle : jobTitle,jobLocation:jobLocation,noOfPosition:noOfPosition,jobType:jobType,rateOfPay:rateOfPay,hourPerWeek:hourPerWeek,jobDescription:jobDescription,selectedCourseIds:selectedCourseIds }
+	var data = {jobTitle : jobTitle,location:location,noOfPosition:noOfPosition,jobType:jobType,rateOfPay:rateOfPay,hourPerWeek:hourPerWeek,jobDescription:jobDescription,selectedCourseIds:selectedCourseIds }
 	var url = window.location.origin + "/saveJob";
 	fetch(url, {
 		  method: 'POST', // or 'PUT'
@@ -247,10 +249,11 @@ function saveJob()
 	        var colViewApplicants = row.insertCell(9);
 	        colId.innerText = job.id;
 	        colJobId.innerText = job.id;
-	        colJobTitle.innerHTML = '<a href="javascript:void(0)" onclick="viewJob(this)">' + job.jobTitle + '</a>';
+          colJobTitle.innerHTML = '<a href="' + window.location.origin + '/viewPostedJob?jobId=' + job.id + '"">' + job.jobTitle + '</a>';
 	        colJobType.innerText  = job.jobType;
             colOrg.innerText = job.organization;
             colLocation.innerText = job.location;
+			colPrereqCourses.innerText = job.requiredCourses;
             colAppDeadline.innerText = job.applicationDeadline;
 	        colCloseJob.innerHTML = '<button class="closeJobBtn" onclick="closeJob(this)">Close Job</button>';
 	        colViewApplicants.innerHTML = '<button class="viewApplicantsBtn" onclick="viewApplicants(this)">View Applicants</button>';
@@ -262,9 +265,13 @@ function saveJob()
 	    console.log(http.response);
       };
       
-      function viewJob(e) 
+      function viewApplicants(srcElement) 
       {
-        console.log(e);
+		var currentRowIndex = srcElement.closest('tr').rowIndex;
+        var activeJobsTable = document.getElementById('activeJobs');
+        var id = activeJobsTable.rows[currentRowIndex].cells[0].innerText;
+      	var url = baseUrl + '/applications?jobId=' + id;
+		window.location.href = url;
       }
 
       function closeJob(srcElement) 

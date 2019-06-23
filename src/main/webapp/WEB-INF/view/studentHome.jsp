@@ -68,10 +68,10 @@
 						<c:forEach items="${jobs}" var="job">
 							<tr>
 								<td>${job.id}</td>
-								<td>${job.openPosition}</td>
+								<td>${job.noOfPosition}</td>
 								<td>${job.organization}</td>
 								<td>${job.location}</td>
-								<td>${job.term}</td>
+								<td>${job.jobType}</td>
 								<td>${job.applicationDeadline}</td>
 								<td>
 									<!-- View button -->

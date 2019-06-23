@@ -74,11 +74,11 @@
 						</tr>
 						<tr>
 							<th>Term</th>
-							<td>${job.term}</td>
+							<td>${job.jobType}</td>
 						</tr>
 						<tr>
 							<th>Open Position</th>
-							<td>${job.openPosition}</td>
+							<td>${job.noOfPosition}</td>
 						</tr>
 						<tr>
 							<th>Hourly Wage</th>
@@ -86,15 +86,11 @@
 						</tr>
 						<tr>
 							<th>Hours per Week</th>
-							<td>${job.hoursPerWeek}</td>
+							<td>${job.hourPerWeek}</td>
 						</tr>
 						<tr>
 							<th>Job Description</th>
 							<td>${job.jobDescription}</td>
-						</tr>
-						<tr>
-							<th>Additional Information</th>
-							<td>${job.additionalInformation}</td>
 						</tr>
 						<tr>
 							<th>Application Deadline</th>
