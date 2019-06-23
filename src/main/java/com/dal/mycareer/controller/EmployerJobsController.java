@@ -32,21 +32,23 @@ public class EmployerJobsController
 	public String activeJobs()
 	{
 		LOGGER.info("Redirect to employerdashboard.jsp");
-		return "employerdashboard";
+		return "employerHome";
 	}
 	
 	@ResponseBody
 	@RequestMapping(value="/activejobs", method=RequestMethod.GET, produces="application/json")
-	public List<Job> getActiveJobs() 
+	public List<Job> getActiveJobs(HttpServletRequest request) 
 	{
 		LOGGER.info("Inside getActiveJobs controller");
-		return employerJobs.getActiveJobs(1);
+		String currentUser = (String) request.getSession().getAttribute("sessionName");
+		return employerJobs.getActiveJobs(currentUser);
 	}
 	
 	@RequestMapping(value="/closedjobs", method=RequestMethod.GET, produces="application/json")
-	public String getClosedJobs(ModelMap model) {
+	public String getClosedJobs(ModelMap model, HttpServletRequest request) {
 		LOGGER.info("Inside getClosedJobs");
-		model.addAttribute("closedJobs", employerJobs.getClosedJobs(1));
+		String currentUser = (String) request.getSession().getAttribute("sessionName");
+		model.addAttribute("closedJobs", employerJobs.getClosedJobs(currentUser));
 		return "closedjobs";
 	}
 	
@@ -56,6 +58,7 @@ public class EmployerJobsController
 		
 		return "postjob";
 	}
+	
 	@ResponseBody
 	@RequestMapping( value="/saveJob", method=RequestMethod.POST)
 	public JobDetails saveJob(@RequestBody JobDetails postedjobDetails, HttpServletRequest request ) 
@@ -65,13 +68,6 @@ public class EmployerJobsController
 		return employerJobs.InsertJobDetails(postedjobDetails, currentUser);
 	}
 
-	@ResponseBody
-	@RequestMapping( value="/closeJob", method=RequestMethod.PUT)
-	public boolean closeJob(@RequestParam(name = "id") int jobRecordId )
-	 {
-		
-		return employerJobs.updateJobStatus(jobRecordId);
-	}
 	@RequestMapping("/viewPostedJob")
 	public String viewPostedJob(ModelMap model, @RequestParam(name ="jobId") int jobId) 
 	{

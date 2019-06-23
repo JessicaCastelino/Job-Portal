@@ -74,12 +74,13 @@ public class StudentController {
 	}
 
 	@RequestMapping(value = { "/withdraw" }, method = RequestMethod.GET)
-	public String withdrawApplication(Model model, HttpServletRequest request) {
-		model.addAttribute("reqPage", PropertiesParser.getPropertyMap().get("applyJob").toString());
+	public String withdrawApplication(@RequestParam("id") int jobId, Model model, HttpServletRequest request) {
+		model.addAttribute("reqPage", PropertiesParser.getPropertyMap().get("studentHome").toString());
 		model.addAttribute("role", "student");
 		roleModel = new RoleModel();
 		model = roleModel.getBasePage(model, request);
 		studentModel = new StudentModel();
+		model = studentModel.withdrawApplication(model, jobId, request);
 		return model.asMap().get("view").toString();
 	}
 

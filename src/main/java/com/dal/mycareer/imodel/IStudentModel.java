@@ -13,4 +13,6 @@ public interface IStudentModel {
 
 	public Model applyJob(Model model, MultipartFile file, HttpServletRequest request);
 
+	public Model withdrawApplication(Model model, int jobId, HttpServletRequest request);
+
 }
