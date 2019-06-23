@@ -49,7 +49,6 @@ public class StudentDAO implements IStudentDAO {
 					//job.setTerm(rs.getString(13));
 					job.setOrganization(rs.getString(13));
 					jobs.add(job);
-					System.out.println(job.getId());
 				}
 
 				rs.close();
@@ -102,7 +101,6 @@ public class StudentDAO implements IStudentDAO {
 					job.setTerm(rs.getString(18));
 					job.setOrganization(rs.getString(19));
 					appliedJobs.add(job);
-					System.out.println("GET APPLIED JOB: " + job.getId());
 				}
 
 				rs.close();
@@ -124,27 +122,15 @@ public class StudentDAO implements IStudentDAO {
 	}
 
 	@Override
-	public int applyForJob(InputStream inputStream) {
+	public int applyForJob(InputStream inputStream, int studentId, int jobId) {
 		Connection c = DatabaseConnection.getConnection();
-		System.out.println("connection applyForJob " + c);
-		String sql = "INSERT INTO appliedJobs(id, document, applicationStatus, studentId, jobId) values (?, ?, ?, ?, ?)";
 		try {
-			PreparedStatement statement = c.prepareStatement(sql);
-			statement.setString(1, "4");
-			if (inputStream != null) {
-				statement.setBlob(2, inputStream);
-			}
-			statement.setString(3, "Submited");
-			statement.setString(4, "1");
-			statement.setString(5, "2");
-			int row = statement.executeUpdate();
-			if (row > 0) {
-				System.out.println("Inserted");
+			callableStatement = con.prepareCall("{call applyForJob('"+inputStream+"','Submitted'," + studentId + "," + jobId + ")}");
+			boolean results = callableStatement.execute();
+			if (results)
 				return 1;
-			} else {
-				System.out.println("Not Inserted");
+			else
 				return 0;
-			}
 
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -195,12 +181,32 @@ public class StudentDAO implements IStudentDAO {
 	@Override
 	public int withdrawApplication(int studentId, int jobId) {
 		Connection c = DatabaseConnection.getConnection();
-		System.out.println("connection applyForJob " + c);
-		String sql = "";
 		try {
 			callableStatement = con.prepareCall("{call withdrawApplication(" + studentId + "," + jobId + ")}");
 			boolean results = callableStatement.execute();
 			if (results)
+				return 1;
+			else
+				return 0;
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return 0;
+		}
+	}
+
+	@Override
+	public int alreadyApplied(int studentId, int jobId) {
+		Connection c = DatabaseConnection.getConnection();
+		try {
+			callableStatement = con.prepareCall("{call alreadyApplied(" + studentId + "," + jobId + ")}");
+			boolean results = callableStatement.execute();
+			ResultSet rs = callableStatement.getResultSet();
+			rs.next();
+			int count =rs.getInt(1);
+			rs.close();
+			if (count>0)
 				return 1;
 			else
 				return 0;

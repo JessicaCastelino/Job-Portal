@@ -23,6 +23,17 @@
 	integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
 	crossorigin="anonymous"></script>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<script type="text/javascript">
+    function applyFilter() {
+        var location = document.getElementById("locationFilter");
+        var term = document.getElementById("coopTermFilter");
+        if (location.value == "" && term.value== "") {
+            alert("Please select an option!");
+            return false;
+        }
+        return true;
+    }
+</script>
 </head>
 <body>
 	<div>
@@ -55,6 +66,36 @@
 				aria-labelledby="home-tab">
 				<div>
 					<br />
+					<form action = "/filter" modelAttribute="filter" method = "GET" onSubmit="return applyFilter();">
+					<table border="1" class="table table-hover">
+						<tr class="table-info">
+						<th>Filters</th>
+						<td> 
+						<select id="locationFilter" name="location">
+							<option selected value=""><c:out value="-Select Location-"/></option>
+    							<c:forEach items="${jobs}" var="job">
+      								<option value="${job.location}">${job.location}</option>
+    							</c:forEach>
+						</select>
+						</td>
+						<td>
+						<select id="coopTermFilter" name="jobType">
+							<option selected value=""><c:out value="-Select Co-op Term-"/></option>
+    							<c:forEach items="${jobs}" var="job">
+      								<option value="${job.jobType}">${job.jobType}</option>
+    							</c:forEach>
+						</select>
+						</td>
+						<td>
+						<button class="btn btn-info btn-block my-4" type="submit">Apply filter</button>
+						<!-- <a class="btn btn-info" href="javascript:"></a> -->
+						</td>
+						</tr>
+					</table>
+					</form>
+					
+					
+					<br />
 					<table border="1" class="table table-hover">
 						<tr class="table-info">
 							<th>Job ID</th>
@@ -83,7 +124,7 @@
 									<div class="form-input">
 										<button class="btn btn-info btn-block my-4" type="submit"
 											value="${job.id}"
-											onclick="window.open('/applyJob','Apply for job', 'width=500,height=500')">Apply</button>
+											onclick="window.open('/applyJob?jobId=${job.id}','Apply for job', 'width=500,height=500')">Apply</button>
 									</div>
 								</td>
 							</tr>

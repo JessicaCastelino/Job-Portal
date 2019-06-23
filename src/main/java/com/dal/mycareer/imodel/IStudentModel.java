@@ -11,8 +11,11 @@ public interface IStudentModel {
 
 	public Model viewJobs(Model model, int jobId, HttpServletRequest request);
 
-	public Model applyJob(Model model, MultipartFile file, HttpServletRequest request);
+	public Model applyJob(Model model, MultipartFile file, HttpServletRequest request, int jobId);
 
 	public Model withdrawApplication(Model model, int jobId, HttpServletRequest request);
 
+	public Model filterJobs(Model model, HttpServletRequest request, String location, String jobType);
+	
+	public Model jobApplicationExists(Model model, HttpServletRequest request, int jobId);
 }
