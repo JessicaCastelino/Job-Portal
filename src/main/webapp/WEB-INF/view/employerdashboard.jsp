@@ -249,7 +249,7 @@ function saveJob()
 	        var colViewApplicants = row.insertCell(9);
 	        colId.innerText = job.id;
 	        colJobId.innerText = job.id;
-	        colJobTitle.innerHTML = '<a href="' + window.location.origin + '/applicants?jobId=' + job.id + '" onclick="viewJob(this)">' + job.jobTitle + '</a>';
+          colJobTitle.innerHTML = '<a href="' + window.location.origin + '/viewPostedJob?jobId=' + job.id + '"">' + job.jobTitle + '</a>';
 	        colJobType.innerText  = job.jobType;
             colOrg.innerText = job.organization;
             colLocation.innerText = job.location;

@@ -10,4 +10,6 @@ public interface IEmployerJobsModel {
 	public JobDetails InsertJobDetails(JobDetails postedJobDetails );
 	public boolean updateJobStatus(int jobRecordId);
 	public List<Job> getClosedJobs(int jobRecordId);
+	public JobDetails viewPostedJobDetails (int jobId);
+	public boolean updateJobDetails(JobDetails updatedJobDetails);
 }
