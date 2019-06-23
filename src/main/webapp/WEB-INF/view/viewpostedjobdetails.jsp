@@ -83,7 +83,7 @@ function editDetails()
 		<label class="col-sm-2">Open Positions</label>
 		<label id="numOfOpenPosition" class="col-sm-3">${jobDetails.hourPerWeek}</label>
 		<label class="col-sm-2">Job Type</label> 
-		<label id="lblJobType" class="col-sm-3" >${jobDetails.location}</label>
+		<label id="lblJobType" class="col-sm-3" >${jobDetails.jobType}</label>
 	</div>
 	<br>
 	<div>
@@ -95,7 +95,7 @@ function editDetails()
 	<div>
 		<br>
 		<label class="col-sm-2">Application deadline</label> 
-		<label id="applicationDeadline" class="col-sm-3">Hi</label> 
+		<label id="applicationDeadline" class="col-sm-3">${jobDetails.applicationDeadline}</label> 
 		<label class="col-sm-2">Job Description</label>
 		<label row=3 id="txtJobDesc" class="col-sm-3" >${jobDetails.jobDescription} </label>
 	</div>

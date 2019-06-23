@@ -5,6 +5,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -34,7 +35,7 @@ public class EmployerJobsDAO implements IEmployerJobsDAO {
 		try
 		{
 		 con  = DatabaseConnection.getConnection();
-		 callStatement = con.prepareCall("{call sp_insertjobdetails(?,?,?,?,?,?,?,?)}"); 
+		 callStatement = con.prepareCall("{call sp_insertjobdetails(?,?,?,?,?,?,?,?,?)}"); 
 		 callStatement.setString("jobTitle", postedJobDetails.getJobTitle());
 		 callStatement.setString("jobLocation", postedJobDetails.getLocation());
 		 callStatement.setString("jobType", postedJobDetails.getJobType());	
@@ -42,7 +43,8 @@ public class EmployerJobsDAO implements IEmployerJobsDAO {
 		 callStatement.setString("rateOfPay", Integer.toString(postedJobDetails.rateOfPay));
 		 callStatement.setString("hourPerWeek", Integer.toString(postedJobDetails.hourPerWeek));
 		 callStatement.setString("jobDescription", postedJobDetails.jobDescription);
-		 callStatement.registerOutParameter(8, java.sql.Types.INTEGER);
+		 callStatement.setDate("applicationDeadline", postedJobDetails.getApplicationDeadline());
+		 callStatement.registerOutParameter(9, java.sql.Types.INTEGER);
 		 int rowsAffected = callStatement.executeUpdate();
 		 if (rowsAffected > 0)
 		 {
@@ -95,6 +97,7 @@ public class EmployerJobsDAO implements IEmployerJobsDAO {
 		CallableStatement callStatement = null;
 		Connection con= null;
 		JobDetails jobDetails=null;
+		List <Integer> lstCourseList = new ArrayList<Integer>();
 		try
 		{
 			jobDetails = new JobDetails();
@@ -113,6 +116,13 @@ public class EmployerJobsDAO implements IEmployerJobsDAO {
 			jobDetails.setHourPerWeek(result.getInt("hoursPerWeek"));
 			jobDetails.setApplicationDeadline(result.getDate("applicationDeadline"));
 			jobDetails.setJobDescription(result.getString("jobDescription"));
+			String preRequisiteCourses = result.getString("prerequisitecourses");
+			String[] courseArray = preRequisiteCourses.trim().split(",");			
+			for (String course : courseArray)
+			{
+				lstCourseList.add(Integer.parseInt(course.trim()));	
+			}
+			jobDetails.setSelectedCourseIds(lstCourseList);
 			}
 		}
 		catch(Exception ex)
@@ -171,7 +181,7 @@ public class EmployerJobsDAO implements IEmployerJobsDAO {
 		try
 		{
 			con = DatabaseConnection.getConnection();
-			callStatement = con.prepareCall("{CALL updatejobdetails (?,?,?,?,?,?,?,?)}");
+			callStatement = con.prepareCall("{CALL updatejobdetails (?,?,?,?,?,?,?,?,?)}");
 			callStatement.setString("jobId", Integer.toString(updatedJobDetails.getId()));
 			callStatement.setString("jobTitle", updatedJobDetails.getJobTitle());
 			callStatement.setString("location", updatedJobDetails.getLocation());
@@ -179,6 +189,7 @@ public class EmployerJobsDAO implements IEmployerJobsDAO {
 			callStatement.setString("noOfPosition", Integer.toString(updatedJobDetails.noOfPosition));
 			callStatement.setString("rateOfPay", Integer.toString(updatedJobDetails.rateOfPay));
 			callStatement.setString("hourPerWeek", Integer.toString(updatedJobDetails.hourPerWeek));
+			callStatement.setDate("applicationDeadline", (updatedJobDetails.getApplicationDeadline()));
 			callStatement.setString("jobDescription", updatedJobDetails.jobDescription);
 			int rowAffected = callStatement.executeUpdate();
 			
@@ -213,22 +224,15 @@ public class EmployerJobsDAO implements IEmployerJobsDAO {
 			callStatement.setString("courseIds",courses); 
 			callStatement.setString("jobRecordId", Integer.toString(jobId));
 			int rowAffected = callStatement.executeUpdate();
-		// for (int courseId : prerequisiteCourses) 
-		// {
-		// 	callStatement = con.prepareCall("{call insertjobRequirementRecord(?,?)}");
-		// 	callStatement.setString("jobRecordId", Integer.toString(jobId));
-		// 	callStatement.setString("preReqCourseId",Integer.toString(courseId)); 
-		// 	int rowAffected = callStatement.executeUpdate();
-		// 	if (rowAffected > 0)
-		// 	{
-		// 		isQuerySuccess= true;
-		// 	}
-		// 	else
-		//  	{
-		// 		isQuerySuccess= false;
-		// 	LOGGER.error( "Error Occurred in InsertJobDetails while inserting record");
-		//  	}
-		//  } 
+			if (rowAffected > 0)
+			{
+				isQuerySuccess= true;
+			}
+			else
+		 	{
+				isQuerySuccess= false;
+				LOGGER.error( "Error Occurred in InsertJobDetails while inserting record");
+		 	}	 
 		 }
 		catch (Exception ex)
 		{
