@@ -49,7 +49,7 @@ public class EmployerJobsDAO implements IEmployerJobsDAO {
 		 int rowsAffected = callStatement.executeUpdate();
 		 if (rowsAffected > 0)
 		 {
-		 int jobId = callStatement.getInt(8);
+		 int jobId = callStatement.getInt(10);
 		 insertJobRequirement(jobId,postedJobDetails.getSelectedCourseIds());
 		 }
 		 else
