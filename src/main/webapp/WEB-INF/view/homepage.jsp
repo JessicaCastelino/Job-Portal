@@ -89,14 +89,14 @@
 				aria-labelledby="profile-tab">
 
 				<!-- Default form Sign Up -->
-				<form class="text-center border border-light p-5">
+				<form class="text-center border border-light p-5" action = "/employerSignup" method = "POST" modelAttribute = "esignup">
 
 					<p class="h4 mb-4">Sign Up</p>
 					<div class="form-field">
 						<div class="user-info">
 							<!-- Salutation -->
 							<div class="user-select">
-								<select class="form-control mb-4" id="salutation">
+								<select class="form-control mb-4" id="salutation" name="title">
 									<option>Mr.</option>
 									<option>Mrs.</option>
 									<option>Ms.</option>
@@ -105,12 +105,12 @@
 							<!-- First Name -->
 							<div class="user-select">
 								<input type="text" id="fname" class="form-control mb-4"
-									placeholder="First Name">
+									placeholder="First Name" name="firstname">
 							</div>
 							<!-- Last Name -->
 							<div class="user-select">
 								<input type="text" id="lname" class="form-control mb-4"
-									placeholder="Last Name">
+									placeholder="Last Name" name="lastname">
 							</div>
 
 						</div>
@@ -118,12 +118,12 @@
 						<!-- Email -->
 						<div class="form-input">
 							<input type="email" id="emp-email" class="form-control mb-4"
-								placeholder="E-mail">
+								placeholder="E-mail" name="email">
 						</div>
 
 						<!-- Company -->
 						<div class= "form-input">
-							<select class="form-control mb-4" id="company">
+							<select class="form-control mb-4" id="company" name="companyName">
 								<option>IBM</option>
 								<option>Deloitte</option>
 								<option>RBC</option>
@@ -132,14 +132,14 @@
 						<!-- Designation -->
 						<div class= "form-input">
 							<input type="text" id="fname" class="form-control mb-4"
-								placeholder="Designation">
+								placeholder="Designation" name="designation">
 						</div>
 
 						<!-- Address -->
-						<div class="form-input">
+						<!-- <div class="form-input">
 							<textarea id="address" class="form-control mb-4"
 								placeholder="Address"></textarea>
-						</div>
+						</div> -->
 
 						<!-- Sign up button -->
 						<div class="form-input">

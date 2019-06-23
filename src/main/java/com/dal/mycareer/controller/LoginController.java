@@ -33,7 +33,7 @@ public class LoginController {
 	public String Login(@Valid @ModelAttribute(USER_LOGIN) UserLogin ulogin, BindingResult result, Model model,
 			HttpServletRequest request) {
 
-		LOGGER.info("Routed to Homepage");
+		LOGGER.info("Login request -- Start");
 
 		if (result.hasErrors()) {
 
@@ -55,6 +55,8 @@ public class LoginController {
 				session.setAttribute("nextPage", model.asMap().get("nextPage").toString());
 			}
 			String page = model.asMap().get("nextPage").toString();
+			
+			LOGGER.info("Login request -- END");
 			return page;
 
 		}
