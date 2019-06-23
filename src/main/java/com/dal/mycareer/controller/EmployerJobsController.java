@@ -2,6 +2,8 @@ package com.dal.mycareer.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.dal.mycareer.DTO.Job;
 import com.dal.mycareer.DTO.JobDetails;
 import com.dal.mycareer.imodel.IEmployerJobsModel;
+import com.dal.mycareer.propertiesparser.PropertiesParser;
 
 @Controller
 public class EmployerJobsController
@@ -29,21 +32,23 @@ public class EmployerJobsController
 	public String activeJobs()
 	{
 		LOGGER.info("Redirect to employerdashboard.jsp");
-		return "employerdashboard";
+		return "employerHome";
 	}
 	
 	@ResponseBody
 	@RequestMapping(value="/activejobs", method=RequestMethod.GET, produces="application/json")
-	public List<Job> getActiveJobs() 
+	public List<Job> getActiveJobs(HttpServletRequest request) 
 	{
 		LOGGER.info("Inside getActiveJobs controller");
-		return employerJobs.getActiveJobs(1);
+		String currentUser = (String) request.getSession().getAttribute("sessionName");
+		return employerJobs.getActiveJobs(currentUser);
 	}
 	
 	@RequestMapping(value="/closedjobs", method=RequestMethod.GET, produces="application/json")
-	public String getClosedJobs(ModelMap model) {
+	public String getClosedJobs(ModelMap model, HttpServletRequest request) {
 		LOGGER.info("Inside getClosedJobs");
-		model.addAttribute("closedJobs", employerJobs.getClosedJobs(1));
+		String currentUser = (String) request.getSession().getAttribute("sessionName");
+		model.addAttribute("closedJobs", employerJobs.getClosedJobs(currentUser));
 		return "closedjobs";
 	}
 	
@@ -53,21 +58,16 @@ public class EmployerJobsController
 		
 		return "postjob";
 	}
+	
 	@ResponseBody
 	@RequestMapping( value="/saveJob", method=RequestMethod.POST)
-	public JobDetails saveJob(@RequestBody JobDetails postedjobDetails ) 
+	public JobDetails saveJob(@RequestBody JobDetails postedjobDetails, HttpServletRequest request ) 
 	{
 		
-		return employerJobs.InsertJobDetails(postedjobDetails);
+		String currentUser = (String) request.getSession().getAttribute("sessionName");
+		return employerJobs.InsertJobDetails(postedjobDetails, currentUser);
 	}
 
-	@ResponseBody
-	@RequestMapping( value="/closeJob", method=RequestMethod.PUT)
-	public boolean closeJob(@RequestParam(name = "id") int jobRecordId )
-	 {
-		
-		return employerJobs.updateJobStatus(jobRecordId);
-	}
 	@RequestMapping("/viewPostedJob")
 	public String viewPostedJob(ModelMap model, @RequestParam(name ="jobId") int jobId) 
 	{
@@ -81,6 +81,7 @@ public class EmployerJobsController
 	{
 		LOGGER.info("Redirect to editPostedJob.jsp");		
 		model.addAttribute("jobDetails", employerJobs.viewPostedJobDetails(jobId));
+		model.addAttribute("jobTypes", PropertiesParser.getPropertyMap().get("jobTypes").toString().split(","));		
 		return "editpostedjobdetails";
 	}
 	@ResponseBody

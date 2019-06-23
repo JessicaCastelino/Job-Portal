@@ -1,3 +1,4 @@
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 
@@ -13,7 +14,14 @@
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
 		integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
 		crossorigin="anonymous"></script>
+		<link rel="stylesheet"
+	href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+		<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 	<script>
+		 $( function() {
+    $( "#applicationDeadline" ).datepicker({dateFormat: 'yy-mm-dd'});
+  } );
 		$('document').ready(function () {
 
 			var url = window.location.origin + "/getPrerequisiteCourses";
@@ -31,6 +39,7 @@
 		})
 		function createDynamicCheckbox(courseList) {
 			document.getElementById('courseRequired').innerHTML = "";
+			var selCourses = document.getElementById('hdnSelectedCourses').value;
 			courseList.forEach(course => {
 				var innerDiv = document.createElement("div");
 				innerDiv.className = "coursesCheckbox";
@@ -40,6 +49,7 @@
 				coursecb.type = "checkbox";
 				//coursecb.id= "coursecb";
 				coursecb.value = course.courseId;
+				coursecb.checked = selCourses.indexOf(course.courseId) >= 0;
 				document.getElementById("courseRequired").appendChild(innerDiv);
 				innerDiv.appendChild(coursecb);
 				innerDiv.appendChild(document.createTextNode(course.CourseName));
@@ -55,10 +65,10 @@
 			var jobType = $('#selJobType').val();
 			var rateOfPay = $('#txtRateofPay').val();
 			var hourPerWeek = $('#txtHoursperweek').val();
-			//var  applicationDeadline = $('#applicationDeadline').val();
+			var  applicationDeadline = $('#applicationDeadline').val();
 			var jobDescription = $('#txtJobDesc').val();
 			var selectedCourseIds = fetchSelectedCourses();
-			var data = { id: jobId, jobTitle: jobTitle, location: location, noOfPosition: noOfPosition, jobType: jobType, rateOfPay: rateOfPay, hourPerWeek: hourPerWeek, jobDescription: jobDescription,selectedCourseIds:selectedCourseIds }
+			var data = { id: jobId, jobTitle: jobTitle, location: location, noOfPosition: noOfPosition, jobType: jobType, rateOfPay: rateOfPay, hourPerWeek: hourPerWeek, jobDescription: jobDescription,selectedCourseIds:selectedCourseIds, applicationDeadline:applicationDeadline }
 			var url = window.location.origin + "/updateJobDetails";
 			fetch(url, {
 				method: 'PUT',
@@ -67,7 +77,10 @@
 					'Content-Type': 'application/json'
 				}
 			}).then(res => res.json())
-				.then(response => console.log('Success:', JSON.stringify(response)))
+				.then(response => { console.log('Success:', JSON.stringify(response));
+				window.location.href= window.location.origin + "/viewPostedJob?jobId=" + jobId
+				})
+
 				.catch(error => console.error('Error:', error));
 		}
 		function fetchSelectedCourses() 
@@ -101,6 +114,7 @@
 <div>
 	<br>
 	<input type="hidden" id="hdnJobId" value="${jobDetails.id}" />
+	<input type="hidden" id="hdnSelectedCourses" value="${jobDetails.selectedCourseIds}">
 	<br>
 	<br>
 	<div>
@@ -114,9 +128,11 @@
 		<label class="col-sm-3">Open Positions</label>
 		<input type="number" id="numOfOpenPosition" value="${jobDetails.hourPerWeek}" />
 		<label class="col-sm-3">Job Type</label>
-		<select id="selJobType">
-			<option value="coop4months">4 months Co-op</option>
-			<option value="coop8months">8 months Co-op</option>
+		<select name="jobType" id="selJobType">
+			<c:forEach var="jobType" items="${jobTypes}">
+				<option value="${jobType}" ${jobType==jobDetails.jobType ? 'selected' : '' }>
+					${jobType}</option>
+			</c:forEach>
 		</select>
 	</div>
 	<br>
@@ -129,7 +145,7 @@
 	<div>
 		<br>
 		<label class="col-sm-3">Application deadline</label>
-		<input type="text" id="applicationDeadline" />
+		<input type="text" id="applicationDeadline" value="${jobDetails.applicationDeadline}"/>
 		<label class="col-sm-3">Job Description</label>
 		<textarea row=3 id="txtJobDesc" value="${jobDetails.jobDescription}">${jobDetails.jobDescription} </textarea>
 	</div>

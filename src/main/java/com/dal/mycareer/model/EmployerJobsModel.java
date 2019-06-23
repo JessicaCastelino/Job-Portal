@@ -16,25 +16,19 @@ public class EmployerJobsModel implements IEmployerJobsModel
 	@Autowired
 	IEmployerJobsDAO employerJobsDAO;
 	
-	public List<Job> getActiveJobs(int employerId) 
+	public List<Job> getActiveJobs(String username) 
 	{
-		return employerJobsDAO.getActiveJobs(employerId);
+		return employerJobsDAO.getActiveJobs(username);
 	}
 	@Override
-	public JobDetails InsertJobDetails(JobDetails postedJobDetails) 
+	public JobDetails InsertJobDetails(JobDetails postedJobDetails,String currentUser) 
 	{
-		return employerJobsDAO.InsertJobDetails(postedJobDetails);
-	}
-
-	@Override
-	public boolean updateJobStatus(int jobRecordId) 
-	{
-		return employerJobsDAO.updateJobStatus(jobRecordId);
+		return employerJobsDAO.InsertJobDetails(postedJobDetails, currentUser);
 	}
 
 	@Override
-	public List<Job> getClosedJobs(int employerId) {
-		return employerJobsDAO.getClosedJobs(employerId);
+	public List<Job> getClosedJobs(String username) {
+		return employerJobsDAO.getClosedJobs(username);
 	}
 	
 	@Override
