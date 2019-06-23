@@ -13,7 +13,14 @@
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
 		integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
 		crossorigin="anonymous"></script>
+		<link rel="stylesheet"
+	href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+		<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 	<script>
+		 $( function() {
+    $( "#applicationDeadline" ).datepicker({dateFormat: 'yy-mm-dd'});
+  } );
 		$('document').ready(function () {
 
 			var url = window.location.origin + "/getPrerequisiteCourses";
@@ -55,10 +62,10 @@
 			var jobType = $('#selJobType').val();
 			var rateOfPay = $('#txtRateofPay').val();
 			var hourPerWeek = $('#txtHoursperweek').val();
-			//var  applicationDeadline = $('#applicationDeadline').val();
+			var  applicationDeadline = $('#applicationDeadline').val();
 			var jobDescription = $('#txtJobDesc').val();
 			var selectedCourseIds = fetchSelectedCourses();
-			var data = { id: jobId, jobTitle: jobTitle, location: location, noOfPosition: noOfPosition, jobType: jobType, rateOfPay: rateOfPay, hourPerWeek: hourPerWeek, jobDescription: jobDescription,selectedCourseIds:selectedCourseIds }
+			var data = { id: jobId, jobTitle: jobTitle, location: location, noOfPosition: noOfPosition, jobType: jobType, rateOfPay: rateOfPay, hourPerWeek: hourPerWeek, jobDescription: jobDescription,selectedCourseIds:selectedCourseIds, applicationDeadline:applicationDeadline }
 			var url = window.location.origin + "/updateJobDetails";
 			fetch(url, {
 				method: 'PUT',
@@ -129,7 +136,7 @@
 	<div>
 		<br>
 		<label class="col-sm-3">Application deadline</label>
-		<input type="text" id="applicationDeadline" />
+		<input type="text" id="applicationDeadline" value="${jobDetails.applicationDeadline}"/>
 		<label class="col-sm-3">Job Description</label>
 		<textarea row=3 id="txtJobDesc" value="${jobDetails.jobDescription}">${jobDetails.jobDescription} </textarea>
 	</div>
