@@ -125,7 +125,7 @@ table th, table td {
 					</div>
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-default" onclick="saveJob()">Submit</button>
+					<button type="button" class="btn btn-default" onclick="saveJob()" data-dismiss="modal">Submit</button>
 				</div>
 			</div>
 		</div>
@@ -224,7 +224,6 @@ function saveJob()
 		}).then(res => res.json())
 		.then(response => console.log('Success:', JSON.stringify(response)))
 		.catch(error => console.error('Error:', error));
-		$('#modalpopup').modal('toggle');
 }
 // Add job code ends
 	  const http = new XMLHttpRequest();
