@@ -23,8 +23,8 @@ public class EmployerJobsDAO implements IEmployerJobsDAO {
 	private final Logger LOGGER = LoggerFactory.getLogger(this.getClass());
 	
 	@Override
-	public List<Job> getActiveJobs(int employerId) {
-		return fetchJobByStatus(employerId, true);
+	public List<Job> getActiveJobs(String username) {
+		return fetchJobByStatus(username, true);
 	}
 	
 	@Override
@@ -64,34 +64,6 @@ public class EmployerJobsDAO implements IEmployerJobsDAO {
 		return postedJobDetails;
 	}
 
-	@Override
-	public boolean updateJobStatus(int jobRecordId) 
-	{
-		boolean isUpdateSuccess = false;
-		CallableStatement callStatement = null;
-		Connection con= null;
-		try
-		{
-		 con  = DatabaseConnection.getConnection();
-		 callStatement = con.prepareCall("{call sp_closeactivejob(?)}"); 
-		 callStatement.setInt("jobRecordId", jobRecordId);
-		 int rowsAffected = callStatement.executeUpdate();
-		 if(rowsAffected > 0)
-		 {
-			isUpdateSuccess = true;
-		 }
-		 else
-		 {
-			 isUpdateSuccess = false;
-		 }
-		}
-		catch(Exception ex)
-		{
-			LOGGER.error( "Error Occurred in updateJobStatus :" + ex.getMessage());
-		}
-		
-		return isUpdateSuccess;
-	}
 	public JobDetails viewPostedJobDetails(int jobId)
 	{
 		CallableStatement callStatement = null;
@@ -133,11 +105,11 @@ public class EmployerJobsDAO implements IEmployerJobsDAO {
 	}
 
 	@Override
-	public List<Job> getClosedJobs(int employerId) {
-		return fetchJobByStatus(employerId, false);		
+	public List<Job> getClosedJobs(String username) {
+		return fetchJobByStatus(username, false);		
 	}
 
-	List<Job> fetchJobByStatus(int employerId, boolean isActive) {
+	List<Job> fetchJobByStatus(String username, boolean isActive) {
 		List<Job> jobs = null;
 		Connection conn = null;
 		String procedureName = "";
@@ -152,7 +124,7 @@ public class EmployerJobsDAO implements IEmployerJobsDAO {
 		try {
 			conn = DatabaseConnection.getConnection();
 			CallableStatement statement = conn.prepareCall("{CALL " + procedureName +"(?)}");
-			statement.setInt("employerid", employerId);
+			statement.setString("employerUserName", username);
 			ResultSet result = statement.executeQuery();
 			Job job;
 			jobs = new ArrayList<>();
@@ -168,12 +140,13 @@ public class EmployerJobsDAO implements IEmployerJobsDAO {
 				jobs.add(job);
 			}
 		} catch (SQLException e) {
-			LOGGER.error("Exception occurred at EmployerJobsDAO:getActiveJobs " + e.getMessage());
+			LOGGER.error("Exception occurred at EmployerJobsDAO:fetchJobByStatus " + e.getMessage());
 			e.printStackTrace();
 		}
 		return jobs;
 	}
-		@Override
+
+	@Override
 	public boolean updatejobDetails(JobDetails updatedJobDetails) {
 		boolean isJobDetailsUpdated = false;
 		CallableStatement callStatement = null;
