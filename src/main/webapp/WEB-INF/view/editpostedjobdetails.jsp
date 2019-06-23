@@ -131,7 +131,8 @@
 		<select name="jobType" id="selJobType">
 			<c:forEach var="jobType" items="${jobTypes}">
 				<option value="${jobType}" ${jobType==jobDetails.jobType ? 'selected' : '' }>
-					${jobType}</option>
+					${jobType}
+				</option>
 			</c:forEach>
 		</select>
 	</div>
