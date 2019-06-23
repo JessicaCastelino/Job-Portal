@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,7 +26,9 @@ public class EmployerJobsDAO implements IEmployerJobsDAO {
 		return fetchJobByStatus(employerId, true);
 	}
 	
-	public JobDetails InsertJobDetails(JobDetails postedJobDetails) {
+	@Override
+	public JobDetails InsertJobDetails(JobDetails postedJobDetails) 
+	{
 		CallableStatement callStatement = null;
 		Connection con= null;
 		try
@@ -40,14 +43,16 @@ public class EmployerJobsDAO implements IEmployerJobsDAO {
 		 callStatement.setString("hourPerWeek", Integer.toString(postedJobDetails.hourPerWeek));
 		 callStatement.setString("jobDescription", postedJobDetails.jobDescription);
 		 callStatement.registerOutParameter(8, java.sql.Types.INTEGER);
-		 callStatement.executeUpdate();
+		 int rowsAffected = callStatement.executeUpdate();
+		 if (rowsAffected > 0)
+		 {
 		 int jobId = callStatement.getInt(8);
-		 for (int courseId : postedJobDetails.getSelectedCourseIds()) {
-			callStatement = con.prepareCall("{call sp_insertjobrequirement(?,?)}");
-			callStatement.setString("jobId", Integer.toString(jobId));
-			callStatement.setString("courseId",Integer.toString(courseId)); 
-			callStatement.executeUpdate();
-		 } 
+		 insertJobRequirement(jobId,postedJobDetails.getSelectedCourseIds());
+		 }
+		 else
+		 {
+			LOGGER.error( "Error Occurred in InsertJobDetails while inserting record");
+		 }
 		}
 		catch(Exception ex)
 		{
@@ -80,10 +85,41 @@ public class EmployerJobsDAO implements IEmployerJobsDAO {
 		}
 		catch(Exception ex)
 		{
-			LOGGER.error( "Error Occurred in InsertJobDetails :" + ex.getMessage());
+			LOGGER.error( "Error Occurred in updateJobStatus :" + ex.getMessage());
 		}
 		
 		return isUpdateSuccess;
+	}
+	public JobDetails viewPostedJobDetails(int jobId)
+	{
+		CallableStatement callStatement = null;
+		Connection con= null;
+		JobDetails jobDetails=null;
+		try
+		{
+			jobDetails = new JobDetails();
+			con  = DatabaseConnection.getConnection();
+			callStatement = con.prepareCall("{CALL getPostedJobDetails(?)}");
+			callStatement.setInt("jobId", jobId);
+			ResultSet result = callStatement.executeQuery();
+			while(result.next())
+			{
+			jobDetails.setId(result.getInt("id"));
+			jobDetails.setJobTitle(result.getString("jobTitle"));
+			jobDetails.setLocation(result.getString("location"));
+			jobDetails.setNoOfPosition(result.getInt("openPosition"));
+			jobDetails.setJobType(result.getString("jobType"));
+			jobDetails.setRateOfPay(result.getInt("rateofPay"));
+			jobDetails.setHourPerWeek(result.getInt("hoursPerWeek"));
+			jobDetails.setApplicationDeadline(result.getDate("applicationDeadline"));
+			jobDetails.setJobDescription(result.getString("jobDescription"));
+			}
+		}
+		catch(Exception ex)
+		{
+			LOGGER.error( "Error Occurred in viewPostedJob :" + ex.getMessage());
+		}
+		return jobDetails;
 	}
 
 	@Override
@@ -126,5 +162,78 @@ public class EmployerJobsDAO implements IEmployerJobsDAO {
 			e.printStackTrace();
 		}
 		return jobs;
+	}
+		@Override
+	public boolean updatejobDetails(JobDetails updatedJobDetails) {
+		boolean isJobDetailsUpdated = false;
+		CallableStatement callStatement = null;
+		Connection con= null;
+		try
+		{
+			con = DatabaseConnection.getConnection();
+			callStatement = con.prepareCall("{CALL updatejobdetails (?,?,?,?,?,?,?,?)}");
+			callStatement.setString("jobId", Integer.toString(updatedJobDetails.getId()));
+			callStatement.setString("jobTitle", updatedJobDetails.getJobTitle());
+			callStatement.setString("location", updatedJobDetails.getLocation());
+			callStatement.setString("jobType", updatedJobDetails.getJobType());	
+			callStatement.setString("noOfPosition", Integer.toString(updatedJobDetails.noOfPosition));
+			callStatement.setString("rateOfPay", Integer.toString(updatedJobDetails.rateOfPay));
+			callStatement.setString("hourPerWeek", Integer.toString(updatedJobDetails.hourPerWeek));
+			callStatement.setString("jobDescription", updatedJobDetails.jobDescription);
+			int rowAffected = callStatement.executeUpdate();
+			
+			if (rowAffected > 0)
+			{
+				isJobDetailsUpdated = insertJobRequirement(updatedJobDetails.getId(),updatedJobDetails.getSelectedCourseIds());
+			}
+			else
+		 	{
+				isJobDetailsUpdated = false;
+			LOGGER.error( "Error Occurred in updatejobDetails while updating record");
+		 	}
+		}
+		catch(Exception ex)
+		{
+			LOGGER.error( "Error Occurred in updatejobDetails :" + ex.getMessage());
+		}
+		return isJobDetailsUpdated;
+	}
+	public boolean insertJobRequirement(int jobId, List <Integer> prerequisiteCourses)
+	{
+		boolean isQuerySuccess = false;
+		CallableStatement callStatement = null;
+		Connection con= null;
+		try
+		{
+			con = DatabaseConnection.getConnection();
+			String courses = prerequisiteCourses.stream().map(n-> n.toString())
+			.collect(Collectors.joining(","));
+			System.out.println(courses);
+			callStatement = con.prepareCall("{call insertjobRequirementRecord(?,?)}");
+			callStatement.setString("courseIds",courses); 
+			callStatement.setString("jobRecordId", Integer.toString(jobId));
+			int rowAffected = callStatement.executeUpdate();
+		// for (int courseId : prerequisiteCourses) 
+		// {
+		// 	callStatement = con.prepareCall("{call insertjobRequirementRecord(?,?)}");
+		// 	callStatement.setString("jobRecordId", Integer.toString(jobId));
+		// 	callStatement.setString("preReqCourseId",Integer.toString(courseId)); 
+		// 	int rowAffected = callStatement.executeUpdate();
+		// 	if (rowAffected > 0)
+		// 	{
+		// 		isQuerySuccess= true;
+		// 	}
+		// 	else
+		//  	{
+		// 		isQuerySuccess= false;
+		// 	LOGGER.error( "Error Occurred in InsertJobDetails while inserting record");
+		//  	}
+		//  } 
+		 }
+		catch (Exception ex)
+		{
+			LOGGER.error( "Error Occurred in insertJobRequirement :" + ex.getMessage());
+		}
+		return isQuerySuccess;
 	}
 }

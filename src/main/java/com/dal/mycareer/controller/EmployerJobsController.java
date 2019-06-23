@@ -18,22 +18,25 @@ import com.dal.mycareer.DTO.JobDetails;
 import com.dal.mycareer.imodel.IEmployerJobsModel;
 
 @Controller
-public class EmployerJobsController {
+public class EmployerJobsController
+ {
 	@Autowired
 	IEmployerJobsModel employerJobs;
 	
 	private final Logger LOGGER = LoggerFactory.getLogger(this.getClass());
 	
 	@RequestMapping("/employerdashboard")
-	public String activeJobs() {
+	public String activeJobs()
+	{
 		LOGGER.info("Redirect to employerdashboard.jsp");
 		return "employerdashboard";
 	}
 	
 	@ResponseBody
 	@RequestMapping(value="/activejobs", method=RequestMethod.GET, produces="application/json")
-	public List<Job> getActiveJobs() {
-		LOGGER.info("Inside getActiveJobs");
+	public List<Job> getActiveJobs() 
+	{
+		LOGGER.info("Inside getActiveJobs controller");
 		return employerJobs.getActiveJobs(1);
 	}
 	
@@ -45,21 +48,47 @@ public class EmployerJobsController {
 	}
 	
 	@RequestMapping( value="/postjob", method=RequestMethod.GET)
-	public String postJob() {
+	public String postJob() 
+	{
 		
 		return "postjob";
 	}
 	@ResponseBody
 	@RequestMapping( value="/saveJob", method=RequestMethod.POST)
-	public JobDetails saveJob(@RequestBody JobDetails postedjobDetails ) {
+	public JobDetails saveJob(@RequestBody JobDetails postedjobDetails ) 
+	{
 		
 		return employerJobs.InsertJobDetails(postedjobDetails);
 	}
 
 	@ResponseBody
 	@RequestMapping( value="/closeJob", method=RequestMethod.PUT)
-	public boolean closeJob(@RequestParam(name = "id") int jobRecordId ) {
+	public boolean closeJob(@RequestParam(name = "id") int jobRecordId )
+	 {
 		
 		return employerJobs.updateJobStatus(jobRecordId);
 	}
+	@RequestMapping("/viewPostedJob")
+	public String viewPostedJob(ModelMap model, @RequestParam(name ="jobId") int jobId) 
+	{
+		LOGGER.info("Redirect to viewPostedJob.jsp");
+		
+		model.addAttribute("jobDetails", employerJobs.viewPostedJobDetails(jobId));
+		return "viewpostedjobdetails";
+	}
+	@RequestMapping("/editPostedJob")
+	public String editPostedJob(ModelMap model, @RequestParam(name ="jobId") int jobId) 
+	{
+		LOGGER.info("Redirect to editPostedJob.jsp");		
+		model.addAttribute("jobDetails", employerJobs.viewPostedJobDetails(jobId));
+		return "editpostedjobdetails";
+	}
+	@ResponseBody
+	@RequestMapping(value ="/updateJobDetails", method=RequestMethod.PUT)
+	public boolean updateJobDetails(@RequestBody JobDetails updatedJobDetails)
+	{
+		return employerJobs.updateJobDetails(updatedJobDetails) ;
+	}
+
+	
 }

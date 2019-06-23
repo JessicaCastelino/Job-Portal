@@ -15,75 +15,93 @@ String requiredCourses;
 List<Integer> selectedCourseIds;
 int employeeId; 
 
-	public int getId() {
+	public int getId() 
+	{
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(int id)
+	 {
 		this.id = id;
 	}
 
-	public String getJobTitle() {
+	public String getJobTitle()
+	{
 		return jobTitle;
 	}
 
-	public void setJobTitle(String jobTitle) {
+	public void setJobTitle(String jobTitle) 
+	{
 		this.jobTitle = jobTitle;
 	}
 
-	public String getLocation() {
+	public String getLocation() 
+	{
 		return location;
 	}
 
-	public void setLocation(String location) {
+	public void setLocation(String location) 
+	{
 		this.location = location;
 	}
 
-	public String getJobType() {
+	public String getJobType() 
+	{
 		return jobType;
 	}
 
-	public void setJobType(String jobType) {
+	public void setJobType(String jobType) 
+	{
 		this.jobType = jobType;
 	}
 
-	public Date getApplicationDeadline() {
+	public Date getApplicationDeadline() 
+	{
 		return applicationDeadline;
 	}
 
-	public void setApplicationDeadline(Date applicationDeadline) {
+	public void setApplicationDeadline(Date applicationDeadline) 
+	{
 		this.applicationDeadline = applicationDeadline;
 	}
 
-	public String getOrganization() {
+	public String getOrganization() 
+	{
 		return organization;
 	}
 
-	public void setOrganization(String organization) {
+	public void setOrganization(String organization) 
+	{
 		this.organization = organization;
 	}
 
-	public List<Integer> getSelectedCourseIds() {
+	public List<Integer> getSelectedCourseIds() 
+	{
 		return selectedCourseIds;
 	}
 
-	public void setSelectedCourseIds(List<Integer> selectedCourseIds) {
+	public void setSelectedCourseIds(List<Integer> selectedCourseIds) 
+	{
 		this.selectedCourseIds = selectedCourseIds;
 	}
 
-	public int getEmployeeId() {
+	public int getEmployeeId() 
+	{
 		return employeeId;
 	}
 
-	public void setEmployeeId(int employeeId) {
+	public void setEmployeeId(int employeeId) 
+	{
 		this.employeeId = employeeId;
 	}
 
-	public String getRequiredCourses() {
+	public String getRequiredCourses() 
+	{
 		return requiredCourses;
 	}
 
-	public void setRequiredCourses(String requiredCourses) {
+	public void setRequiredCourses(String requiredCourses) 
+	{
 		this.requiredCourses = requiredCourses;
 	}
 }
