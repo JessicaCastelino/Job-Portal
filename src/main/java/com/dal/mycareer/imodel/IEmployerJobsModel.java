@@ -7,7 +7,7 @@ import com.dal.mycareer.DTO.JobDetails;
 
 public interface IEmployerJobsModel {
 	public List<Job> getActiveJobs(int employeeId);
-	public JobDetails InsertJobDetails(JobDetails postedJobDetails );
+	public JobDetails InsertJobDetails(JobDetails postedJobDetails,String currentUser );
 	public boolean updateJobStatus(int jobRecordId);
 	public List<Job> getClosedJobs(int jobRecordId);
 	public JobDetails viewPostedJobDetails (int jobId);

@@ -2,6 +2,8 @@ package com.dal.mycareer.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,10 +58,11 @@ public class EmployerJobsController
 	}
 	@ResponseBody
 	@RequestMapping( value="/saveJob", method=RequestMethod.POST)
-	public JobDetails saveJob(@RequestBody JobDetails postedjobDetails ) 
+	public JobDetails saveJob(@RequestBody JobDetails postedjobDetails, HttpServletRequest request ) 
 	{
 		
-		return employerJobs.InsertJobDetails(postedjobDetails);
+		String currentUser = (String) request.getSession().getAttribute("sessionName");
+		return employerJobs.InsertJobDetails(postedjobDetails, currentUser);
 	}
 
 	@ResponseBody
@@ -82,7 +85,7 @@ public class EmployerJobsController
 	{
 		LOGGER.info("Redirect to editPostedJob.jsp");		
 		model.addAttribute("jobDetails", employerJobs.viewPostedJobDetails(jobId));
-		model.addAttribute("jobtypes", PropertiesParser.getPropertyMap().get("JobTypes").toString().split(","));
+		model.addAttribute("jobTypes", PropertiesParser.getPropertyMap().get("jobTypes").toString().split(","));		
 		return "editpostedjobdetails";
 	}
 	@ResponseBody

@@ -21,9 +21,9 @@ public class EmployerJobsModel implements IEmployerJobsModel
 		return employerJobsDAO.getActiveJobs(employerId);
 	}
 	@Override
-	public JobDetails InsertJobDetails(JobDetails postedJobDetails) 
+	public JobDetails InsertJobDetails(JobDetails postedJobDetails,String currentUser) 
 	{
-		return employerJobsDAO.InsertJobDetails(postedJobDetails);
+		return employerJobsDAO.InsertJobDetails(postedJobDetails, currentUser);
 	}
 
 	@Override

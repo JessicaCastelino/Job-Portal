@@ -28,14 +28,14 @@ public class EmployerJobsDAO implements IEmployerJobsDAO {
 	}
 	
 	@Override
-	public JobDetails InsertJobDetails(JobDetails postedJobDetails) 
+	public JobDetails InsertJobDetails(JobDetails postedJobDetails,String currentUser) 
 	{
 		CallableStatement callStatement = null;
 		Connection con= null;
 		try
 		{
 		 con  = DatabaseConnection.getConnection();
-		 callStatement = con.prepareCall("{call sp_insertjobdetails(?,?,?,?,?,?,?,?,?)}"); 
+		 callStatement = con.prepareCall("{call sp_insertjobdetails(?,?,?,?,?,?,?,?,?,?)}"); 
 		 callStatement.setString("jobTitle", postedJobDetails.getJobTitle());
 		 callStatement.setString("jobLocation", postedJobDetails.getLocation());
 		 callStatement.setString("jobType", postedJobDetails.getJobType());	
@@ -43,8 +43,9 @@ public class EmployerJobsDAO implements IEmployerJobsDAO {
 		 callStatement.setString("rateOfPay", Integer.toString(postedJobDetails.rateOfPay));
 		 callStatement.setString("hourPerWeek", Integer.toString(postedJobDetails.hourPerWeek));
 		 callStatement.setString("jobDescription", postedJobDetails.jobDescription);
+		 callStatement.setString("emailId", currentUser);
 		 callStatement.setDate("applicationDeadline", postedJobDetails.getApplicationDeadline());
-		 callStatement.registerOutParameter(9, java.sql.Types.INTEGER);
+		 callStatement.registerOutParameter(10, java.sql.Types.INTEGER);
 		 int rowsAffected = callStatement.executeUpdate();
 		 if (rowsAffected > 0)
 		 {

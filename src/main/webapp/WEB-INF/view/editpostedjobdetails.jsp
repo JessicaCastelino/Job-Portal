@@ -1,3 +1,4 @@
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 
@@ -127,9 +128,11 @@
 		<label class="col-sm-3">Open Positions</label>
 		<input type="number" id="numOfOpenPosition" value="${jobDetails.hourPerWeek}" />
 		<label class="col-sm-3">Job Type</label>
-		<select id="selJobType">
-			<option value="coop4months">4 months Co-op</option>
-			<option value="coop8months">8 months Co-op</option>
+		<select name="jobType" id="selJobType">
+			<c:forEach var="jobType" items="${jobTypes}">
+				<option value="${jobType}" ${jobType==jobDetails.jobType ? 'selected' : '' }>
+					${jobType}</option>
+			</c:forEach>
 		</select>
 	</div>
 	<br>
