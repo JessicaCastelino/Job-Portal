@@ -18,11 +18,12 @@ import com.dal.mycareer.DAO.Impl.StudentDAO;
 import com.dal.mycareer.DAO.Interface.IStudentDAO;
 import com.dal.mycareer.DTO.AppliedJob;
 import com.dal.mycareer.DTO.Job;
+import com.dal.mycareer.DTO.JobDetails;
 import com.dal.mycareer.DTO.Student;
 import com.dal.mycareer.imodel.IStudentModel;
 
 public class StudentModel implements IStudentModel {
-	private static List<Job> jobs = new ArrayList<Job>();
+	private static List<JobDetails> jobs = new ArrayList<JobDetails>();
 	private static List<AppliedJob> appliedJobs = new ArrayList<AppliedJob>();
 	private static final String SESSION_NAME = "sessionName";
 	static Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());

@@ -1,10 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+	pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Active Jobs</title>
-    <link rel="stylesheet"
+<title>Active Jobs</title>
+<link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
 	integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
 	crossorigin="anonymous">
@@ -19,119 +19,136 @@
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
 	integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
 	crossorigin="anonymous"></script>
-	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-  
-	  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
- 
+<link rel="stylesheet"
+	href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
 <style>
 table {
-    border-collapse: collapse;
-    width: 100%;
-    border: 1px solid #ddd;
-  }
-  .tablehdr {
-    background-color: midnightblue;
-    color: white;
-  }
-  table th, table td {
-    text-align: left;
-    padding: 12px;
-  }
-  .closeJobBtn, .viewApplicantsBtn {
-  background-color: #009933;
-  border-color: #00802b;
-  border-radius: 7px;
-  height: 40px;
-  color: white;
-  width: 100px;
+	border-collapse: collapse;
+	width: 100%;
+	border: 1px solid #ddd;
 }
-.coursescheckbox
-  {
-	  margin-left: 26%;
-  }
-  .buttonmargin{
-    margin-top: 2%;
-  }
+
+.tablehdr {
+	background-color: midnightblue;
+	color: white;
+}
+
+table th, table td {
+	text-align: left;
+	padding: 12px;
+}
+
+.closeJobBtn, .viewApplicantsBtn {
+	background-color: #009933;
+	border-color: #00802b;
+	border-radius: 7px;
+	height: 60px;
+	color: white;
+	width: 100px;
+}
+
+.coursescheckbox {
+	margin-left: 26%;
+}
+
+.buttonmargin {
+	margin-top: 2%;
+}
 </style>
 </head>
 <body>
 
-    <button id="btnAddJob"  data-toggle="modal" data-target="#modalpopup" class ="buttonmargin" onclick="loadPrerequisiteCourse()">Add Job</button>
-    <div class="modal fade" id="modalpopup" role="dialog">
-    <div class="modal-dialog modal-lg">
-    <div class="modal-content">
-    <div class="modal-header">
-    <h4 class="modal-title">Create new Job</h4>
-    <button type="button" class="class" data-dismiss="modal">&times;</button>
-    
-    </div>
-    <div class="modal-body">
-    <div>
-    <label class="col-sm-3">Job Title</label>
-    <input type="text" id="txtjobtitle" />
-    <label class="col-sm-3">Location</label>
-    <input type="text" id="txtLocation"/>
-    </div>
-    <br>
-    <div>
-    <label class="col-sm-3">Open Positions</label>
-    <input type="number" id="numOfOpenPosition" />
-    <label class="col-sm-3">Job Type</label>
-    <select id="selJobType">
-    <option value="coop4months"> 4 months Co-op</option>
-    <option value="coop8months"> 8 months Co-op</option>
-    </select>
-    </div>
-    <br>
-    <div>
-    <label class="col-sm-3">Rate of pay</label>
-    <input type="text" id="txtRateofPay" />
-    <label class="col-sm-3">Hours per week</label>
-    <input type="text" id="txtHoursperweek" />
-    </div>
-    <div>
-    <br>
-    <label class="col-sm-3">Application deadline</label>
-    <input type="text" id="applicationDeadline" />
-    <label class="col-sm-3">Job Description</label>
-    <textarea row = 3 id="txtJobDesc"> </textarea>
-    </div>
-    <br>
-    <div>
-    <label class="col-sm-3">Courses Required</label>
-    <div id="courseRequired" class="coursescheckbox"></div>
-    </div>
-    </div>
-    <div class="modal-footer">
-    <button type="button" class="btn btn-default" onclick="saveJob()">Submit</button> 
-    </div>
-    </div>
-    </div>
-    </div>
-    <br>
-    <br>
-<table id="activeJobs">
-<thead>
-<tr class="tablehdr">
-    <th style="display:none;">ID</th>
-    <th>Job Id</th>
-    <th>Title</th>
-    <th>Job Type</th>
-    <th>Company</th>
-    <th>Location</th>
-    <th>Deadline</th>
-    <th>Prerequisite Courses</th>
-    <th style="width:75px"></th>
-    <th style="width:75px"></th>
-  </tr>
-</thead>
-<tbody>
+	<div>
+		<nav class="navbar navbar-inverse">
+			<div class="container-fluid">
+				<div class="navbar-header">
+					<a class="navbar-brand" href="/homepage">My Career</a>
+				</div>
+				<div class="navbar-header">
+					<a class="navbar-brand" href="/logout">Logout</a>
+				</div>
+			</div>
+		</nav>
+	</div>
 
-</tbody>
-</table>
+	<button id="btnAddJob" data-toggle="modal" data-target="#modalpopup"
+		class="buttonmargin" onclick="loadPrerequisiteCourse()">Add
+		Job</button>
+	<button id="btnAddJob" onclick="window.location.href = window.location.origin + '/closedjobs'">View Closed Jobs</button>
+	<div class="modal fade" id="modalpopup" role="dialog">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title">Create new Job</h4>
+					<button type="button" class="class" data-dismiss="modal">&times;</button>
 
-<script>
+				</div>
+				<div class="modal-body">
+					<div>
+						<label class="col-sm-3">Job Title</label> <input type="text"
+							id="txtjobtitle" /> <label class="col-sm-3">Location</label> <input
+							type="text" id="txtLocation" />
+					</div>
+					<br>
+					<div>
+						<label class="col-sm-3">Open Positions</label> <input
+							type="number" id="numOfOpenPosition" /> <label class="col-sm-3">Job
+							Type</label> <select id="selJobType">
+							<option value="coop4months">4 months Co-op</option>
+							<option value="coop8months">8 months Co-op</option>
+						</select>
+					</div>
+					<br>
+					<div>
+						<label class="col-sm-3">Rate of pay</label> <input type="text"
+							id="txtRateofPay" /> <label class="col-sm-3">Hours per
+							week</label> <input type="text" id="txtHoursperweek" />
+					</div>
+					<div>
+						<br> <label class="col-sm-3">Application deadline</label> <input
+							type="text" id="applicationDeadline" /> <label class="col-sm-3">Job
+							Description</label>
+						<textarea row=3 id="txtJobDesc"> </textarea>
+					</div>
+					<br>
+					<div>
+						<label class="col-sm-3">Courses Required</label>
+						<div id="courseRequired" class="coursescheckbox"></div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" onclick="saveJob()">Submit</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<br>
+	<br>
+	<table id="activeJobs">
+		<thead>
+			<tr class="tablehdr">
+				<th style="display: none;">ID</th>
+				<th>Job Id</th>
+				<th>Title</th>
+				<th>Job Type</th>
+				<th>Company</th>
+				<th>Location</th>
+				<th>Deadline</th>
+				<th>Prerequisite Courses</th>
+				<th style="width: 75px"></th>
+				<th style="width: 75px"></th>
+			</tr>
+		</thead>
+		<tbody>
+
+		</tbody>
+	</table>
+
+	<script>
   // Add job code starts
   $( function() {
     $( "#applicationDeadline" ).datepicker();
@@ -184,7 +201,7 @@ return selCourseArray;
 function saveJob()
 {
 	var  jobTitle = $('#txtjobtitle').val();
-	var  jobLocation = $('#txtLocation').val();
+	var  location = $('#txtLocation').val();
 	var  noOfPosition = $('#numOfOpenPosition').val();
 	var  jobType = $('#selJobType').val();
 	var  rateOfPay = $('#txtRateofPay').val();
@@ -192,7 +209,7 @@ function saveJob()
 	//var  applicationDeadline = $('#applicationDeadline').val();
 	var  jobDescription = $('#txtJobDesc').val();
 	var selectedCourseIds = fetchSelectedCourses();
-	var data = {jobTitle : jobTitle,jobLocation:jobLocation,noOfPosition:noOfPosition,jobType:jobType,rateOfPay:rateOfPay,hourPerWeek:hourPerWeek,jobDescription:jobDescription,selectedCourseIds:selectedCourseIds }
+	var data = {jobTitle : jobTitle,location:location,noOfPosition:noOfPosition,jobType:jobType,rateOfPay:rateOfPay,hourPerWeek:hourPerWeek,jobDescription:jobDescription,selectedCourseIds:selectedCourseIds }
 	var url = window.location.origin + "/saveJob";
 	fetch(url, {
 		  method: 'POST', // or 'PUT'
@@ -231,11 +248,12 @@ function saveJob()
 	        var colCloseJob = row.insertCell(8);
 	        var colViewApplicants = row.insertCell(9);
 	        colId.innerText = job.id;
-	        colJobId.innerText = job.jobId;
-	        colJobTitle.innerHTML = '<a href="javascript:void(0)" onclick="viewJob(this)">' + job.jobTitle + '</a>';
+	        colJobId.innerText = job.id;
+          colJobTitle.innerHTML = '<a href="' + window.location.origin + '/viewPostedJob?jobId=' + job.id + '"">' + job.jobTitle + '</a>';
 	        colJobType.innerText  = job.jobType;
             colOrg.innerText = job.organization;
             colLocation.innerText = job.location;
+			colPrereqCourses.innerText = job.requiredCourses;
             colAppDeadline.innerText = job.applicationDeadline;
 	        colCloseJob.innerHTML = '<button class="closeJobBtn" onclick="closeJob(this)">Close Job</button>';
 	        colViewApplicants.innerHTML = '<button class="viewApplicantsBtn" onclick="viewApplicants(this)">View Applicants</button>';
@@ -247,9 +265,13 @@ function saveJob()
 	    console.log(http.response);
       };
       
-      function viewJob(e) 
+      function viewApplicants(srcElement) 
       {
-        console.log(e);
+		var currentRowIndex = srcElement.closest('tr').rowIndex;
+        var activeJobsTable = document.getElementById('activeJobs');
+        var id = activeJobsTable.rows[currentRowIndex].cells[0].innerText;
+      	var url = baseUrl + '/applications?jobId=' + id;
+		window.location.href = url;
       }
 
       function closeJob(srcElement) 

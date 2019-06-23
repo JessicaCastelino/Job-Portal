@@ -17,6 +17,8 @@ public class RoleModel implements IRoleModel {
 		if (session.getAttribute("sessionName") != null && request.getSession().getAttribute("home") != null) {
 			if (session.getAttribute("role").toString().equals(model.asMap().get("role").toString())) {
 				model.addAttribute("view", model.asMap().get("reqPage").toString());
+			} else if (model.asMap().get("reqPage").toString().equalsIgnoreCase("logout")) {
+				model.addAttribute("view", "logout");
 			} else {
 				model.addAttribute("view", session.getAttribute("nextPage").toString());
 			}
