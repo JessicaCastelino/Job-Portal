@@ -1,5 +1,7 @@
+
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
+	<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -97,9 +99,11 @@ table th, table td {
 					<div>
 						<label class="col-sm-3">Open Positions</label> <input
 							type="number" id="numOfOpenPosition" /> <label class="col-sm-3">Job
-							Type</label> <select id="selJobType">
-							<option value="coop4months">4 months Co-op</option>
-							<option value="coop8months">8 months Co-op</option>
+							Type</label> 
+						<select name="jobType" id="selJobType">
+							<c:forEach var="jobType" items="${jobTypes}">
+								<option value="${jobType}">${jobType}</option>
+							</c:forEach>
 						</select>
 					</div>
 					<br>
@@ -220,6 +224,7 @@ function saveJob()
 		}).then(res => res.json())
 		.then(response => console.log('Success:', JSON.stringify(response)))
 		.catch(error => console.error('Error:', error));
+		$('#modalpopup').modal('toggle');
 }
 // Add job code ends
 	  const http = new XMLHttpRequest();
@@ -249,7 +254,7 @@ function saveJob()
 	        var colViewApplicants = row.insertCell(9);
 	        colId.innerText = job.id;
 	        colJobId.innerText = job.id;
-          colJobTitle.innerHTML = '<a href="' + window.location.origin + '/viewPostedJob?jobId=' + job.id + '"">' + job.jobTitle + '</a>';
+          	colJobTitle.innerHTML = '<a href="' + window.location.origin + '/viewPostedJob?jobId=' + job.id + '"">' + job.jobTitle + '</a>';
 	        colJobType.innerText  = job.jobType;
             colOrg.innerText = job.organization;
             colLocation.innerText = job.location;
