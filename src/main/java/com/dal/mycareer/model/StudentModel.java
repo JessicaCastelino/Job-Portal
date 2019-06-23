@@ -21,6 +21,7 @@ import com.dal.mycareer.DTO.Job;
 import com.dal.mycareer.DTO.JobDetails;
 import com.dal.mycareer.DTO.Student;
 import com.dal.mycareer.imodel.IStudentModel;
+import com.dal.mycareer.propertiesparser.PropertiesParser;
 
 public class StudentModel implements IStudentModel {
 	private static List<JobDetails> jobs = new ArrayList<JobDetails>();
@@ -34,12 +35,16 @@ public class StudentModel implements IStudentModel {
 	public Model fetchJobs(Model model, HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		String userSessionName = (String) session.getAttribute(SESSION_NAME);
+		System.out.println("USERNAME :"+userSessionName);
+		if(userSessionName!="" && userSessionName!=null)
+		{
 		dao = new StudentDAO();
 		student = dao.getStudentDetails(userSessionName);
 		jobs = dao.getAllJobList();
 		appliedJobs = dao.getAppliedJobList(student.getId());
 		model.addAttribute("jobs", jobs);
 		model.addAttribute("appliedJobs", appliedJobs);
+		}
 		return model;
 	}
 
@@ -57,7 +62,10 @@ public class StudentModel implements IStudentModel {
 	@Override
 	public Model applyJob(Model model, MultipartFile file, HttpServletRequest request) {
 		InputStream inputStream = null;
-
+		HttpSession session = request.getSession();
+		String userSessionName = (String) session.getAttribute(SESSION_NAME);
+		if(userSessionName!="" && userSessionName!=null)
+		{
 		dao = new StudentDAO();
 		if (file != null) {
 			System.out.println(String.format("File name %s", file.getOriginalFilename()));
@@ -72,6 +80,7 @@ public class StudentModel implements IStudentModel {
 				e.printStackTrace();
 			}
 		}
+		}
 
 		return model;
 	}
@@ -79,11 +88,15 @@ public class StudentModel implements IStudentModel {
 	@Override
 	public Model withdrawApplication(Model model, int jobId, HttpServletRequest request) {
 		HttpSession session = request.getSession();
+		String userSessionName = (String) session.getAttribute(SESSION_NAME);
+		if(userSessionName!="" && userSessionName!=null)
+		{
 		dao = new StudentDAO();
 		int i = dao.withdrawApplication(student.getId(), jobId);
 		appliedJobs = dao.getAppliedJobList(student.getId());
 		model.addAttribute("jobs", jobs);
 		model.addAttribute("appliedJobs", appliedJobs);
+		}
 		return model;
 	}
 }
