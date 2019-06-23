@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.dal.mycareer.DTO.Job;
 import com.dal.mycareer.DTO.JobDetails;
 import com.dal.mycareer.imodel.IEmployerJobsModel;
+import com.dal.mycareer.propertiesparser.PropertiesParser;
 
 @Controller
 public class EmployerJobsController
@@ -60,10 +61,11 @@ public class EmployerJobsController
 	
 	@ResponseBody
 	@RequestMapping( value="/saveJob", method=RequestMethod.POST)
-	public JobDetails saveJob(@RequestBody JobDetails postedjobDetails ) 
+	public JobDetails saveJob(@RequestBody JobDetails postedjobDetails, HttpServletRequest request ) 
 	{
 		
-		return employerJobs.InsertJobDetails(postedjobDetails);
+		String currentUser = (String) request.getSession().getAttribute("sessionName");
+		return employerJobs.InsertJobDetails(postedjobDetails, currentUser);
 	}
 
 	@RequestMapping("/viewPostedJob")
@@ -79,6 +81,7 @@ public class EmployerJobsController
 	{
 		LOGGER.info("Redirect to editPostedJob.jsp");		
 		model.addAttribute("jobDetails", employerJobs.viewPostedJobDetails(jobId));
+		model.addAttribute("jobTypes", PropertiesParser.getPropertyMap().get("jobTypes").toString().split(","));		
 		return "editpostedjobdetails";
 	}
 	@ResponseBody

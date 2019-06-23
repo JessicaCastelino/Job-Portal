@@ -31,6 +31,7 @@
 		function createDynamicCheckbox (courseList)
 {
 document.getElementById('courseRequired').innerHTML="";
+var selCourses = document.getElementById('hdnSelectedCourses').value;
 courseList.forEach(course => {
 	var innerDiv = document.createElement("div");
 	innerDiv.className="coursesCheckbox";
@@ -40,6 +41,8 @@ courseList.forEach(course => {
 	coursecb.type="checkbox";
 	//coursecb.id= "coursecb";
 	coursecb.value = course.courseId;
+	coursecb.checked = selCourses.indexOf(course.courseId) >= 0;
+	coursecb.disabled = true;
 	document.getElementById("courseRequired").appendChild(innerDiv);
 	innerDiv.appendChild(coursecb);
 	innerDiv.appendChild(document.createTextNode(course.CourseName));	
@@ -71,6 +74,7 @@ function editDetails()
 	<br>
 	<br>
 	<input type="hidden" id="hdnjobId" value="${jobDetails.id}"/>
+	<input type="hidden" id="hdnSelectedCourses" value="${jobDetails.selectedCourseIds}">
 	<br>
 	<div>
 		<label class="col-sm-2">Job Title</label>

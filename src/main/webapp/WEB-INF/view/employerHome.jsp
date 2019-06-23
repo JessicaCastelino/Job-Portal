@@ -151,7 +151,7 @@ table th, table td {
 	<script>
   // Add job code starts
   $( function() {
-    $( "#applicationDeadline" ).datepicker();
+    $( "#applicationDeadline" ).datepicker({dateFormat: 'yy-mm-dd'});
   } );
 function loadPrerequisiteCourse ()
 {
@@ -206,10 +206,10 @@ function saveJob()
 	var  jobType = $('#selJobType').val();
 	var  rateOfPay = $('#txtRateofPay').val();
 	var  hourPerWeek = $('#txtHoursperweek').val();
-	//var  applicationDeadline = $('#applicationDeadline').val();
+	var  applicationDeadline = $('#applicationDeadline').val();
 	var  jobDescription = $('#txtJobDesc').val();
 	var selectedCourseIds = fetchSelectedCourses();
-	var data = {jobTitle : jobTitle,location:location,noOfPosition:noOfPosition,jobType:jobType,rateOfPay:rateOfPay,hourPerWeek:hourPerWeek,jobDescription:jobDescription,selectedCourseIds:selectedCourseIds }
+	var data = {jobTitle : jobTitle,location:location,noOfPosition:noOfPosition,jobType:jobType,rateOfPay:rateOfPay,hourPerWeek:hourPerWeek,jobDescription:jobDescription,selectedCourseIds:selectedCourseIds, applicationDeadline:applicationDeadline }
 	var url = window.location.origin + "/saveJob";
 	fetch(url, {
 		  method: 'POST', // or 'PUT'
