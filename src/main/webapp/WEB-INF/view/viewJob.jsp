@@ -100,7 +100,7 @@
 					<div class="form-input">
 						<button class="btn btn-info btn-block my-4" type="submit"
 							value="${job.id}"
-							onclick="window.open('/applyJob','Apply for job', 'width=500,height=500')">Apply</button>
+							onclick="window.open('/applyJob?jobId=${job.id}','Apply for job', 'width=500,height=500')">Apply</button>
 					</div>
 				</div>
 			</div>
