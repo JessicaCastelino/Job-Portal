@@ -60,18 +60,21 @@ public class StudentModel implements IStudentModel {
 	}
 
 	@Override
-	public Model applyJob(Model model, MultipartFile file, HttpServletRequest request) {
+	public Model applyJob(Model model, MultipartFile file, HttpServletRequest request, int jobId) {
 		InputStream inputStream = null;
 		HttpSession session = request.getSession();
 		String userSessionName = (String) session.getAttribute(SESSION_NAME);
 		if(userSessionName!="" && userSessionName!=null)
 		{
 		dao = new StudentDAO();
+		student = dao.getStudentDetails(userSessionName);
 		if (file != null) {
 			System.out.println(String.format("File name %s", file.getOriginalFilename()));
 			try {
 				inputStream = file.getInputStream();
-				int i = dao.applyForJob(inputStream);
+				System.out.println(student);
+				System.out.println(student.getId());
+				int i = dao.applyForJob(inputStream,student.getId(),jobId);
 				if (i == 1) {
 					System.out.println("File Uploaded..");
 				}
@@ -96,6 +99,50 @@ public class StudentModel implements IStudentModel {
 		appliedJobs = dao.getAppliedJobList(student.getId());
 		model.addAttribute("jobs", jobs);
 		model.addAttribute("appliedJobs", appliedJobs);
+		}
+		return model;
+	}
+
+	@Override
+	public Model filterJobs(Model model, HttpServletRequest request, String location, String jobType) {
+		HttpSession session = request.getSession();
+		String userSessionName = (String) session.getAttribute(SESSION_NAME);
+		if(userSessionName!="" && userSessionName!=null)
+		{
+			List<JobDetails> filteredJob=new ArrayList<JobDetails>();
+		
+		for(JobDetails job:jobs)
+		{
+			if(location==null || location=="" || jobType==null || jobType=="")
+			{
+				if(job.getLocation().equalsIgnoreCase(location)||job.getJobType().equalsIgnoreCase(jobType))
+					filteredJob.add(job);
+			}
+			else
+			{
+				if(job.getLocation().equalsIgnoreCase(location)&&job.getJobType().equalsIgnoreCase(jobType))
+					filteredJob.add(job);
+			}
+		}
+		model.addAttribute("jobs", filteredJob);
+		model.addAttribute("appliedJobs", appliedJobs);
+		}
+		return model;
+	}
+
+	@Override
+	public Model jobApplicationExists(Model model, HttpServletRequest request, int jobId) {
+		HttpSession session = request.getSession();
+		String userSessionName = (String) session.getAttribute(SESSION_NAME);
+		if(userSessionName!="" && userSessionName!=null)
+		{
+			dao = new StudentDAO();
+			student = dao.getStudentDetails(userSessionName);
+			int i=dao.alreadyApplied(student.getId(),jobId);
+			if(i==1)
+			{
+				model.addAttribute("reqPage", PropertiesParser.getPropertyMap().get("alreadyApplied").toString());
+			}
 		}
 		return model;
 	}
