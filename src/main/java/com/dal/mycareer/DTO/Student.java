@@ -14,7 +14,6 @@ public class Student {
 
 	public Student() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	public Student(int id, String firstname, String lastname, String bannerid, String email, String phonenumber,

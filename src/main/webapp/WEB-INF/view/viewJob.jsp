@@ -32,7 +32,7 @@
 					<a class="navbar-brand" href="/homepage">My Career</a>
 				</div>
 				<div class="navbar-header">
-					<a class="navbar-brand" href="/profile">Profile</a>
+					<a class="navbar-brand" href="/studentProfile">Profile</a>
 				</div>
 				<div class="navbar-header">
 					<a class="navbar-brand" href="/logout">Logout</a>
