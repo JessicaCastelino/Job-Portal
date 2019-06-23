@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.dal.mycareer.DTO.Job;
 import com.dal.mycareer.DTO.JobDetails;
 import com.dal.mycareer.imodel.IEmployerJobsModel;
+import com.dal.mycareer.propertiesparser.PropertiesParser;
 
 @Controller
 public class EmployerJobsController
@@ -81,6 +82,7 @@ public class EmployerJobsController
 	{
 		LOGGER.info("Redirect to editPostedJob.jsp");		
 		model.addAttribute("jobDetails", employerJobs.viewPostedJobDetails(jobId));
+		model.addAttribute("jobtypes", PropertiesParser.getPropertyMap().get("JobTypes").toString().split(","));
 		return "editpostedjobdetails";
 	}
 	@ResponseBody

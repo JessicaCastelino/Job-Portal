@@ -38,6 +38,7 @@
 		})
 		function createDynamicCheckbox(courseList) {
 			document.getElementById('courseRequired').innerHTML = "";
+			var selCourses = document.getElementById('hdnSelectedCourses').value;
 			courseList.forEach(course => {
 				var innerDiv = document.createElement("div");
 				innerDiv.className = "coursesCheckbox";
@@ -47,6 +48,7 @@
 				coursecb.type = "checkbox";
 				//coursecb.id= "coursecb";
 				coursecb.value = course.courseId;
+				coursecb.checked = selCourses.indexOf(course.courseId) >= 0;
 				document.getElementById("courseRequired").appendChild(innerDiv);
 				innerDiv.appendChild(coursecb);
 				innerDiv.appendChild(document.createTextNode(course.CourseName));
@@ -74,7 +76,10 @@
 					'Content-Type': 'application/json'
 				}
 			}).then(res => res.json())
-				.then(response => console.log('Success:', JSON.stringify(response)))
+				.then(response => { console.log('Success:', JSON.stringify(response));
+				window.location.href= window.location.origin + "/viewPostedJob?jobId=" + jobId
+				})
+
 				.catch(error => console.error('Error:', error));
 		}
 		function fetchSelectedCourses() 
@@ -108,6 +113,7 @@
 <div>
 	<br>
 	<input type="hidden" id="hdnJobId" value="${jobDetails.id}" />
+	<input type="hidden" id="hdnSelectedCourses" value="${jobDetails.selectedCourseIds}">
 	<br>
 	<br>
 	<div>
