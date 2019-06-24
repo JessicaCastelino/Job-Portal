@@ -1,0 +1,158 @@
+Drop function if exists `getCompletedCoursesForStudent`;
+DELIMITER $$
+CREATE  FUNCTION `getCompletedCoursesForStudent`(studentid int) RETURNS varchar(255) CHARSET latin1
+BEGIN
+RETURN (select GROUP_CONCAT(courses.courseName SEPARATOR ', ')  from studentRegisteredCourses regCourses 
+join courses ON
+regCourses.courseId = courses.id
+where regCourses.studentId = studentid);
+END$$
+DELIMITER ;
+
+Drop function if exists `getRequiredCoursesForJob`;
+DELIMITER $$
+CREATE  FUNCTION `getRequiredCoursesForJob`(jobRecordId int) RETURNS varchar(255) CHARSET latin1
+BEGIN
+RETURN (select GROUP_CONCAT(courses.courseName SEPARATOR ', ')  from jobRequirement requirement
+left join courses ON
+requirement.courseId = courses.id
+where requirement.jobId = jobRecordId);
+END$$
+DELIMITER ;
+
+
+Drop table if exists `coopAdmin`;
+Drop table if exists `studentRegisteredCourses`;
+Drop table if exists `appliedJobs`;
+Drop table if exists `students`;
+Drop table if exists `jobRequirement`;
+Drop table if exists `jobs`;
+Drop table if exists `employers`;
+Drop table if exists `userlogin`;
+Drop table if exists `courses`;
+
+CREATE TABLE `userlogin` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `userName` varchar(50) DEFAULT NULL,
+  `pwd` varchar(100) DEFAULT NULL,
+  `role` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `userName` (`userName`)
+) ENGINE=InnoDB AUTO_INCREMENT=103 DEFAULT CHARSET=latin1;
+
+
+CREATE TABLE `employers` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `title` varchar(5) DEFAULT NULL,
+  `firstname` varchar(50) DEFAULT NULL,
+  `lastname` varchar(50) DEFAULT NULL,
+  `email` varchar(50) DEFAULT NULL,
+  `designation` varchar(50) DEFAULT NULL,
+  `companyname` varchar(50) DEFAULT NULL,
+  `isActive` tinyint(1) DEFAULT NULL,
+  `userid` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `email` (`email`),
+  KEY `userid` (`userid`),
+  CONSTRAINT `employers_ibfk_1` FOREIGN KEY (`userid`) REFERENCES `userlogin` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=109 DEFAULT CHARSET=latin1;
+
+
+CREATE TABLE `students` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `firstname` varchar(50) DEFAULT NULL,
+  `lastname` varchar(50) DEFAULT NULL,
+  `bannerid` varchar(10) DEFAULT NULL,
+  `email` varchar(50) DEFAULT NULL,
+  `phonenumber` varchar(10) DEFAULT NULL,
+  `degree` varchar(100) DEFAULT NULL,
+  `department` varchar(50) DEFAULT NULL,
+  `program` varchar(50) DEFAULT NULL,
+  `isActive` tinyint(1) DEFAULT NULL,
+  `userid` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `userid` (`userid`),
+  CONSTRAINT `students_ibfk_1` FOREIGN KEY (`userid`) REFERENCES `userlogin` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+
+
+CREATE TABLE `coopAdmin` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `firstname` varchar(50) DEFAULT NULL,
+  `lastname` varchar(50) DEFAULT NULL,
+  `email` varchar(50) DEFAULT NULL,
+  `isActive` tinyint(1) DEFAULT NULL,
+  `userid` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `userid` (`userid`),
+  CONSTRAINT `coopAdmin_ibfk_1` FOREIGN KEY (`userid`) REFERENCES `userlogin` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
+CREATE TABLE `jobs` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `jobTitle` varchar(50) DEFAULT NULL,
+  `location` varchar(50) DEFAULT NULL,
+  `openPosition` int(11) DEFAULT NULL,
+  `jobType` varchar(50) DEFAULT NULL,
+  `rateOfPay` int(11) DEFAULT NULL,
+  `hoursPerWeek` int(11) DEFAULT NULL,
+  `applicationDeadline` datetime DEFAULT NULL,
+  `jobDescription` varchar(255) DEFAULT NULL,
+  `additionalInformation` varchar(255) DEFAULT NULL,
+  `jobStatus` bit(1) DEFAULT NULL,
+  `employerid` int(11) DEFAULT NULL,
+  `term` varchar(10) DEFAULT NULL,
+  `organization` varchar(50) DEFAULT NULL,
+  `jobId` varchar(10) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `employeeId` (`employerid`),
+  CONSTRAINT `jobs_ibfk_1` FOREIGN KEY (`employerid`) REFERENCES `employers` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=133 DEFAULT CHARSET=latin1;
+
+
+CREATE TABLE `courses` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `courseName` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+
+
+CREATE TABLE `jobRequirement` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `jobId` int(11) DEFAULT NULL,
+  `courseId` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `jobId` (`jobId`),
+  KEY `courseId` (`courseId`),
+  CONSTRAINT `jobRequirement_ibfk_1` FOREIGN KEY (`jobId`) REFERENCES `jobs` (`id`),
+  CONSTRAINT `jobRequirement_ibfk_2` FOREIGN KEY (`courseId`) REFERENCES `courses` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=62 DEFAULT CHARSET=latin1;
+
+
+CREATE TABLE `studentRegisteredCourses` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `studentId` int(11) DEFAULT NULL,
+  `courseId` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `studentId` (`studentId`),
+  KEY `courseId` (`courseId`),
+  CONSTRAINT `studentRegisteredCourses_ibfk_1` FOREIGN KEY (`studentId`) REFERENCES `students` (`id`),
+  CONSTRAINT `studentRegisteredCourses_ibfk_2` FOREIGN KEY (`courseId`) REFERENCES `courses` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+
+
+
+
+CREATE TABLE `appliedJobs` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `document` longblob,
+  `applicationStatus` varchar(30) DEFAULT NULL,
+  `studentId` int(11) DEFAULT NULL,
+  `jobId` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `studentId` (`studentId`),
+  KEY `jobId` (`jobId`),
+  CONSTRAINT `appliedJobs_ibfk_1` FOREIGN KEY (`studentId`) REFERENCES `students` (`id`),
+  CONSTRAINT `appliedJobs_ibfk_2` FOREIGN KEY (`jobId`) REFERENCES `jobs` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
