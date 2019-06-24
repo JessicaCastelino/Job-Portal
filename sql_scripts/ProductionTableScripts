@@ -1,3 +1,12 @@
+DROP FUNCTION `getCompletedCoursesIds`
+DELIMITER $$
+CREATE FUNCTION `getCompletedCoursesIds`(jobRecordId int) RETURNS varchar(255) CHARSET latin1
+BEGIN
+RETURN (select GROUP_CONCAT(courseId SEPARATOR ', ')  from jobRequirement
+where jobId = jobRecordId);
+END$$
+DELIMITER ;
+
 Drop function if exists `getCompletedCoursesForStudent`;
 DELIMITER $$
 CREATE  FUNCTION `getCompletedCoursesForStudent`(studentid int) RETURNS varchar(255) CHARSET latin1
