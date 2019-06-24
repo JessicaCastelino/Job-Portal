@@ -1,7 +1,14 @@
 package com.dal.mycareer.controller;
 
+import com.dal.mycareer.DAO.Impl.ManageApplicationsDAO;
+import com.dal.mycareer.DAO.Interface.IManageApplicationsDAO;
 import com.dal.mycareer.imodel.IManageApplicationsModel;
 import com.dal.mycareer.propertiesparser.PropertiesParser;
+
+import java.io.IOException;
+import java.io.InputStream;
+
+import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,5 +41,22 @@ public class ManageApplicationsController {
 	@RequestMapping(value = "/updateApplicationStatus", method = RequestMethod.PUT)
 	public boolean updateApplicationStatus(ModelMap model, @RequestParam(name = "applicationId")int applicationId, @RequestParam(name = "appStatus") String appStatus) {
 		return applicationManager.updateApplicationStatus(applicationId, appStatus);
+	}
+	
+	
+	@RequestMapping(value = "/downloadFile", method = RequestMethod.GET)
+	public void downloadFile(ModelMap model, @RequestParam int id, HttpServletResponse response) {
+		
+		try {
+		      ManageApplicationsDAO dao=new ManageApplicationsDAO();
+		      InputStream is = dao.fetchDocument(id);
+		      // copy it to response's OutputStream
+		      org.apache.commons.io.IOUtils.copy(is, response.getOutputStream());
+		      response.flushBuffer();
+		    } catch (IOException ex) {
+		      System.out.println("Error writing file to output stream. Filename was '{}'");
+		      throw new RuntimeException("IOError writing file to output stream");
+		    }
+		
 	}
 }

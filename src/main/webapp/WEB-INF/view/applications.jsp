@@ -93,7 +93,7 @@
                     <td>${applicant.applicantFName} ${applicant.applicantLName}</td>
                     <td>${applicant.email}</td>
                     <td>${applicant.completedCourses}</td>
-                    <td></td>
+                    <td><a href="/downloadFile?id=${applicant.applicationId}">Click here to download file</a></td>
                     <td>
                         <select name="appStatus" id="appStatus">
                             <c:forEach var="status" items="${appStatus}">
