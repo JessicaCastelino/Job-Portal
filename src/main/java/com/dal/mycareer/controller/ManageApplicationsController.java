@@ -23,6 +23,8 @@ public class ManageApplicationsController {
     @RequestMapping("/applications")
 	public String viewApplicants(ModelMap model, @RequestParam(name = "jobId")int id) {
         LOGGER.info("Redirect to applications.jsp");
+        //System.out.println("******************88"+id);
+        model.addAttribute("jobId",id);
 		model.addAttribute("applicants", applicationManager.getApplications(id));
 		model.addAttribute("appStatus", PropertiesParser.getPropertyMap().get("applicationStatus").toString().split(","));
 		return "applications";

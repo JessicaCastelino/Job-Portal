@@ -25,7 +25,7 @@
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <style>
-        table {
+       /*  table {
             border-collapse: collapse;
             width: 100%;
             border: 1px solid #ddd;
@@ -40,16 +40,16 @@
         table td {
             text-align: left;
             padding: 12px;
-        }
+        } */
 
-        .updateStatusBtn {
+       /*  .updateStatusBtn {
             background-color: #009933;
             border-color: #00802b;
             border-radius: 7px;
             height: 40px;
             color: white;
             width: 100px;
-        }
+        } */
 
         .hiddenStatus {
             display: none;
@@ -70,11 +70,11 @@
             </div>
         </nav>
     </div>
-    <button id="btnAddJob" onclick="window.history.back()">Back to job list</button>
-    <h1>Applicants for Job Id: ${applicant.jobId}</h1>
-    <table id="applications">
+    <button id="btnAddJob" class="btn btn-info" onclick="window.history.back()">Back to job list</button>
+    <h1>Applicants for Job ID ${jobId}</h1>
+    <table id="applications" class="table table-hover">
         <thead>
-            <tr class="tablehdr">
+            <tr class="tablehdr table-info">
                 <th style="display:none">ApplicationId</th>
                 <th>Applicant ID</th>
                 <th>Name</th>
@@ -103,7 +103,7 @@
                         </select>
                         <label class="hiddenStatus">${applicant.applicationStatus}</label>
                     </td>
-                    <td><button class="updateStatusBtn" onclick="UpdateStatus(this)">updateStatus</button></td>
+                    <td><button class="updateStatusBtn btn btn-info" onclick="UpdateStatus(this)">Update</button></td>
                 </tr>
             </c:forEach>
         </c:if>

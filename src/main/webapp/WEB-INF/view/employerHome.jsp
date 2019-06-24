@@ -44,22 +44,17 @@ table th, table td {
 	padding: 12px;
 }
 
-.closeJobBtn, .viewApplicantsBtn {
-	background-color: #009933;
-	border-color: #00802b;
-	border-radius: 7px;
+/* .closeJobBtn, .viewApplicantsBtn, {
+	background-color: #17a2b8;
 	height: 60px;
 	color: white;
 	width: 100px;
-}
+} */
 
 .coursescheckbox {
 	margin-left: 26%;
 }
 
-.buttonmargin {
-	margin-top: 2%;
-}
 </style>
 </head>
 <body>
@@ -78,15 +73,15 @@ table th, table td {
 	</div>
 
 	<button id="btnAddJob" data-toggle="modal" data-target="#modalpopup"
-		class="buttonmargin" onclick="loadPrerequisiteCourse()">Add
+		class="buttonmargin btn btn-info" onclick="loadPrerequisiteCourse()">Add
 		Job</button>
-	<button id="btnAddJob" onclick="window.location.href = window.location.origin + '/closedjobs'">View Closed Jobs</button>
+	<button id="btnAddJob" class="buttonmargin btn btn-info" onclick="window.location.href = window.location.origin + '/closedjobs'">View Closed Jobs</button>
 	<div class="modal fade" id="modalpopup" role="dialog">
 		<div class="modal-dialog modal-lg">
 			<div class="modal-content">
 				<div class="modal-header">
 					<h4 class="modal-title">Create new Job</h4>
-					<button type="button" class="class" data-dismiss="modal">&times;</button>
+					<button type="button" class="class btn btn-info" data-dismiss="modal">&times;</button>
 
 				</div>
 				<div class="modal-body">
@@ -125,18 +120,18 @@ table th, table td {
 					</div>
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-default" onclick="saveJob()" data-dismiss="modal">Submit</button>
+					<button type="button" class="btn btn-default btn btn-info" onclick="saveJob()" data-dismiss="modal">Submit</button>
 				</div>
 			</div>
 		</div>
 	</div>
 	<br>
 	<br>
-	<table id="activeJobs">
+	<table id="activeJobs" class="table table-hover">
 		<thead>
-			<tr class="tablehdr">
+			<tr class="table-info">
 				<th style="display: none;">ID</th>
-				<th>Job Id</th>
+				<th style="width: 6%;">Job Id</th>
 				<th>Title</th>
 				<th>Job Type</th>
 				<th>Company</th>
@@ -259,8 +254,8 @@ function saveJob()
             colLocation.innerText = job.location;
 			colPrereqCourses.innerText = job.requiredCourses;
             colAppDeadline.innerText = job.applicationDeadline;
-	        colCloseJob.innerHTML = '<button class="closeJobBtn" onclick="closeJob(this)">Close Job</button>';
-	        colViewApplicants.innerHTML = '<button class="viewApplicantsBtn" onclick="viewApplicants(this)">View Applicants</button>';
+	        colCloseJob.innerHTML = '<button class="closeJobBtn btn btn-info" onclick="closeJob(this)">Close Job</button>';
+	        colViewApplicants.innerHTML = '<button class="viewApplicantsBtn btn btn-info" onclick="viewApplicants(this)">View Applicants</button>';
 	      });
 	    }
 	  };
