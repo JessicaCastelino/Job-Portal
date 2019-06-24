@@ -45,6 +45,7 @@ public class LoginController {
 			ILoginDAO loginDAO = new LoginDAO();
 
 			model = loginModel.verifyLogin(model, ulogin, loginDAO, request);
+			String page = null;
 
 			if (model.asMap().get("isValidUser").toString().equalsIgnoreCase("true")) {
 				String userSessionName = request.getParameter(USERNAME);
@@ -54,7 +55,11 @@ public class LoginController {
 				session.setAttribute("role", model.asMap().get("role").toString());
 				session.setAttribute("nextPage", model.asMap().get("nextPage").toString());
 			}
-			String page = model.asMap().get("nextPage").toString();
+			if(model.containsAttribute("error")) {
+				page = "homepage";
+			}else {
+				page = model.asMap().get("nextPage").toString();
+			}
 			
 			LOGGER.info("Login request -- END");
 			return page;

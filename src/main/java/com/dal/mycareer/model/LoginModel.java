@@ -36,6 +36,8 @@ public class LoginModel implements ILoginModel {
 			model.addAttribute("nextPage", REDIRECT + PropertiesParser.getPropertyMap().getProperty("homepage"));
 			model.addAttribute("isValidUser", isValidUser);
 			model.addAttribute("view", PropertiesParser.getPropertyMap().getProperty("homepage"));
+			model.addAttribute("error", " you have entered invalid username, password or role !");
+			model.addAttribute("isInvalid", true);
 		}
 
 		return model;
