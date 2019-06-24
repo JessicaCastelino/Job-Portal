@@ -70,48 +70,82 @@ function editDetails()
 }
 </style>
 </head>
+<body>
 <div>
-	<br>
-	<br>
+		<nav class="navbar navbar-inverse">
+			<div class="container-fluid">
+				<div class="navbar-header">
+					<a class="navbar-brand" href="/homepage">My Career</a>
+				</div>
+				
+				<div class="navbar-header">
+					<a class="navbar-brand" href="/logout">Logout</a>
+				</div>
+
+			</div>
+		</nav>
+	</div>
+
+<div>
 	<input type="hidden" id="hdnjobId" value="${jobDetails.id}"/>
 	<input type="hidden" id="hdnSelectedCourses" value="${jobDetails.selectedCourseIds}">
-	<br>
-	<div>
-		<label class="col-sm-2">Job Title</label>
-		<label id="lbljobtitle" class="col-sm-3">${jobDetails.jobTitle}</label>
-		<label class="col-sm-2">Location</label> 
-		<label id="lblLocation" class="col-sm-3" >${jobDetails.location}</label>
-	</div>
-	<br>
-	<div>
-		<label class="col-sm-2">Open Positions</label>
-		<label id="numOfOpenPosition" class="col-sm-3">${jobDetails.hourPerWeek}</label>
-		<label class="col-sm-2">Job Type</label> 
-		<label id="lblJobType" class="col-sm-3" >${jobDetails.jobType}</label>
-	</div>
-	<br>
-	<div>
-		<label class="col-sm-2">Rate of pay</label> 
-		<label id="txtRateofPay" class="col-sm-3">${jobDetails.rateOfPay}</label>
-		<label class="col-sm-2">Hours per week</label> 
-		<label id="txtHoursperweek" class="col-sm-3">${jobDetails.hourPerWeek}</label>
-	</div>
-	<div>
-		<br>
-		<label class="col-sm-2">Application deadline</label> 
-		<label id="applicationDeadline" class="col-sm-3">${jobDetails.applicationDeadline}</label> 
-		<label class="col-sm-2">Job Description</label>
-		<label row=3 id="txtJobDesc" class="col-sm-3" >${jobDetails.jobDescription} </label>
-	</div>
-	<br>
-	<div>
-		<label class="col-sm-2">Courses Required</label>
-		<div id="courseRequired" class="coursescheckbox"></div>
-	</div>
+					<div>
+					
+					<table border="1" class="table table-hover">
+						<tr>
+						<th>Job Title</th>
+						<td id="lbljobtitle">${jobDetails.jobTitle}</td>
+						</tr>
+						
+						<tr>
+						<th>Location</th>
+						<td id="lblLocation">${jobDetails.location}</td>
+						</tr>
+						
+						<tr>
+						<th>Open Positions</th>
+						<td id="numOfOpenPosition">${jobDetails.hourPerWeek}</td>
+						</tr>
+						
+						<tr>
+						<th>Job Type</th>
+						<td id="lblJobType">${jobDetails.jobType}</td>
+						</tr>
+						
+						<tr>
+						<th>Rate of pay</th>
+						<td id="txtRateofPay">${jobDetails.rateOfPay}</td>
+						</tr>
+						
+						<tr>
+						<th>Hours per week</th>
+						<td id="txtHoursperweek">${jobDetails.hourPerWeek}</td>
+						</tr>
+						
+						<tr>
+						<th>Application deadline</th>
+						<td id="applicationDeadline">${jobDetails.applicationDeadline}</td>
+						</tr>
+						
+						<tr>
+						<th>Job Description</th>
+						<td id="txtJobDesc">${jobDetails.jobDescription}</td>
+						</tr>
+						
+						<tr>
+						<th>Courses Required</th>
+						<td id="courseRequired" class="coursescheckbox"></td>
+						</tr>
+						</table>
+						</div>
+	
+	
+	
 </div>
 
 <div class="btnAlignment">
-<button id="btnEdit" onclick="editDetails()"> Edit Details</button>
+<button id="btnEdit" class="btn btn-info" onclick="editDetails()"> Edit Details</button>
 
 </div>
+</body>
 </html>

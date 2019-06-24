@@ -25,7 +25,7 @@
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <style>
-        table {
+       /*  table {
             border-collapse: collapse;
             width: 100%;
             border: 1px solid #ddd;
@@ -40,9 +40,9 @@
         table td {
             text-align: left;
             padding: 12px;
-        }
+        } */
 
-        .reopenJobBtn,
+       /*  .reopenJobBtn,
         .viewApplicantsBtn {
             background-color: #009933;
             border-color: #00802b;
@@ -50,7 +50,7 @@
             height: 60px;
             color: white;
             width: 100px;
-        }
+        } */
     </style>
 </head>
 
@@ -67,11 +67,11 @@
             </div>
         </nav>
     </div>
-    <button id="btnAddJob" onclick="window.location.href = window.location.origin + '/employerHome'">Back to active jobs</button>
+    <button id="btnAddJob" class="btn btn-info" onclick="window.location.href = window.location.origin + '/employerHome'">Back to active jobs</button>
     <h1>Closed Jobs</h1>
-    <table id="closedJobs">
+    <table id="closedJobs" class="table table-hover">
         <thead>
-            <tr class="tablehdr">
+            <tr class="tablehdr table-info">
                 <th>Job Id</th>
                 <th>Title</th>
                 <th>Job Type</th>
@@ -93,8 +93,8 @@
                     <td>${job.location}</td>
                     <td>${job.applicationDeadline}</td>
                     <td>${job.requiredCourses}</td>
-                    <td><button class="reopenJobBtn" onclick="reOpenJob(this)">Reopen Job</button></td>
-                    <td><button class="viewApplicantsBtn" onclick="viewApplicants(this)">View Applicants</button></td>
+                    <td><button class="reopenJobBtn btn btn-info" onclick="reOpenJob(this)">Reopen Job</button></td>
+                    <td><button class="viewApplicantsBtn btn btn-info" onclick="viewApplicants(this)">View Applicants</button></td>
                 </tr>
             </c:forEach>
         </c:if>
