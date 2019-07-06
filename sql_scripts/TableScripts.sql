@@ -185,7 +185,7 @@ DROP procedure IF EXISTS `withdrawApplication`;
 DELIMITER //
 CREATE PROCEDURE `withdrawApplication` (IN studentId INT(11), IN jobId INT(11))
 BEGIN
-delete from `CSCI5308_8_DEVINT`.`students` where studentId=studentId and jobId=jobId;
+delete from `CSCI5308_8_DEVINT`.`appliedJobs` where id=jId;
 END //
 DELIMITER ;
 
@@ -446,4 +446,15 @@ SET
 WHERE `id` =jobId;
 
 END$$
+DELIMITER ;
+
+
+DROP procedure IF EXISTS `fetchRecruiterRequests`;
+DELIMITER $$
+
+CREATE PROCEDURE `fetchRecruiterRequests` ()
+BEGIN
+SELECT id, firstname, lastname email, companyname FROM employers where isActive=0;
+END$$
+
 DELIMITER ;

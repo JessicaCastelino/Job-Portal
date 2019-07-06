@@ -98,7 +98,8 @@ public class StudentModel implements IStudentModel {
 		if(userSessionName!="" && userSessionName!=null)
 		{
 		dao = new StudentDAO();
-		int i = dao.withdrawApplication(student.getId(), jobId);
+		student = dao.getStudentDetails(userSessionName);
+		int i = dao.withdrawApplication(jobId);
 		appliedJobs = dao.getAppliedJobList(student.getId());
 		model.addAttribute("jobs", jobs);
 		model.addAttribute("appliedJobs", appliedJobs);
