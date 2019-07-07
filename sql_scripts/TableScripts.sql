@@ -477,3 +477,14 @@ BEGIN
 DELETE FROM employers where id=reqID;
 END$$
 DELIMITER ;
+
+
+DROP procedure IF EXISTS `fetchRecruiter`;
+
+DELIMITER $$
+CREATE PROCEDURE `fetchRecruiter` (IN reqID INT(11))
+BEGIN
+SELECT id, firstname, lastname, email, companyname FROM employers where id=reqID;
+END$$
+
+DELIMITER ;
