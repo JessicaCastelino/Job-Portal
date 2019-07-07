@@ -39,13 +39,13 @@ public class CoopCoordinatorController {
 	      }
 	 
 	  @RequestMapping(value = { "/approve" }, method = RequestMethod.GET)
-		public String rejectRequest(@RequestParam("id") int recruiterRequestId,@RequestParam("email") String email, Model model, HttpServletRequest request) {
+		public String rejectRequest(@RequestParam("id") int recruiterRequestId, Model model, HttpServletRequest request) {
 			model.addAttribute("reqPage", PropertiesParser.getPropertyMap().get("adminHome").toString());
 			model.addAttribute("role", "admin");
 			roleModel = new RoleModel();
 			model = roleModel.getBasePage(model, request);
 			coopCordinatorModel = new CoopCoordinatorModel();
-			model = coopCordinatorModel.approveRecruiterRequest(model, request, recruiterRequestId, email);
+			model = coopCordinatorModel.approveRecruiterRequest(model, request, recruiterRequestId);
 			return model.asMap().get("view").toString();
 		}
 	  

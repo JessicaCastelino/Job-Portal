@@ -8,6 +8,7 @@ public interface ICoopCordinatorDAO
 {
 	public List<RecruiterRequest> fetchRecruiterRequests();
 	public List<RecruiterRequest> fetchActiveRecruiters();
-	int approveRequest(int requestId, String username, String password);
-	int rejectRequest(int requestId);
+	public int approveRequest(int requestId, String username, String password);
+	public int rejectRequest(int requestId);
+	public RecruiterRequest fetchRecruiter(int reqID);
 }

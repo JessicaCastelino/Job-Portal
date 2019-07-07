@@ -32,7 +32,6 @@ public class CoopCordinatorDAO implements ICoopCordinatorDAO
 				ResultSet rs = callableStatement.getResultSet();
 				while (rs.next()) {
 					recruiterRequest = new RecruiterRequest();
-					System.out.println("***********"+rs.getInt(1));
 					recruiterRequest.setId(Integer.toString(rs.getInt(1)));
 					recruiterRequest.setFirstname(rs.getString(2));
 					recruiterRequest.setLastname(rs.getString(3));
@@ -152,5 +151,42 @@ public class CoopCordinatorDAO implements ICoopCordinatorDAO
 				}
 			}
 	}
+		
+			@Override
+			public RecruiterRequest fetchRecruiter(int reqID) {
+				con = DatabaseConnection.getConnection();
+				RecruiterRequest recruiterRequest = null;
+				try {
+					callableStatement = con.prepareCall("{call fetchRecruiter("+reqID+")}");
+					boolean results = callableStatement.execute();
+					System.out.println("**********************************"+results);
+					ResultSet rs = callableStatement.getResultSet();
+					System.out.println("**********************************"+rs);
+					while (rs.next()) {
+							recruiterRequest = new RecruiterRequest();
+							System.out.println("**********************************"+rs.getInt(1));
+							recruiterRequest.setId(Integer.toString(rs.getInt(1)));
+							recruiterRequest.setFirstname(rs.getString(2));
+							recruiterRequest.setLastname(rs.getString(3));
+							recruiterRequest.setEmail(rs.getString(4));
+							recruiterRequest.setCompanyname(rs.getString(5));
+						}
+
+						rs.close();
+				
+					return recruiterRequest;
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+					return recruiterRequest;
+				} finally {
+					try {
+						callableStatement.close();
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+			}
 
 }

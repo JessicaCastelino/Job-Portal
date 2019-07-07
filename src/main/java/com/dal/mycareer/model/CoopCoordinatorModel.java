@@ -14,8 +14,12 @@ import org.springframework.stereotype.Service;
 import com.dal.mycareer.DAO.Impl.CoopCordinatorDAO;
 import com.dal.mycareer.DAO.Interface.ICoopCordinatorDAO;
 import com.dal.mycareer.DTO.RecruiterRequest;
+import com.dal.mycareer.emailengine.EmployerApprovalEmail;
+import com.dal.mycareer.emailengine.EmployerRejectionEmailImpl;
+import com.dal.mycareer.emailengine.IEmployerApprovalEmail;
+import com.dal.mycareer.emailengine.IEmployerRejectionEmail;
 import com.dal.mycareer.imodel.ICoopCoordinatorModel;
-import org.springframework.beans.factory.annotation.Autowired;
+
 @Service
 public class CoopCoordinatorModel implements ICoopCoordinatorModel
 {
@@ -35,29 +39,29 @@ public class CoopCoordinatorModel implements ICoopCoordinatorModel
 		if(userSessionName!="" && userSessionName!=null)
 		{
 		dao = new CoopCordinatorDAO();
+		model.addAttribute("isValid", "NA");
 		requests = dao.fetchRecruiterRequests();
 		model.addAttribute("recruiterRequests", requests);
 		}
 		return model;
 	}
 
-	 @Override
-	 public List<RecruiterRequest> fetchActiveRecruiters()
-	 {
-		dao = new CoopCordinatorDAO(); 
-		return dao.fetchActiveRecruiters();
-	 }
 
 	 @Override
-		public Model approveRecruiterRequest(Model model, HttpServletRequest request, int recruiterRequestId, String email) {
+		public Model approveRecruiterRequest(Model model, HttpServletRequest request, int recruiterRequestId) {
 			HttpSession session = request.getSession();
 			String userSessionName = (String) session.getAttribute(SESSION_NAME);
 			System.out.println("USERNAME :"+userSessionName);
+			IEmployerApprovalEmail approvalEmail=new EmployerApprovalEmail();
 			if(userSessionName!="" && userSessionName!=null)
 			{
 			dao = new CoopCordinatorDAO();
-			int i=dao.approveRequest(recruiterRequestId, email, "HAHAHA");
+			String password="HAHAHA";
+			RecruiterRequest recruiter=dao.fetchRecruiter(recruiterRequestId);
+			int i=dao.approveRequest(recruiterRequestId, recruiter.getEmail(), password);
+			approvalEmail.employerApprovalEmail(recruiter.getEmail(), recruiter.getFirstname()+" "+recruiter.getLastname(), recruiter.getCompanyname(), password, recruiter.getEmail());
 			requests=dao.fetchRecruiterRequests();
+			model.addAttribute("isValid", "approve");
 			model.addAttribute("recruiterRequests", requests);
 			}
 			return model;
@@ -67,11 +71,15 @@ public class CoopCoordinatorModel implements ICoopCoordinatorModel
 			HttpSession session = request.getSession();
 			String userSessionName = (String) session.getAttribute(SESSION_NAME);
 			System.out.println("USERNAME :"+userSessionName);
+			IEmployerRejectionEmail rejectEmail=new EmployerRejectionEmailImpl();
 			if(userSessionName!="" && userSessionName!=null)
 			{
 			dao = new CoopCordinatorDAO();
+			RecruiterRequest recruiter=dao.fetchRecruiter(recruiterRequestId);
 			int i=dao.rejectRequest(recruiterRequestId);
+			rejectEmail.employerRejectionEmail(recruiter.getEmail(), recruiter.getFirstname()+" "+recruiter.getLastname(), recruiter.getCompanyname());
 			requests=dao.fetchRecruiterRequests();
+			model.addAttribute("isValid", "reject");
 			model.addAttribute("recruiterRequests", requests);
 			}
 			return model;

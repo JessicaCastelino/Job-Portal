@@ -51,6 +51,16 @@
                 aria-labelledby="home-tab">
                 <div>
                     <br />
+                    <c:if test="${isValid=='approve'}">
+							<div class="alert alert-success alert-dismissible fade show">
+							<strong>Request Approved!</strong>
+							</div>
+					</c:if>
+					<c:if test="${isValid=='reject'}">
+							<div class="alert alert-danger alert-dismissible fade show">
+							<strong>Request Rejected!</strong>
+							</div>
+					</c:if>
                     <table border="1" class="table table-hover">
                         <tr class="table-info">
                             <th>Recruiter Name</th>
@@ -60,19 +70,20 @@
                         </tr>
                         <c:forEach items="${recruiterRequests}" var="request">
                             <tr>
-                                <td>${request.firstname}</td>
+                                <td>${request.firstname} ${request.lastname}</td>
                                 <td>${request.email}</td>
                                 <td>${request.companyname}</td>
                                 <td>
                                     <!-- View button -->
                                     <div class="form-input">
                                     <a class="btn btn-info btn-block my-4"
-                                            href="/approve?id=${request.id}&email=${request.email}">Approve</a>
+                                            href="/approve?id=${request.id}&email=${request.email}&name=${request.firstname}">Approve</a>
                                     </div> <!-- Apply button -->
                                     <div class="form-input">
                                         <a class="btn btn-info btn-block my-4"
                                             href="/reject?id=${request.id}">Reject</a>
                                     </div>
+                                    
                                 </td>
                             </tr>
                         </c:forEach>
