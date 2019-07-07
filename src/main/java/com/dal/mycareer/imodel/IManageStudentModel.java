@@ -8,4 +8,5 @@ public interface IManageStudentModel
 {
     public Student RegisterStudent(Student studentDetails);
     public List<Student> getRegisteredStudents ();
+	public boolean DeleteStudent(int studentId);
 }

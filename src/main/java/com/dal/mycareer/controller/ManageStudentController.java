@@ -15,6 +15,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
@@ -38,5 +39,13 @@ public class ManageStudentController
     {
         String currentUser = (String) request.getSession().getAttribute("sessionName");
 		return manageStudentModel.RegisterStudent(studentDetails);
+    }
+
+    @ResponseBody
+	@RequestMapping( value="/deletestudent", method=RequestMethod.DELETE)
+    public boolean DeleteStudent(@RequestParam(name = "id") int studentId, HttpServletRequest request)
+    {
+        String currentUser = (String) request.getSession().getAttribute("sessionName");
+		return manageStudentModel.DeleteStudent(studentId);
     }
 }

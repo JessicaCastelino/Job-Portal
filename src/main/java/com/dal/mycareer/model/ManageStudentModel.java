@@ -25,4 +25,9 @@ public class ManageStudentModel implements IManageStudentModel {
     {
         return manageStudentDAO.getRegisteredStudents();
     }
+	   @Override
+    public boolean DeleteStudent(int studentId) 
+    {
+        return manageStudentDAO.DeleteStudent(studentId);
+    }
 }
