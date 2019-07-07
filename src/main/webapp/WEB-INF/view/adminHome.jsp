@@ -22,6 +22,75 @@
     integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
     crossorigin="anonymous"></script>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<script>
+
+function getActiveEmployers()
+{
+	const http = new XMLHttpRequest();
+      var baseUrl = window.location.origin;
+      var url = baseUrl + '/activeRecruiters';
+	  http.open('GET', url, true);
+	  http.send();
+      http.onreadystatechange = function () 
+      {
+        if (this.readyState === 4 && this.status === 200) 
+        {
+		  var activeRecruiters = JSON.parse(http.response);
+		  console.log(activeRecruiters);
+          activeRecruiters.forEach(activeRecruiter => 
+          {
+	        var activeJobsTable = document.getElementById('activeEmployers');
+	        var row = activeEmployers.insertRow();
+	        // var colId = row.insertCell(0);
+	        // colId.style.display = 'none';
+	        var colJobId = row.insertCell(0);
+	        var colName = row.insertCell(1);
+	        var colDesignation = row.insertCell(2);
+            var colOrganisation = row.insertCell(3);
+			var colEmail = row.insertCell(4);
+			var colDeleteBtn = row.insertCell(5);
+	        colJobId.innerText = activeRecruiter.id;
+			colName.innerText = activeRecruiter.firstname + " " + activeRecruiter.lastname;
+			colDesignation.innerText = activeRecruiter.designation;
+			colOrganisation.innerText = activeRecruiter.companyname;
+			colEmail.innerText = activeRecruiter.email;
+	    	colDeleteBtn.innerHTML = '<button class="btn btn-info" onclick="delActiveEmployer(this)">Delete</button>';
+	    // //     colViewApplicants.innerHTML = '<button class="viewApplicantsBtn" onclick="viewApplicants(this)">View Applicants</button>';
+	    });
+	    }
+	  };
+      http.onerror = function () 
+      {
+	    console.log(http.response);
+      };
+
+
+}
+function delActiveEmployer(srcElement)
+{
+console.log(srcElement);
+const httpReq = new XMLHttpRequest();
+        var currentRowIndex = srcElement.closest('tr').rowIndex;
+        var activeEmployerTable = document.getElementById('activeEmployers');
+        var id = activeEmployerTable.rows[currentRowIndex].cells[0].innerText;
+        var params =  {id : 1};
+        httpReq.open('DELETE',window.location.origin + '/deleteRecruiter', true);
+        httpReq.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        httpReq.send("id=" + id);
+        httpReq.onreadystatechange = function () 
+        {
+                if (this.readyState === 4 && this.status === 200) {
+                    if (httpReq.responseText == "true") {
+                        activeEmployerTable.deleteRow(currentRowIndex);
+                    }
+                }
+        };
+        httpReq.onerror = function () 
+        {
+                console.log(http.response);
+        };
+}
+</script>
 </head>
 <body>
     <div>
@@ -38,13 +107,17 @@
         </nav>
     </div>
     <div class="container">
+        <br>
+            <button id="btnManageStudents" class="buttonmargin btn btn-info" onclick="window.location.href = window.location.origin + '/students'">Manage Students</button>
+            <br>
+            <br>
         <ul class="nav nav-tabs" id="myTab" role="tablist">
             <li class="nav-item"><a class="nav-link active" id="home-tab"
                 data-toggle="tab" href="#home" role="tab" aria-controls="home"
                 aria-selected="true">Pending employer requests</a></li>
             <li class="nav-item"><a class="nav-link" id="profile-tab"
                 data-toggle="tab" href="#profile" role="tab" aria-controls="profile"
-                aria-selected="false">Active employers</a></li>
+				aria-selected="false" onclick="getActiveEmployers()" >Active employers</a></li>
         </ul>
         <div class="tab-content" id="myTabContent">
             <div class="tab-pane fade show active" id="home" role="tabpanel"
@@ -83,20 +156,22 @@
                 aria-labelledby="profile-tab">
                 <div>
                     <br />
-                    <table border="1" class="table table-hover">
-                        <tr class="table-info">
-                            <th>Job ID</th>
-                            <th>Position</th>
-                            <th>Organization</th>
-                            <th>Location</th>
-                            <th>Status</th>
-                            <th>Action</th>
-                        </tr>
-                        
-                    </table>
-                </div>
-            </div>
-        </div>
-    </div>
+					<table border="1" class="table table-hover" id="activeEmployers">
+						<tr class="table-info">
+							<th>Employer ID</th>
+							<th>Name</th>
+							<th>Designation</th>
+							<th>Company</th>
+							<th>Email</th>
+							<th>Action</th>
+						</tr>
+						
+					</table>
+				</div>
+
+			</div>
+		</div>
+	</div>
+
 </body>
 </html>
