@@ -65,7 +65,7 @@
 							<tr>
 								<td>${request.firstname}</td>
 								<td>${request.email}</td>
-								<td>${request.organization}</td>
+								<td>${request.companyname}</td>
 								<td>
 									<!-- View button -->
 									<div class="form-input">
