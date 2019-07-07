@@ -27,7 +27,7 @@ public class LoginModel implements ILoginModel {
 			model.addAttribute("isValidUser", isValidUser);
 			model.addAttribute("view", PropertiesParser.getPropertyMap().getProperty("studentHome"));
 			model.addAttribute("role","student");
-		} else if (isValidUser && ulogin.getRole().equalsIgnoreCase("co-op admin")) {
+		} else if (isValidUser && ulogin.getRole().equalsIgnoreCase("co-op Admin")) {
 			model.addAttribute("nextPage", REDIRECT + PropertiesParser.getPropertyMap().getProperty("adminHome"));
 			model.addAttribute("isValidUser", isValidUser);
 			model.addAttribute("view", PropertiesParser.getPropertyMap().getProperty("adminHome"));
