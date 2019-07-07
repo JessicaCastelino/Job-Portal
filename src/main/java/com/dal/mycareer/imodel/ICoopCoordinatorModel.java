@@ -12,4 +12,6 @@ public interface ICoopCoordinatorModel
 {
 	public Model fetchRecruiterRequests(Model model, HttpServletRequest request);
 	public List<RecruiterRequest> fetchActiveRecruiters();
+	public Model approveRecruiterRequest(Model model, HttpServletRequest request, int recruiterRequestId, String email);
+	public Model rejectRecruiterRequest(Model model, HttpServletRequest request, int recruiterRequestId);
 }
