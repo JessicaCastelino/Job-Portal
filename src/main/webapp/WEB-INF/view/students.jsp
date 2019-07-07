@@ -122,7 +122,7 @@
                         <td>${regStudent.firstname}</td>
                         <td>${regStudent.email}</td>
                         <td>${regStudent.requiredCourses}</td>
-                        <td><button class="btn btn-info" >Delete</button></td>
+                        <td><button class="btn btn-info" onclick="delActiveStudent(this)" >Delete</button></td>
                     </tr>
                 </c:forEach>
             </c:if>
@@ -211,6 +211,30 @@
         }).then(res => res.json())
             .then(response => console.log('Success:', JSON.stringify(response)))
             .catch(error => console.error('Error:', error));
+    }
+    function delActiveStudent(srcElement)
+    {
+        
+        const httpReq = new XMLHttpRequest();
+        var currentRowIndex = srcElement.closest('tr').rowIndex;
+        var activeStudentTable = document.getElementById('regStudents');
+        var id = activeStudentTable.rows[currentRowIndex].cells[0].innerText;
+        var params =  {id : 1};
+        httpReq.open('DELETE',window.location.origin + '/deletestudent', true);
+        httpReq.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        httpReq.send("id=" + id);
+        httpReq.onreadystatechange = function () 
+        {
+                if (this.readyState === 4 && this.status === 200) {
+                    if (httpReq.responseText == "true") {
+                        activeStudentTable.deleteRow(currentRowIndex);
+                    }
+                }
+        };
+        httpReq.onerror = function () 
+        {
+                console.log(http.response);
+        };
     }
     </script>
 </body>

@@ -14,4 +14,5 @@ public interface ICoopCoordinatorModel
 	public List<RecruiterRequest> fetchActiveRecruiters();
 	public Model approveRecruiterRequest(Model model, HttpServletRequest request, int recruiterRequestId, String email);
 	public Model rejectRecruiterRequest(Model model, HttpServletRequest request, int recruiterRequestId);
+	public boolean deleteActiveRecruiter(int employerId);
 }
