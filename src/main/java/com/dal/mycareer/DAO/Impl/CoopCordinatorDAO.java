@@ -27,11 +27,13 @@ public class CoopCordinatorDAO implements ICoopCordinatorDAO{
 				ResultSet rs = callableStatement.getResultSet();
 				while (rs.next()) {
 					recruiterRequest = new RecruiterRequest();
+					System.out.println("***********"+rs.getInt(1));
 					recruiterRequest.setId(Integer.toString(rs.getInt(1)));
 					recruiterRequest.setFirstname(rs.getString(2));
 					recruiterRequest.setLastname(rs.getString(3));
 					recruiterRequest.setEmail(rs.getString(4));
 					recruiterRequest.setCompanyname(rs.getString(5));
+					
 					requests.add(recruiterRequest);
 				}
 

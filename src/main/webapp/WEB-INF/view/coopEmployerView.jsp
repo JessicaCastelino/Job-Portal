@@ -63,7 +63,7 @@
 						</tr>
 						<c:forEach items="${recruiterRequests}" var="request">
 							<tr>
-								<td>${request.name}</td>
+								<td>${request.firstname}</td>
 								<td>${request.email}</td>
 								<td>${request.organization}</td>
 								<td>

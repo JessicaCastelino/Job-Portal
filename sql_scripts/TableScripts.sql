@@ -454,7 +454,7 @@ DELIMITER $$
 
 CREATE PROCEDURE `fetchRecruiterRequests` ()
 BEGIN
-SELECT id, firstname, lastname email, companyname FROM employers where isActive=0;
+SELECT id, firstname, lastname, email, companyname FROM employers where isActive=0;
 END$$
 
 DELIMITER ;
