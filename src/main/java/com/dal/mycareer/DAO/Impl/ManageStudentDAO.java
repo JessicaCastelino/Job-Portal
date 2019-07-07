@@ -106,5 +106,33 @@ public class ManageStudentDAO implements IManageStudentDAO {
 		}
         return registeredStudentList;
     }
+   @Override
+    public boolean DeleteStudent(int studentId) {
+        CallableStatement callStatement = null;
+        Connection con = null;
+        boolean isDeleteSuccess = false;
+        try 
+        {
+            con = DatabaseConnection.getConnection();
+            callStatement = con.prepareCall("{call sp_deleteStudent(?)}");
+            callStatement.setInt("studentId", studentId);
+            int rowsAffected = callStatement.executeUpdate();
+            if (rowsAffected > 0) 
+            {
+                isDeleteSuccess = true;
+            } 
+            else 
+            {
+                isDeleteSuccess = false;
+                LOGGER.error("Error Occurred while deleting student");
+            }
+        } 
+        catch (Exception ex) 
+        {
+            isDeleteSuccess = false;
+            LOGGER.error("Error Occurred in DeleteStudent :" + ex.getMessage());
+        }
 
+        return isDeleteSuccess;
+    }
 }
