@@ -458,3 +458,22 @@ SELECT id, firstname, lastname, email, companyname FROM employers where isActive
 END$$
 
 DELIMITER ;
+
+DROP procedure IF EXISTS `makeEmployerActive`;
+DELIMITER $$
+CREATE PROCEDURE `makeEmployerActive` (IN reqID INT(11), IN name VARCHAR(50), IN password VARCHAR(100))
+BEGIN
+UPDATE employers SET isActive = 1 WHERE id=reqID;
+INSERT INTO userlogin (userName,pwd,role) VALUES (name, password, 'co-opAdmin');
+END$$
+
+DELIMITER ;
+
+
+DROP procedure IF EXISTS `rejectEmployer`;
+DELIMITER $$
+CREATE PROCEDURE `rejectEmployer` (IN reqID INT(11))
+BEGIN
+DELETE FROM employers where id=reqID;
+END$$
+DELIMITER ;

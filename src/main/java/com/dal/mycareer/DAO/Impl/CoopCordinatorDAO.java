@@ -95,5 +95,62 @@ public class CoopCordinatorDAO implements ICoopCordinatorDAO
 		}
 		return lstActiveRecruiter;
 	}
+	
+	@Override
+	public int approveRequest(int requestId, String username, String password) {
+		con = DatabaseConnection.getConnection();
+		try {
+			callableStatement = con.prepareCall("{call makeEmployerActive("+requestId+",'"+username+"','"+password+"')}");
+			boolean results = callableStatement.execute();
+			if (results)
+			{
+				return 1;
+			}
+			else
+			{
+				return 0;
+			}
+	
+			}
+			catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return 0;
+		} finally {
+			try {
+				callableStatement.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
+		
+		@Override
+		public int rejectRequest(int requestId) {
+			con = DatabaseConnection.getConnection();
+			try {
+				
+				callableStatement = con.prepareCall("{call rejectEmployer("+requestId+")}");
+				boolean results = callableStatement.execute();
+				if (results)
+					return 1;
+				else
+					return 0;
+		
+				}
+				catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				return 0;
+			} finally {
+				try {
+					callableStatement.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+	}
 
 }

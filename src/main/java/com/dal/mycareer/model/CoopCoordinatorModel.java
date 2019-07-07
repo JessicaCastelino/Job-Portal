@@ -48,4 +48,32 @@ public class CoopCoordinatorModel implements ICoopCoordinatorModel
 		return dao.fetchActiveRecruiters();
 	 }
 
+	 @Override
+		public Model approveRecruiterRequest(Model model, HttpServletRequest request, int recruiterRequestId, String email) {
+			HttpSession session = request.getSession();
+			String userSessionName = (String) session.getAttribute(SESSION_NAME);
+			System.out.println("USERNAME :"+userSessionName);
+			if(userSessionName!="" && userSessionName!=null)
+			{
+			dao = new CoopCordinatorDAO();
+			int i=dao.approveRequest(recruiterRequestId, email, "HAHAHA");
+			requests=dao.fetchRecruiterRequests();
+			model.addAttribute("recruiterRequests", requests);
+			}
+			return model;
+		}
+	 @Override
+		public Model rejectRecruiterRequest(Model model, HttpServletRequest request, int recruiterRequestId) {
+			HttpSession session = request.getSession();
+			String userSessionName = (String) session.getAttribute(SESSION_NAME);
+			System.out.println("USERNAME :"+userSessionName);
+			if(userSessionName!="" && userSessionName!=null)
+			{
+			dao = new CoopCordinatorDAO();
+			int i=dao.rejectRequest(recruiterRequestId);
+			requests=dao.fetchRecruiterRequests();
+			model.addAttribute("recruiterRequests", requests);
+			}
+			return model;
+		}
 }

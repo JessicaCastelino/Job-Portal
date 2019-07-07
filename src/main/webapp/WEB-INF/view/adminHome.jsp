@@ -67,11 +67,11 @@
                                     <!-- View button -->
                                     <div class="form-input">
                                     <a class="btn btn-info btn-block my-4"
-                                            href="/approveReject?id=${request.id}">Approve</a>
+                                            href="/approve?id=${request.id}&email=${request.email}">Approve</a>
                                     </div> <!-- Apply button -->
                                     <div class="form-input">
                                         <a class="btn btn-info btn-block my-4"
-                                            href="/approveReject?id=${request.id}">Reject</a>
+                                            href="/reject?id=${request.id}">Reject</a>
                                     </div>
                                 </td>
                             </tr>
