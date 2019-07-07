@@ -12,5 +12,9 @@ public class ManageStudentModel implements IManageStudentModel {
     @Autowired
     IManageStudentDAO manageStudentDAO;
 
-
+    @Override
+    public Student RegisterStudent(Student studentDetails) 
+	{
+        return manageStudentDAO.RegisterStudent(studentDetails);
+    }
 }

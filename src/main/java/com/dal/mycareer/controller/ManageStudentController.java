@@ -18,5 +18,11 @@ public class ManageStudentController
     @Autowired
     IManageStudentModel manageStudentModel;
 
-
+    @ResponseBody
+	@RequestMapping( value="/registerstudent", method=RequestMethod.POST)
+    public Student RegisterStudent(@RequestBody Student studentDetails, HttpServletRequest request)
+    {
+        String currentUser = (String) request.getSession().getAttribute("sessionName");
+		return manageStudentModel.RegisterStudent(studentDetails);
+    }
 }
