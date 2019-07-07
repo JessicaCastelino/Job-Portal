@@ -5,13 +5,6 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
-import com.dal.mycareer.DTO.RecruiterRequest;
-import com.dal.mycareer.imodel.ICoopCoordinatorModel;
-import com.dal.mycareer.imodel.IRoleModel;
-import com.dal.mycareer.model.CoopCoordinatorModel;
-import com.dal.mycareer.model.RoleModel;
-import com.dal.mycareer.propertiesparser.PropertiesParser;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +15,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.dal.mycareer.DTO.RecruiterRequest;
+import com.dal.mycareer.imodel.ICoopCoordinatorModel;
+import com.dal.mycareer.imodel.IRoleModel;
+import com.dal.mycareer.model.RoleModel;
+import com.dal.mycareer.propertiesparser.PropertiesParser;
 
 @Controller
 public class CoopCoordinatorController {

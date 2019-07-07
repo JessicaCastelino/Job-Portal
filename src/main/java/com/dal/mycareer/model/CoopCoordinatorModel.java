@@ -19,6 +19,8 @@ import com.dal.mycareer.emailengine.EmployerRejectionEmailImpl;
 import com.dal.mycareer.emailengine.IEmployerApprovalEmail;
 import com.dal.mycareer.emailengine.IEmployerRejectionEmail;
 import com.dal.mycareer.imodel.ICoopCoordinatorModel;
+import com.dal.mycareer.passwordgenerator.IPasswordGenerator;
+import com.dal.mycareer.passwordgenerator.PasswordGenerator;
 
 @Service
 public class CoopCoordinatorModel implements ICoopCoordinatorModel
@@ -56,7 +58,8 @@ public class CoopCoordinatorModel implements ICoopCoordinatorModel
 			if(userSessionName!="" && userSessionName!=null)
 			{
 			dao = new CoopCordinatorDAO();
-			String password="HAHAHA";
+			IPasswordGenerator passwordGenerator = new PasswordGenerator();
+			String password= passwordGenerator.generatePassword();
 			RecruiterRequest recruiter=dao.fetchRecruiter(recruiterRequestId);
 			int i=dao.approveRequest(recruiterRequestId, recruiter.getEmail(), password);
 			approvalEmail.employerApprovalEmail(recruiter.getEmail(), recruiter.getFirstname()+" "+recruiter.getLastname(), recruiter.getCompanyname(), password, recruiter.getEmail());
