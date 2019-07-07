@@ -11,4 +11,5 @@ public interface ICoopCordinatorDAO
 	public int approveRequest(int requestId, String username, String password);
 	public int rejectRequest(int requestId);
 	public RecruiterRequest fetchRecruiter(int reqID);
+	public boolean deleteActiveRecruiter(int employerId);
 }

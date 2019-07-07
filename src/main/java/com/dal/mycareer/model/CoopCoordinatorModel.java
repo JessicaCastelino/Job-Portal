@@ -84,4 +84,17 @@ public class CoopCoordinatorModel implements ICoopCoordinatorModel
 			}
 			return model;
 		}
+	 @Override
+	 public boolean deleteActiveRecruiter(int employerId)
+	 {
+		dao = new CoopCordinatorDAO(); 
+		return dao.deleteActiveRecruiter(employerId);
+	 }
+
+
+	@Override
+	public List<RecruiterRequest> fetchActiveRecruiters() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

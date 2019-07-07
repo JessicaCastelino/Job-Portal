@@ -189,4 +189,34 @@ public class CoopCordinatorDAO implements ICoopCordinatorDAO
 				}
 			}
 
+	@Override
+	public boolean deleteActiveRecruiter(int employerId)
+	{
+		CallableStatement callStatement = null;
+		Connection con = null;
+		boolean isDeleted = false;
+		try
+		{
+			con = DatabaseConnection.getConnection();
+			callStatement = con.prepareCall("{call sp_deleteActiveEmployer(?)}");
+			callStatement.setInt("employerId", employerId);
+			int rowDeleted = callStatement.executeUpdate();
+			if (rowDeleted > 0)
+			{
+				isDeleted = true;
+			}
+			else
+			{
+				isDeleted = false;
+				LOGGER.error("Error Occurred while deleting employer");
+			}
+		}
+		catch(Exception ex)
+		{
+			isDeleted = false;
+			LOGGER.error("Error Occurred in deleteActiveRecruiter :" + ex.getMessage());
+		}
+		return isDeleted;
+	}
+
 }
