@@ -2,6 +2,10 @@ package com.dal.mycareer.DAO.Impl;
 
 import java.sql.CallableStatement;
 import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.dal.mycareer.DAO.Interface.IManageStudentDAO;
 import com.dal.mycareer.DAO.Interface.IPrerequisiteCoursesDAO;
@@ -58,6 +62,49 @@ public class ManageStudentDAO implements IManageStudentDAO {
         }
 
         return studentDetails;
+    }
+    @Override
+    public List<Student> getRegisteredStudents()
+    {
+        CallableStatement callStatement = null;
+        Connection con = null;
+        Student student = null;
+        List <Student> registeredStudentList = new ArrayList<Student>();
+        try
+        {
+            
+            con = DatabaseConnection.getConnection();
+            callStatement = con.prepareCall("{call fetchRegisteredStudents()}");
+            ResultSet regStudentsSet = callStatement.executeQuery();
+            while (regStudentsSet.next())
+            {
+                student = new Student();
+                student.setId(regStudentsSet.getInt("id"));
+                student.setFirstname(regStudentsSet.getString("firstname"));
+                student.setLastname(regStudentsSet.getString("lastname"));
+                student.setBannerid(regStudentsSet.getString("bannerid"));
+                student.setEmail(regStudentsSet.getString("email"));
+                student.setRequiredCourses(regStudentsSet.getString("requiredCourses"));
+                registeredStudentList.add(student);
+            }
+        }
+        catch (Exception ex)
+        {
+            LOGGER.error( "Error Occurred in getRegisteredStudents :" + ex.getMessage());
+        }
+        finally
+		{
+            try 
+            {
+				callStatement.close();
+            }
+             catch (SQLException e) 
+             {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+        return registeredStudentList;
     }
 
 }

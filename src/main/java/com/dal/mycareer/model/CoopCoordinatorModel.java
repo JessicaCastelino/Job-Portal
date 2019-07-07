@@ -10,17 +10,22 @@ import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.ui.Model;
-
+import org.springframework.stereotype.Service;
 import com.dal.mycareer.DAO.Impl.CoopCordinatorDAO;
 import com.dal.mycareer.DAO.Interface.ICoopCordinatorDAO;
 import com.dal.mycareer.DTO.RecruiterRequest;
 import com.dal.mycareer.imodel.ICoopCoordinatorModel;
-
-public class CoopCoordinatorModel implements ICoopCoordinatorModel{
+import org.springframework.beans.factory.annotation.Autowired;
+@Service
+public class CoopCoordinatorModel implements ICoopCoordinatorModel
+{
+	
+	ICoopCordinatorDAO dao = null;
+	
 	private static List<RecruiterRequest> requests = new ArrayList<RecruiterRequest>();
 	private static final String SESSION_NAME = "sessionName";
 	static Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
-	ICoopCordinatorDAO dao = null;
+	
 
 	@Override
 	public Model fetchRecruiterRequests(Model model, HttpServletRequest request) {
@@ -35,5 +40,12 @@ public class CoopCoordinatorModel implements ICoopCoordinatorModel{
 		}
 		return model;
 	}
+
+	 @Override
+	 public List<RecruiterRequest> fetchActiveRecruiters()
+	 {
+		dao = new CoopCordinatorDAO(); 
+		return dao.fetchActiveRecruiters();
+	 }
 
 }

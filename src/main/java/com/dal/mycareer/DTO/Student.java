@@ -14,7 +14,7 @@ public class Student {
 	private String program;
 	private int isActive;
 	private List<Integer> completedCourses;
-
+	private String requiredCourses;
 	public Student() {
 		super();
 	}
@@ -120,6 +120,15 @@ public class Student {
 
 	public void setCompletedCourses(List<Integer> completedCourses) {
 		this.completedCourses = completedCourses;
+	}
+
+	public String getRequiredCourses()
+	{
+		return requiredCourses;
+	}
+	public void setRequiredCourses(String requiredCourses)
+	{
+		this.requiredCourses = requiredCourses;
 	}
 
 }

@@ -1,5 +1,7 @@
 package com.dal.mycareer.model;
 
+import java.util.List;
+
 import com.dal.mycareer.DAO.Interface.IManageStudentDAO;
 import com.dal.mycareer.DTO.Student;
 import com.dal.mycareer.imodel.IManageStudentModel;
@@ -16,5 +18,11 @@ public class ManageStudentModel implements IManageStudentModel {
     public Student RegisterStudent(Student studentDetails) 
 	{
         return manageStudentDAO.RegisterStudent(studentDetails);
+    }
+
+    @Override
+    public List<Student> getRegisteredStudents()
+    {
+        return manageStudentDAO.getRegisteredStudents();
     }
 }

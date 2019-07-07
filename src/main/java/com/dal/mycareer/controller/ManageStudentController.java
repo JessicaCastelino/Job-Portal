@@ -28,7 +28,8 @@ public class ManageStudentController
     @RequestMapping("/students")
 	public String getRegisteredStudents(ModelMap model)
 	{
-		return "students";
+        model.addAttribute("registeredStudents", manageStudentModel.getRegisteredStudents());
+        return "students";
     }
     
     @ResponseBody

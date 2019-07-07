@@ -104,21 +104,29 @@
     <table id="regStudents" class="table table-hover">
         <thead>
             <tr class="table-info">
-                <th style="display: none;">ID</th>
-                <th style="width: 6%;">Job Id</th>
-                <th>Title</th>
-                <th>Job Type</th>
-                <th>Company</th>
-                <th>Location</th>
-                <th>Deadline</th>
+                <th>ID</th>
+                <th>Banner No.</th>
+                <th>Student Name</th>
+                <th>Email</th>            
                 <th>Prerequisite Courses</th>
                 <th style="width: 75px"></th>
                 <th style="width: 75px"></th>
             </tr>
         </thead>
-        <tbody>
-
-        </tbody>
+        
+            <c:if test="${not empty registeredStudents}">
+                <c:forEach var="regStudent" items="${registeredStudents}">
+                    <tr>
+                        <td>${regStudent.id}</td>
+                        <td>${regStudent.bannerid}</td>
+                        <td>${regStudent.firstname}</td>
+                        <td>${regStudent.email}</td>
+                        <td>${regStudent.requiredCourses}</td>
+                        <td><button class="btn btn-info" >Delete</button></td>
+                    </tr>
+                </c:forEach>
+            </c:if>
+        
     </table>
 
     <script>

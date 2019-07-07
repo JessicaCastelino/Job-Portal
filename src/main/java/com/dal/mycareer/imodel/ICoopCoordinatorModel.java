@@ -8,7 +8,8 @@ import org.springframework.ui.Model;
 
 import com.dal.mycareer.DTO.RecruiterRequest;
 
-public interface ICoopCoordinatorModel {
-
+public interface ICoopCoordinatorModel 
+{
 	public Model fetchRecruiterRequests(Model model, HttpServletRequest request);
+	public List<RecruiterRequest> fetchActiveRecruiters();
 }
