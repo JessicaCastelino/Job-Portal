@@ -157,7 +157,7 @@
 									<!-- View button --> <!-- Apply button -->
 									<div class="form-input">
 										<a class="btn btn-info btn-block my-4"
-											href="/withdraw?id=${job.id}">Withdraw</a>
+											href="/withdraw?id=${appliedJob.id}">Withdraw</a>
 
 									</div>
 								</td>

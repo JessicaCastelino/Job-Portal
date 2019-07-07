@@ -49,21 +49,24 @@ public class RequestController {
 
 	}
 
-	@RequestMapping("/adminHome")
-	public String adminHome(Model model, HttpServletRequest request) {
-
-		LOGGER.info("Routed to AdminHome");
-
-		model.addAttribute("reqPage", PropertiesParser.getPropertyMap().get("adminHome").toString());
-		model.addAttribute("role", "admin");
-
-		IRoleModel roleModel = new RoleModel();
-
-		model = roleModel.getBasePage(model, request);
-
-		return model.asMap().get("view").toString();
-	}
 	
+	/*
+	 * @RequestMapping("/adminHome") public String adminHome(Model model,
+	 * HttpServletRequest request) {
+	 * 
+	 * LOGGER.info("Routed to AdminHome");
+	 * 
+	 * model.addAttribute("reqPage",
+	 * PropertiesParser.getPropertyMap().get("adminHome").toString());
+	 * model.addAttribute("role", "admin");
+	 * 
+	 * IRoleModel roleModel = new RoleModel();
+	 * 
+	 * model = roleModel.getBasePage(model, request);
+	 * 
+	 * return model.asMap().get("view").toString(); }
+	 * 
+	 */
 	@RequestMapping("/logout")
 	public String logout(Model model, HttpServletRequest request) {
 
