@@ -9,4 +9,6 @@ public interface IManageApplicationsModel
 	public List<Application> getApplications(int jobRecordId);
 
 	public boolean updateApplicationStatus(int applicationId, String appStatus);
+	
+	//public boolean downloadFile(int applicationId);
 }

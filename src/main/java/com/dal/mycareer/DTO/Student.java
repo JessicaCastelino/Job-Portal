@@ -1,5 +1,7 @@
 package com.dal.mycareer.DTO;
 
+import java.util.List;
+
 public class Student {
 	private int id;
 	private String firstname;
@@ -11,7 +13,8 @@ public class Student {
 	private String department;
 	private String program;
 	private int isActive;
-
+	private List<Integer> completedCourses;
+	private String requiredCourses;
 	public Student() {
 		super();
 	}
@@ -109,6 +112,23 @@ public class Student {
 
 	public void setIsActive(int isActive) {
 		this.isActive = isActive;
+	}
+
+	public List<Integer> getCompletedCourses() {
+		return completedCourses;
+	}
+
+	public void setCompletedCourses(List<Integer> completedCourses) {
+		this.completedCourses = completedCourses;
+	}
+
+	public String getRequiredCourses()
+	{
+		return requiredCourses;
+	}
+	public void setRequiredCourses(String requiredCourses)
+	{
+		this.requiredCourses = requiredCourses;
 	}
 
 }

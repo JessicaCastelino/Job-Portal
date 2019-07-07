@@ -17,7 +17,7 @@ public interface IStudentDAO {
 
 	public int applyForJob(InputStream inputStream, int studentId, int jobId);
 
-	public int withdrawApplication(int studentId, int jobId);
+	public int withdrawApplication(int jobId);
 	
 	public int alreadyApplied(int studentId, int jobId);
 }
