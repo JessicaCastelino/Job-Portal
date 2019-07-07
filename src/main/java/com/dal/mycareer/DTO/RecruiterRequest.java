@@ -6,6 +6,7 @@ String firstname;
 String lastname;
 String email;
 String companyname;
+String designation;
 public String getId() {
 	return id;
 }
@@ -35,6 +36,14 @@ public String getCompanyname() {
 }
 public void setCompanyname(String companyname) {
 	this.companyname = companyname;
+}
+public String getDesignation() 
+{
+	return designation;
+}
+public void setDesignation(String designation) 
+{
+	this.designation = designation;
 }
 
 

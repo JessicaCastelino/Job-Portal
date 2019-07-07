@@ -10,9 +10,14 @@ import java.util.List;
 import com.dal.mycareer.DAO.Interface.ICoopCordinatorDAO;
 import com.dal.mycareer.DBConnection.DatabaseConnection;
 import com.dal.mycareer.DTO.RecruiterRequest;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Repository;
 
-
-public class CoopCordinatorDAO implements ICoopCordinatorDAO{
+@Repository
+public class CoopCordinatorDAO implements ICoopCordinatorDAO
+{
+	private final Logger LOGGER = LoggerFactory.getLogger(this.getClass());
 	Connection con = null;
 	CallableStatement callableStatement = null;
 	@Override
@@ -54,6 +59,41 @@ public class CoopCordinatorDAO implements ICoopCordinatorDAO{
 			}
 		}
 	}
-		
+	public List<RecruiterRequest> fetchActiveRecruiters()
+	{
+		con = DatabaseConnection.getConnection();
+		RecruiterRequest activeRecruiter = null;
+		List <RecruiterRequest> lstActiveRecruiter = new ArrayList<RecruiterRequest>();
+		try
+		{
+			callableStatement = con.prepareCall("{call fetchActiveRecruiters()}");
+			ResultSet activeEmployerSet = callableStatement.executeQuery();
+			while(activeEmployerSet.next())
+			{
+				activeRecruiter = new RecruiterRequest();
+				activeRecruiter.setId(Integer.toString(activeEmployerSet.getInt("id")));
+				activeRecruiter.setFirstname(activeEmployerSet.getString("firstname"));
+				activeRecruiter.setLastname(activeEmployerSet.getString("lastname"));
+				activeRecruiter.setEmail(activeEmployerSet.getString("email"));
+				activeRecruiter.setDesignation(activeEmployerSet.getString("designation"));
+				activeRecruiter.setCompanyname(activeEmployerSet.getString("companyName"));
+				lstActiveRecruiter.add(activeRecruiter);
+			}
+		}
+		catch(Exception ex)
+		{
+			LOGGER.error( "Error Occurred in fetchActiveRecruiters :" + ex.getMessage());
+		}
+		finally
+		{
+			try {
+				callableStatement.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return lstActiveRecruiter;
+	}
 
 }
