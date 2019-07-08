@@ -96,8 +96,9 @@ public class CoopCoordinatorModel implements ICoopCoordinatorModel
 
 
 	@Override
-	public List<RecruiterRequest> fetchActiveRecruiters() {
-		// TODO Auto-generated method stub
-		return null;
+	public List<RecruiterRequest> fetchActiveRecruiters() 
+	{
+		dao = new CoopCordinatorDAO(); 
+		return dao.fetchActiveRecruiters();
 	}
 }
