@@ -33,7 +33,7 @@ public class ManageStudentDAO implements IManageStudentDAO {
         try 
         {
             con = DatabaseConnection.getConnection();
-            callStatement = con.prepareCall("{call sp_insertStudent(?,?,?,?,?,?,?,?,?,?)}");
+            callStatement = con.prepareCall("{call sp_insertStudent(?,?,?,?,?,?,?,?,?,?,?)}");
             callStatement.setString("fname", studentDetails.getFirstname());
             callStatement.setString("lname", studentDetails.getLastname());
             callStatement.setString("bannerid", studentDetails.getBannerid());
@@ -42,8 +42,9 @@ public class ManageStudentDAO implements IManageStudentDAO {
             callStatement.setString("degree", studentDetails.getDegree());
             callStatement.setString("dept", studentDetails.getDepartment());
             callStatement.setString("pgm", studentDetails.getProgram());
-            callStatement.registerOutParameter(9, java.sql.Types.INTEGER);
+            callStatement.setString("pswrd", studentDetails.getPassword());
             callStatement.registerOutParameter(10, java.sql.Types.INTEGER);
+            callStatement.registerOutParameter(11, java.sql.Types.INTEGER);
             int rowsAffected = callStatement.executeUpdate();
             if (rowsAffected > 0) 
             {

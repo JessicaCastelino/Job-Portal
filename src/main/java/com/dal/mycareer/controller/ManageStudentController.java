@@ -5,6 +5,8 @@ import java.lang.invoke.MethodHandles;
 import javax.servlet.http.HttpServletRequest;
 
 import com.dal.mycareer.DTO.Student;
+import com.dal.mycareer.emailengine.IStudentOnboardEmail;
+import com.dal.mycareer.emailengine.StudentOnboardEmailImpl;
 import com.dal.mycareer.imodel.IManageStudentModel;
 
 import org.slf4j.Logger;
@@ -37,8 +39,10 @@ public class ManageStudentController
 	@RequestMapping( value="/registerstudent", method=RequestMethod.POST)
     public Student RegisterStudent(@RequestBody Student studentDetails, HttpServletRequest request)
     {
-        String currentUser = (String) request.getSession().getAttribute("sessionName");
-		return manageStudentModel.RegisterStudent(studentDetails);
+        Student student = manageStudentModel.RegisterStudent(studentDetails);
+        IStudentOnboardEmail onboardEmail = new StudentOnboardEmailImpl();
+        onboardEmail.studentOnboardEmail(student.getEmail(), student.getFirstname(), student.getPassword(), student.getEmail());
+		return student;
     }
 
     @ResponseBody
