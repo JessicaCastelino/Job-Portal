@@ -36,7 +36,8 @@ function getActiveEmployers()
         if (this.readyState === 4 && this.status === 200) 
         {
 		  var activeRecruiters = JSON.parse(http.response);
-		  console.log(activeRecruiters);
+          console.log(activeRecruiters);
+          $("#activeEmployers").find("tr:gt(0)").remove();
           activeRecruiters.forEach(activeRecruiter => 
           {
 	        var activeJobsTable = document.getElementById('activeEmployers');
