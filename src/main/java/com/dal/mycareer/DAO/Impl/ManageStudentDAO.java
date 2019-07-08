@@ -48,8 +48,8 @@ public class ManageStudentDAO implements IManageStudentDAO {
             int rowsAffected = callStatement.executeUpdate();
             if (rowsAffected > 0) 
             {
-                int studentId = callStatement.getInt(9);
-                int userId = callStatement.getInt(10);
+                int studentId = callStatement.getInt(10);
+                int userId = callStatement.getInt(11);
                 prereqDAO.addStudentCompletedPrereq(studentId, studentDetails.getCompletedCourses());
             } 
             else 
