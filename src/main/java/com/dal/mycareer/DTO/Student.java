@@ -15,6 +15,7 @@ public class Student {
 	private int isActive;
 	private List<Integer> completedCourses;
 	private String requiredCourses;
+	private String password;
 	public Student() {
 		super();
 	}
@@ -130,5 +131,12 @@ public class Student {
 	{
 		this.requiredCourses = requiredCourses;
 	}
-
+	public String getPassword()
+	{
+		return password;
+	}
+	public void setPassword(String password)
+	{
+		this.password = password;
+	}
 }
