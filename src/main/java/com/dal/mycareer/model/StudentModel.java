@@ -40,7 +40,7 @@ public class StudentModel implements IStudentModel {
 		{
 		dao = new StudentDAO();
 		student = dao.getStudentDetails(userSessionName);
-		jobs = dao.getAllJobList();
+		jobs = dao.getAllJobList(student.getId());
 		appliedJobs = dao.getAppliedJobList(student.getId());
 		model.addAttribute("jobs", jobs);
 		model.addAttribute("appliedJobs", appliedJobs);
