@@ -21,12 +21,12 @@ public class StudentDAO implements IStudentDAO {
 	CallableStatement callableStatement = null;
 
 	@Override
-	public List<JobDetails> getAllJobList() {
+	public List<JobDetails> getAllJobList(int studID) {
 		con = DatabaseConnection.getConnection();
 		JobDetails job = null;
 		List<JobDetails> jobs = new ArrayList<JobDetails>();
 		try {
-			callableStatement = con.prepareCall("{call getAllJobList()}");
+			callableStatement = con.prepareCall("{call getAllJobList("+studID+")}");
 			boolean results = callableStatement.execute();
 			while (results) {
 				ResultSet rs = callableStatement.getResultSet();

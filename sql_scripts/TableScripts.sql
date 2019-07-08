@@ -464,7 +464,7 @@ DELIMITER $$
 CREATE PROCEDURE `makeEmployerActive` (IN reqID INT(11), IN name VARCHAR(50), IN password VARCHAR(100))
 BEGIN
 UPDATE employers SET isActive = 1 WHERE id=reqID;
-INSERT INTO userlogin (userName,pwd,role) VALUES (name, password, 'co-opAdmin');
+INSERT INTO userlogin (userName,pwd,role) VALUES (name, password, 'employer');
 UPDATE employers SET userid = (SELECT id from userlogin where userName=name) WHERE id=reqID;
 END$$
 
