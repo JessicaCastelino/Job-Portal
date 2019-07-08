@@ -31,7 +31,6 @@ public class StudentController {
 
 	@RequestMapping(value = { "/studentHome" }, method = RequestMethod.GET)
 	public String loadStudentHome(Model model, HttpServletRequest request) {
-
 		model.addAttribute("reqPage", PropertiesParser.getPropertyMap().get("studentHome").toString());
 		model.addAttribute("role", "student");
 		roleModel = new RoleModel();
@@ -39,7 +38,6 @@ public class StudentController {
 		studentModel = new StudentModel();
 		model = studentModel.fetchJobs(model, request);
 		return model.asMap().get("view").toString();
-
 	}
 
 	@RequestMapping(value = { "/viewJob" }, method = RequestMethod.GET)

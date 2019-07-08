@@ -7,4 +7,5 @@ import com.dal.mycareer.DTO.PrerequisiteCourses;
 public interface IPrerequisiteCoursesDAO {
 
 	public List<PrerequisiteCourses> getPrerequisiteCourses();
+	public boolean addStudentCompletedPrereq(int studentId, List<Integer> completedCourses);
 }

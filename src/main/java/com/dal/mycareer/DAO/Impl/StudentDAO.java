@@ -21,14 +21,13 @@ public class StudentDAO implements IStudentDAO {
 	CallableStatement callableStatement = null;
 
 	@Override
-	public List<JobDetails> getAllJobList() {
+	public List<JobDetails> getAllJobList(int studID) {
 		con = DatabaseConnection.getConnection();
 		JobDetails job = null;
 		List<JobDetails> jobs = new ArrayList<JobDetails>();
 		try {
-			callableStatement = con.prepareCall("{call getAllJobList()}");
+			callableStatement = con.prepareCall("{call getAllJobList("+studID+")}");
 			boolean results = callableStatement.execute();
-
 			while (results) {
 				ResultSet rs = callableStatement.getResultSet();
 				while (rs.next()) {
@@ -42,10 +41,7 @@ public class StudentDAO implements IStudentDAO {
 					job.setHourPerWeek((rs.getInt(7)));
 					job.setApplicationDeadline(rs.getDate(8));
 					job.setJobDescription(rs.getString(9));
-					//job.setAdditionalInformation(rs.getString(10));
-					//job.setJobStatus(rs.getString(11));
 					job.setEmployeeId((rs.getInt(12)));
-					//job.setTerm(rs.getString(13));
 					job.setOrganization(rs.getString(13));
 					jobs.add(job);
 				}
@@ -76,7 +72,6 @@ public class StudentDAO implements IStudentDAO {
 		try {
 			callableStatement = con.prepareCall("{call getAppliedJobList(" + studentId + ")}");
 			boolean results = callableStatement.execute();
-
 			while (results) {
 				ResultSet rs = callableStatement.getResultSet();
 				while (rs.next()) {
@@ -178,10 +173,10 @@ public class StudentDAO implements IStudentDAO {
 	}
 
 	@Override
-	public int withdrawApplication(int studentId, int jobId) {
+	public int withdrawApplication(int jobId) {
 		Connection c = DatabaseConnection.getConnection();
 		try {
-			callableStatement = con.prepareCall("{call withdrawApplication(" + studentId + "," + jobId + ")}");
+			callableStatement = con.prepareCall("{call withdrawApplication(" + jobId + ")}");
 			boolean results = callableStatement.execute();
 			if (results)
 				return 1;

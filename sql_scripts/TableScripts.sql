@@ -185,7 +185,7 @@ DROP procedure IF EXISTS `withdrawApplication`;
 DELIMITER //
 CREATE PROCEDURE `withdrawApplication` (IN studentId INT(11), IN jobId INT(11))
 BEGIN
-delete from `CSCI5308_8_DEVINT`.`students` where studentId=studentId and jobId=jobId;
+delete from `CSCI5308_8_DEVINT`.`appliedJobs` where id=jId;
 END //
 DELIMITER ;
 
@@ -446,4 +446,46 @@ SET
 WHERE `id` =jobId;
 
 END$$
+DELIMITER ;
+
+
+DROP procedure IF EXISTS `fetchRecruiterRequests`;
+DELIMITER $$
+
+CREATE PROCEDURE `fetchRecruiterRequests` ()
+BEGIN
+SELECT id, firstname, lastname, email, companyname FROM employers where isActive=0;
+END$$
+
+DELIMITER ;
+
+DROP procedure IF EXISTS `makeEmployerActive`;
+DELIMITER $$
+CREATE PROCEDURE `makeEmployerActive` (IN reqID INT(11), IN name VARCHAR(50), IN password VARCHAR(100))
+BEGIN
+UPDATE employers SET isActive = 1 WHERE id=reqID;
+INSERT INTO userlogin (userName,pwd,role) VALUES (name, password, 'employer');
+UPDATE employers SET userid = (SELECT id from userlogin where userName=name) WHERE id=reqID;
+END$$
+
+DELIMITER ;
+
+
+DROP procedure IF EXISTS `rejectEmployer`;
+DELIMITER $$
+CREATE PROCEDURE `rejectEmployer` (IN reqID INT(11))
+BEGIN
+DELETE FROM employers where id=reqID;
+END$$
+DELIMITER ;
+
+
+DROP procedure IF EXISTS `fetchRecruiter`;
+
+DELIMITER $$
+CREATE PROCEDURE `fetchRecruiter` (IN reqID INT(11))
+BEGIN
+SELECT id, firstname, lastname, email, companyname FROM employers where id=reqID;
+END$$
+
 DELIMITER ;

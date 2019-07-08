@@ -40,7 +40,7 @@ public class StudentModel implements IStudentModel {
 		{
 		dao = new StudentDAO();
 		student = dao.getStudentDetails(userSessionName);
-		jobs = dao.getAllJobList();
+		jobs = dao.getAllJobList(student.getId());
 		appliedJobs = dao.getAppliedJobList(student.getId());
 		model.addAttribute("jobs", jobs);
 		model.addAttribute("appliedJobs", appliedJobs);
@@ -95,7 +95,8 @@ public class StudentModel implements IStudentModel {
 		if(userSessionName!="" && userSessionName!=null)
 		{
 		dao = new StudentDAO();
-		int i = dao.withdrawApplication(student.getId(), jobId);
+		student = dao.getStudentDetails(userSessionName);
+		int i = dao.withdrawApplication(jobId);
 		appliedJobs = dao.getAppliedJobList(student.getId());
 		model.addAttribute("jobs", jobs);
 		model.addAttribute("appliedJobs", appliedJobs);
@@ -146,4 +147,6 @@ public class StudentModel implements IStudentModel {
 		}
 		return model;
 	}
+	
+	
 }

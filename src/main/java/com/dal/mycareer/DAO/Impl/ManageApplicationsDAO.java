@@ -1,5 +1,6 @@
 package com.dal.mycareer.DAO.Impl;
 
+import java.io.InputStream;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -69,5 +70,24 @@ public class ManageApplicationsDAO implements IManageApplicationsDAO {
 		}
 
 		return isUpdateSuccess;
+	}
+
+	public InputStream fetchDocument(int id) {
+		Connection con = DatabaseConnection.getConnection();
+		try {
+	
+			CallableStatement callableStatement = con.prepareCall("{call fetchDocument(" + id + ")}");
+			boolean results = callableStatement.execute();
+			ResultSet rs = callableStatement.getResultSet();
+			rs.next();
+			InputStream is =rs.getBinaryStream(1);
+			rs.close();
+			return is;
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
 	}
 }
