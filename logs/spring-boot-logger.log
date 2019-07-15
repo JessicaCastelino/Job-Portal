@@ -1,0 +1,12 @@
+2019-07-14 21:30:31,262 INFO com.dal.mycareer.controller.RequestController [http-nio-8090-exec-1] Routed to Homepage
+2019-07-14 21:30:35,805 INFO com.dal.mycareer.controller.LoginController [http-nio-8090-exec-3] Login request -- Start
+2019-07-14 21:30:36,259 INFO com.dal.mycareer.controller.LoginController [http-nio-8090-exec-3] Login request -- END
+2019-07-14 21:30:38,296 INFO com.dal.mycareer.controller.RequestController [http-nio-8090-exec-5] Routed to Logout
+2019-07-14 21:30:38,301 INFO com.dal.mycareer.controller.RequestController [http-nio-8090-exec-5] Session Invalidated and Logged out
+2019-07-14 21:30:39,960 INFO com.dal.mycareer.controller.RequestController [http-nio-8090-exec-6] Routed to Homepage
+2019-07-14 21:34:03,051 INFO com.dal.mycareer.controller.RequestController [http-nio-8090-exec-1] Routed to Homepage
+2019-07-14 21:34:07,655 INFO com.dal.mycareer.controller.LoginController [http-nio-8090-exec-3] Login request -- Start
+2019-07-14 21:34:08,058 INFO com.dal.mycareer.controller.LoginController [http-nio-8090-exec-3] Login request -- END
+2019-07-14 21:34:10,820 INFO com.dal.mycareer.controller.RequestController [http-nio-8090-exec-6] Routed to Logout
+2019-07-14 21:34:10,825 INFO com.dal.mycareer.controller.RequestController [http-nio-8090-exec-6] Session Invalidated and Logged out
+2019-07-14 21:34:12,573 INFO com.dal.mycareer.controller.RequestController [http-nio-8090-exec-5] Routed to Homepage
