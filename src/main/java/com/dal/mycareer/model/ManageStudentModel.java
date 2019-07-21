@@ -12,9 +12,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class ManageStudentModel implements IManageStudentModel {
+public class ManageStudentModel implements IManageStudentModel 
+{
     @Autowired
     IManageStudentDAO manageStudentDAO;
+
+    public ManageStudentModel() 
+    {
+
+    }
+
+    public ManageStudentModel(IManageStudentDAO manageStudentDAO)
+    {
+        this.manageStudentDAO = manageStudentDAO;
+    }
 
     @Override
     public Student RegisterStudent(Student studentDetails) 

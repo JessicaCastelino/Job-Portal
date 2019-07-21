@@ -101,7 +101,6 @@ public class ManageStudentDAO implements IManageStudentDAO {
             }
              catch (SQLException e) 
              {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
