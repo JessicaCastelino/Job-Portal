@@ -28,7 +28,7 @@ public class CoopCoordinatorController {
 	IRoleModel roleModel = null;
 	@Autowired
 	ICoopCoordinatorModel coopCordinatorModel;
-	private static final String FILTER = "filter";
+	
 
 	
 	

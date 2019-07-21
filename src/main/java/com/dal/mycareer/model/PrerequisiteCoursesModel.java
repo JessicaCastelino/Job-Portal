@@ -13,7 +13,17 @@ public class PrerequisiteCoursesModel implements IPrerequisiteCoursesModel {
 
 @Autowired
 IPrerequisiteCoursesDAO prerequisiteCoursesDAO;
-	public List<PrerequisiteCourses> getPrerequisiteCourses() {
+
+public PrerequisiteCoursesModel ()
+{
+
+}
+public PrerequisiteCoursesModel (IPrerequisiteCoursesDAO prerequisiteCoursesDAO)
+{
+this.prerequisiteCoursesDAO = prerequisiteCoursesDAO;
+}
+public List<PrerequisiteCourses> getPrerequisiteCourses() 
+{
 		
 		return prerequisiteCoursesDAO.getPrerequisiteCourses();
 	}

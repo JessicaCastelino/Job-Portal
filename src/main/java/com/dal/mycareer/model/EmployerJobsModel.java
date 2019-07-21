@@ -15,7 +15,15 @@ public class EmployerJobsModel implements IEmployerJobsModel
 {
 	@Autowired
 	IEmployerJobsDAO employerJobsDAO;
-	
+
+	public EmployerJobsModel()
+	{
+
+	}
+	public EmployerJobsModel(IEmployerJobsDAO employerJobsDAO)
+	{
+		this.employerJobsDAO = employerJobsDAO;
+	}
 	public List<Job> getActiveJobs(String username) 
 	{
 		return employerJobsDAO.getActiveJobs(username);
