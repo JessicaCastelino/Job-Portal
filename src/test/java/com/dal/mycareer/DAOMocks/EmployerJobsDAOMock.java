@@ -71,7 +71,9 @@ public class EmployerJobsDAOMock implements IEmployerJobsDAO
     @Override
     public JobDetails InsertJobDetails(JobDetails postedJobDetails, String currentUser) 
     {
-        return null;
+        postedJobDetails.setId(jobDetailsList.size() + 1);
+        jobDetailsList.add(postedJobDetails);
+        return postedJobDetails;
     }
 
     @Override
