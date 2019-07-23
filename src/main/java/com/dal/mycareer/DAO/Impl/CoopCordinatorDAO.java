@@ -85,11 +85,13 @@ public class CoopCordinatorDAO implements ICoopCordinatorDAO
 		}
 		finally
 		{
-			try {
-				callableStatement.close();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+			try 
+			{
+				con.close();
+			} 
+			catch (SQLException sqlEx) 
+			{
+				LOGGER.error( "Error Occurred in closing the connection fetchActiveRecruiters :" + sqlEx.getMessage());
 			}
 		}
 		return lstActiveRecruiter;
@@ -215,6 +217,17 @@ public class CoopCordinatorDAO implements ICoopCordinatorDAO
 		{
 			isDeleted = false;
 			LOGGER.error("Error Occurred in deleteActiveRecruiter :" + ex.getMessage());
+		}
+		finally
+		{
+			try
+			{
+			con.close();
+			}
+			catch( SQLException sqlEx)
+			{
+				LOGGER.error( "Error Occurred in closing the connection deleteActiveRecruiter :" + sqlEx.getMessage());
+			}
 		}
 		return isDeleted;
 	}

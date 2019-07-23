@@ -60,7 +60,17 @@ public class EmployerJobsDAO implements IEmployerJobsDAO {
 		{
 			LOGGER.error( "Error Occurred in InsertJobDetails :" + ex.getMessage());
 		}
-		
+		finally
+		{
+			try
+			{
+				con.close();
+			}
+			catch(Exception SqlEx)
+			{
+				LOGGER.error( "Error Occurred in closing the connection in InsertJobDetails :" + SqlEx.getMessage());
+			}
+		}
 		return postedJobDetails;
 	}
 
@@ -100,6 +110,17 @@ public class EmployerJobsDAO implements IEmployerJobsDAO {
 		catch(Exception ex)
 		{
 			LOGGER.error( "Error Occurred in viewPostedJob :" + ex.getMessage());
+		}
+		finally
+		{
+			try
+			{
+				con.close();
+			}
+			catch(Exception SqlEx)
+			{
+				LOGGER.error( "Error Occurred in closing the connection in viewPostedJob :" + SqlEx.getMessage());
+			}
 		}
 		return jobDetails;
 	}
@@ -180,6 +201,17 @@ public class EmployerJobsDAO implements IEmployerJobsDAO {
 		{
 			LOGGER.error( "Error Occurred in updatejobDetails :" + ex.getMessage());
 		}
+		finally
+		{
+			try
+			{
+				con.close();
+			}
+			catch (SQLException sqlEx)
+			{
+				LOGGER.error( "Error Occurred in closing the connection in updatejobDetails :" + sqlEx.getMessage());
+			}
+		}
 		return isJobDetailsUpdated;
 	}
 	public boolean insertJobRequirement(int jobId, List <Integer> prerequisiteCourses)
@@ -210,6 +242,17 @@ public class EmployerJobsDAO implements IEmployerJobsDAO {
 		catch (Exception ex)
 		{
 			LOGGER.error( "Error Occurred in insertJobRequirement :" + ex.getMessage());
+		}
+		finally
+		{
+			try
+			{
+				con.close();
+			}
+			catch(SQLException SqlEx)
+			{
+				LOGGER.error( "Error Occurred in closing the connection in insertJobRequirement :" + SqlEx.getMessage());
+			}
 		}
 		return isQuerySuccess;
 	}

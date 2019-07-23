@@ -8,10 +8,10 @@ import com.dal.mycareer.DTO.RecruiterRequest;
 public class CoopCordinatorDAOMock implements ICoopCordinatorDAO 
 {
 
-    ArrayList<RecruiterRequest> lstActiveRecruiter;
+    ArrayList<RecruiterRequest> lstRecruiters;
     public CoopCordinatorDAOMock ()
     {
-        lstActiveRecruiter = new ArrayList<RecruiterRequest>();
+        lstRecruiters = new ArrayList<RecruiterRequest>();
         RecruiterRequest recruiter1 = new RecruiterRequest();
         recruiter1.setId("1");
         recruiter1.setFirstname("Henry");
@@ -19,7 +19,7 @@ public class CoopCordinatorDAOMock implements ICoopCordinatorDAO
         recruiter1.setEmail("henry@ford.com");
         recruiter1.setCompanyname("Ford Corp");
         recruiter1.setDesignation("CEO");
-        lstActiveRecruiter.add(recruiter1);
+        lstRecruiters.add(recruiter1);
         RecruiterRequest recruiter2 = new RecruiterRequest();
         recruiter2.setId("2");
         recruiter2.setFirstname("Steve");
@@ -27,7 +27,7 @@ public class CoopCordinatorDAOMock implements ICoopCordinatorDAO
         recruiter2.setEmail("steve@apple.com");
         recruiter2.setCompanyname("Apple");
         recruiter2.setDesignation("CEO");
-        lstActiveRecruiter.add(recruiter2);
+        lstRecruiters.add(recruiter2);
         RecruiterRequest recruiter3 = new RecruiterRequest();
         recruiter3.setId("3");
         recruiter3.setFirstname("Bill");
@@ -35,7 +35,7 @@ public class CoopCordinatorDAOMock implements ICoopCordinatorDAO
         recruiter3.setEmail("BillGates@microsoft.com");
         recruiter3.setCompanyname("Microsoft");
         recruiter3.setDesignation("CEO");
-        lstActiveRecruiter.add(recruiter3);
+        lstRecruiters.add(recruiter3);
     }
     @Override
     public int approveRequest(int requestId, String username, String password) 
@@ -46,13 +46,13 @@ public class CoopCordinatorDAOMock implements ICoopCordinatorDAO
     @Override
     public boolean deleteActiveRecruiter(int employerId) 
     {
-        return false;
+        return lstRecruiters.removeIf(recruiter -> recruiter.getId() == Integer.toString(employerId));
     }
 
     @Override
     public List<RecruiterRequest> fetchActiveRecruiters() 
     {
-        return lstActiveRecruiter;
+        return lstRecruiters;
     }
 
     @Override
