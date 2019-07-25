@@ -14,7 +14,7 @@ public class Job
 	private String requiredCourses;
 	private List<Integer> selectedCourseIds;
 	private int employeeId;
-  private boolean jobStatus;
+  	private boolean jobStatus;
 
 	public int getId() 
 	{
