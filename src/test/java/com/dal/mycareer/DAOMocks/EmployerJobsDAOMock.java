@@ -55,9 +55,9 @@ public class EmployerJobsDAOMock implements IEmployerJobsDAO
 
     }
     @Override
-    public List<Job> getActiveJobs(String username) 
+    public List<Job> getActiveJobs(String username, List<Job> lstActiveJobs) 
     {
-       ArrayList <Job> lstActiveJobs = new ArrayList<Job>(); 
+        lstActiveJobs = new ArrayList<Job>(); 
         for (Job job : jobDetailsList)
         {
             if(job.getJobStatus() == true)
@@ -77,9 +77,9 @@ public class EmployerJobsDAOMock implements IEmployerJobsDAO
     }
 
     @Override
-    public List<Job> getClosedJobs(String username) 
+    public List<Job> getClosedJobs(String username, List<Job> lstClosedJobs) 
     {
-        ArrayList <Job> lstClosedJobs = new ArrayList<Job>(); 
+        lstClosedJobs = new ArrayList<Job>(); 
         for (Job job : jobDetailsList)
         {
             if(job.getJobStatus() == true)
@@ -91,14 +91,14 @@ public class EmployerJobsDAOMock implements IEmployerJobsDAO
     }
 
     @Override
-    public JobDetails viewPostedJobDetails(int jobId) 
+    public JobDetails viewPostedJobDetails(JobDetails expectedJobDetails) 
     {
         
-        for (JobDetails jobDetails : jobDetailsList)
+        for (JobDetails job : jobDetailsList)
         {
-            if(jobDetails.getId() == jobId)
+            if(job.getId() == expectedJobDetails.getId())
             {
-                return (jobDetails);
+                return (job);
             }
         }    
         return null;

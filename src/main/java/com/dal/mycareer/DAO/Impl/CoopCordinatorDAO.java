@@ -17,27 +17,29 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class CoopCordinatorDAO implements ICoopCordinatorDAO
 {
-	private final Logger LOGGER = LoggerFactory.getLogger(this.getClass());
+	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 	Connection con = null;
 	CallableStatement callableStatement = null;
 	@Override
-	public List<RecruiterRequest> fetchRecruiterRequests() {
+	public List<RecruiterRequest> fetchRecruiterRequests() 
+	{
 		con = DatabaseConnection.getConnection();
 		RecruiterRequest recruiterRequest = null;
 		List<RecruiterRequest> requests = new ArrayList<RecruiterRequest>();
 		try {
 			callableStatement = con.prepareCall("{call fetchRecruiterRequests()}");
 			boolean results = callableStatement.execute();
-			while (results) {
+			while (results) 
+			{
 				ResultSet rs = callableStatement.getResultSet();
-				while (rs.next()) {
+				while (rs.next()) 
+				{
 					recruiterRequest = new RecruiterRequest();
 					recruiterRequest.setId(Integer.toString(rs.getInt(1)));
 					recruiterRequest.setFirstname(rs.getString(2));
 					recruiterRequest.setLastname(rs.getString(3));
 					recruiterRequest.setEmail(rs.getString(4));
-					recruiterRequest.setCompanyname(rs.getString(5));
-					
+					recruiterRequest.setCompanyname(rs.getString(5));		
 					requests.add(recruiterRequest);
 				}
 
@@ -45,15 +47,20 @@ public class CoopCordinatorDAO implements ICoopCordinatorDAO
 				results = callableStatement.getMoreResults();
 			}
 			return requests;
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		} 
+		catch (SQLException ex) 
+		{
+			logger.error( "Error Occurred in fetchRecruiterRequests :" + ex.getMessage());
 			return requests;
-		} finally {
-			try {
+		} 
+		finally 
+		{
+			try 
+			{
 				callableStatement.close();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
+			}
+			catch (SQLException e)
+			{
 				e.printStackTrace();
 			}
 		}
@@ -62,11 +69,13 @@ public class CoopCordinatorDAO implements ICoopCordinatorDAO
 	{
 		con = DatabaseConnection.getConnection();
 		RecruiterRequest activeRecruiter = null;
+		ResultSet activeEmployerSet = null;
 		List <RecruiterRequest> lstActiveRecruiter = new ArrayList<RecruiterRequest>();
+		logger.info("DL: fetchActiveRecruiters method started");
 		try
 		{
 			callableStatement = con.prepareCall("{call fetchActiveRecruiters()}");
-			ResultSet activeEmployerSet = callableStatement.executeQuery();
+			activeEmployerSet = callableStatement.executeQuery();
 			while(activeEmployerSet.next())
 			{
 				activeRecruiter = new RecruiterRequest();
@@ -81,18 +90,11 @@ public class CoopCordinatorDAO implements ICoopCordinatorDAO
 		}
 		catch(Exception ex)
 		{
-			LOGGER.error( "Error Occurred in fetchActiveRecruiters :" + ex.getMessage());
+			logger.error( "Error Occurred in fetchActiveRecruiters :" + ex.getMessage());
 		}
 		finally
 		{
-			try 
-			{
-				con.close();
-			} 
-			catch (SQLException sqlEx) 
-			{
-				LOGGER.error( "Error Occurred in closing the connection fetchActiveRecruiters :" + sqlEx.getMessage());
-			}
+			DatabaseConnection.closeDatabaseComponents(activeEmployerSet,callableStatement);
 		}
 		return lstActiveRecruiter;
 	}
@@ -100,7 +102,8 @@ public class CoopCordinatorDAO implements ICoopCordinatorDAO
 	@Override
 	public int approveRequest(int requestId, String username, String password) {
 		con = DatabaseConnection.getConnection();
-		try {
+		try 
+		{
 			callableStatement = con.prepareCall("{call makeEmployerActive("+requestId+",'"+username+"','"+password+"')}");
 			boolean results = callableStatement.execute();
 			if (results)
@@ -113,25 +116,30 @@ public class CoopCordinatorDAO implements ICoopCordinatorDAO
 			}
 	
 			}
-			catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		catch (SQLException ex) 
+		{
+			logger.error( "Error Occurred in approveRequest :" + ex.getMessage());
 			return 0;
-		} finally {
-			try {
+		} 
+		finally 
+		{
+			try 
+			{
 				callableStatement.close();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
+			} 
+			catch (SQLException e) 
+			{
 				e.printStackTrace();
 			}
 		}
 	}
 		
 		@Override
-		public int rejectRequest(int requestId) {
+		public int rejectRequest(int requestId) 
+		{
 			con = DatabaseConnection.getConnection();
-			try {
-				
+			try 
+			{	
 				callableStatement = con.prepareCall("{call rejectEmployer("+requestId+")}");
 				boolean results = callableStatement.execute();
 				if (results)
@@ -140,15 +148,19 @@ public class CoopCordinatorDAO implements ICoopCordinatorDAO
 					return 0;
 		
 				}
-				catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				catch (SQLException e) 
+				{
+				logger.error( "Error Occurred in rejectRequest :" + e.getMessage());
 				return 0;
-			} finally {
-				try {
+			}
+			finally 
+			{
+				try 
+				{
 					callableStatement.close();
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
+				} 
+				catch (SQLException e) 
+				{
 					e.printStackTrace();
 				}
 			}
@@ -164,28 +176,32 @@ public class CoopCordinatorDAO implements ICoopCordinatorDAO
 					System.out.println("**********************************"+results);
 					ResultSet rs = callableStatement.getResultSet();
 					System.out.println("**********************************"+rs);
-					while (rs.next()) {
-							recruiterRequest = new RecruiterRequest();
-							System.out.println("**********************************"+rs.getInt(1));
-							recruiterRequest.setId(Integer.toString(rs.getInt(1)));
-							recruiterRequest.setFirstname(rs.getString(2));
-							recruiterRequest.setLastname(rs.getString(3));
-							recruiterRequest.setEmail(rs.getString(4));
-							recruiterRequest.setCompanyname(rs.getString(5));
-						}
-
-						rs.close();
-				
+					while (rs.next()) 
+					{
+						recruiterRequest = new RecruiterRequest();
+						System.out.println("**********************************"+rs.getInt(1));
+						recruiterRequest.setId(Integer.toString(rs.getInt(1)));
+						recruiterRequest.setFirstname(rs.getString(2));
+						recruiterRequest.setLastname(rs.getString(3));
+						recruiterRequest.setEmail(rs.getString(4));
+						recruiterRequest.setCompanyname(rs.getString(5));
+					}
+					rs.close();
 					return recruiterRequest;
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+				} 
+				catch (SQLException e) 
+				{
+					logger.error( "Error Occurred in fetchRecruiter :" + e.getMessage());
 					return recruiterRequest;
-				} finally {
-					try {
+				} 
+				finally 
+				{
+					try 
+					{
 						callableStatement.close();
-					} catch (SQLException e) {
-						// TODO Auto-generated catch block
+					}
+					 catch (SQLException e) 
+					{
 						e.printStackTrace();
 					}
 				}
@@ -197,6 +213,7 @@ public class CoopCordinatorDAO implements ICoopCordinatorDAO
 		CallableStatement callStatement = null;
 		Connection con = null;
 		boolean isDeleted = false;
+		logger.info("DL: deleteActiveRecruiter method started");
 		try
 		{
 			con = DatabaseConnection.getConnection();
@@ -210,24 +227,17 @@ public class CoopCordinatorDAO implements ICoopCordinatorDAO
 			else
 			{
 				isDeleted = false;
-				LOGGER.error("Error Occurred while deleting employer");
+				logger.error("Error Occurred while deleting employer");
 			}
 		}
 		catch(Exception ex)
 		{
 			isDeleted = false;
-			LOGGER.error("Error Occurred in deleteActiveRecruiter :" + ex.getMessage());
+			logger.error("Error Occurred in deleteActiveRecruiter :" + ex.getMessage());
 		}
 		finally
 		{
-			try
-			{
-			con.close();
-			}
-			catch( SQLException sqlEx)
-			{
-				LOGGER.error( "Error Occurred in closing the connection deleteActiveRecruiter :" + sqlEx.getMessage());
-			}
+			DatabaseConnection.closeDatabaseComponents(callStatement);
 		}
 		return isDeleted;
 	}
