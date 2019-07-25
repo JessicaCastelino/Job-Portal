@@ -9,7 +9,8 @@ import com.dal.mycareer.DTO.Job;
 public class JobsDAOMock implements IJobsDAO 
 {
     private List<Job> jobs;
-
+    private boolean isUpdated;
+    
     JobsDAOMock()
     {
         jobs = new ArrayList<>();
@@ -20,19 +21,29 @@ public class JobsDAOMock implements IJobsDAO
         job.setJobType("Full-time");
         job.setOrganization("IBM");
         job.setEmployeeId(1);
+        job.setJobStatus(false);
+        jobs.add(job);
+        job = new Job();
+        job.setId(2);
+        job.setJobTitle("Associate Consultant");
+        job.setLocation("Halifax");
+        job.setJobType("Full-time");
+        job.setOrganization("IBM");
+        job.setEmployeeId(2);
+        job.setJobStatus(true);
         jobs.add(job);
     }
 
     @Override
     public boolean updateJobStatus(int jobRecordId, boolean jobStatus) 
     {
-        boolean isUpdated = false;
+        this.isUpdated = false;
         jobs.forEach(job -> 
         {
-            if(job.getId() == jobRecordId)
+            if(job.getId() == jobRecordId && job.getJobStatus() != jobStatus)
             {
-                //isUpdated = true;
-                //job.setJobStatus(jobStatus);
+                this.isUpdated = true;
+                job.setJobStatus(jobStatus);
             }
         });
         return isUpdated;
