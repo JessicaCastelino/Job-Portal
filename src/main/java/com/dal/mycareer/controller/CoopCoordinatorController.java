@@ -23,58 +23,58 @@ import com.dal.mycareer.model.RoleModel;
 import com.dal.mycareer.propertiesparser.PropertiesParser;
 
 @Controller
-public class CoopCoordinatorController {
-	static Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
+public class CoopCoordinatorController 
+{
+	static Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 	IRoleModel roleModel = null;
 	@Autowired
 	ICoopCoordinatorModel coopCordinatorModel;
-	
 
-	
-	
 	  @RequestMapping("/adminHome") 
-	  public String loadAdminHome(Model model,HttpServletRequest request) { 
+	  public String loadAdminHome(Model model,HttpServletRequest request) 
+	  { 
 		  model.addAttribute("reqPage", PropertiesParser.getPropertyMap().get("adminHome").toString());
 		  model.addAttribute("role", "admin"); roleModel = new RoleModel(); 
 		  model = roleModel.getBasePage(model, request); 
-		  //coopCordinatorModel = new CoopCoordinatorModel(); 
 		  model = coopCordinatorModel.fetchRecruiterRequests(model, request); 
 		  return model.asMap().get("view").toString(); 
-	      }
+	  }
 	 
 	  @RequestMapping(value = { "/approve" }, method = RequestMethod.GET)
-		public String rejectRequest(@RequestParam("id") int recruiterRequestId, Model model, HttpServletRequest request) {
+		public String rejectRequest(@RequestParam("id") int recruiterRequestId, Model model, HttpServletRequest request) 
+		{
 			model.addAttribute("reqPage", PropertiesParser.getPropertyMap().get("adminHome").toString());
 			model.addAttribute("role", "admin");
 			roleModel = new RoleModel();
 			model = roleModel.getBasePage(model, request);
-			//coopCordinatorModel = new CoopCoordinatorModel();
 			model = coopCordinatorModel.approveRecruiterRequest(model, request, recruiterRequestId);
 			return model.asMap().get("view").toString();
 		}
 	  
 	  @RequestMapping(value = { "/reject" }, method = RequestMethod.GET)
-		public String approveRequest(@RequestParam("id") int recruiterRequestId, Model model, HttpServletRequest request) {
+		public String approveRequest(@RequestParam("id") int recruiterRequestId, Model model, HttpServletRequest request) 
+		{
 			model.addAttribute("reqPage", PropertiesParser.getPropertyMap().get("adminHome").toString());
 			model.addAttribute("role", "admin");
 			roleModel = new RoleModel();
 			model = roleModel.getBasePage(model, request);
-			//coopCordinatorModel = new CoopCoordinatorModel();
 			model = coopCordinatorModel.rejectRecruiterRequest(model, request, recruiterRequestId);
 			return model.asMap().get("view").toString();
 		}
+
 	@ResponseBody
 	@RequestMapping(value = "/activeRecruiters", method = RequestMethod.GET)
 	public List<RecruiterRequest> showActiveRecruiter(ModelMap model) 
 	{
-
-		LOGGER.info("Redirect to adminHome.jsp");
+		logger.info("Controller: Inside showActiveRecruiter method");
 		return coopCordinatorModel.fetchActiveRecruiters();
 	}
+	
 	@ResponseBody
 	@RequestMapping(value ="/deleteRecruiter", method = RequestMethod.DELETE)
 	public boolean deleteActiveEmployer(@RequestParam(name = "id") int employerId)
 	{
+		logger.info("Controller: Inside deleteActiveEmployer method with employerId-" + employerId);
 		return coopCordinatorModel.deleteActiveRecruiter(employerId);
 	}
 }

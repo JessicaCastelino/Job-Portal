@@ -1,19 +1,21 @@
 package com.dal.mycareer.DBConnection;
 
 import java.lang.invoke.MethodHandles;
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Properties;
+
+import com.dal.mycareer.propertiesparser.PropertiesParser;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.dal.mycareer.propertiesparser.PropertiesParser;
-
 public class DatabaseConnection {
 
-	static Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
+	static Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 	private static Connection connection;
 
 	static{
@@ -32,8 +34,50 @@ public class DatabaseConnection {
 		}
 	}
 
-	public static Connection getConnection() {
+	public static Connection getConnection() 
+	{
 		return connection;
 	}
-
+	public static void closeDatabaseComponents(ResultSet resultSet, CallableStatement callableStatement)
+	{
+		if (resultSet !=null)
+		{
+			try
+			{
+			resultSet.close();
+			}
+			catch(SQLException sqlEx)
+			{
+				logger.error( "Error Occurred in closing resultSet :" + sqlEx.getMessage());
+			}
+		}
+		if (callableStatement !=null)
+		{
+			try
+			{
+				callableStatement.close();
+			}
+			catch(SQLException sqlEx)
+			{
+				logger.error( "Error Occurred in closing callable Statement :" + sqlEx.getMessage());
+			}
+		}
+	
+	}
+	public static void closeDatabaseComponents(CallableStatement callableStatement)
+	{
+	
+		if (callableStatement !=null)
+		{
+			try
+			{
+				callableStatement.close();
+			}
+			catch(SQLException sqlEx)
+			{
+				logger.error( "Error Occurred in closing callable Statement :" + sqlEx.getMessage());
+			}
+		}
+	
+	}
 }

@@ -32,7 +32,7 @@ public class PrerequisiteCoursesDAOMock implements IPrerequisiteCoursesDAO
     }
 
     @Override
-    public List<PrerequisiteCourses> getPrerequisiteCourses() 
+    public List<PrerequisiteCourses> getPrerequisiteCourses(List<PrerequisiteCourses> preRequisiteList) 
     {
         return PrerequisiteCoursesList;
     }

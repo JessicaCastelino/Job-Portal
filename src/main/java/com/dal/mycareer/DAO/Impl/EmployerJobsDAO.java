@@ -8,22 +8,24 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Repository;
-
 import com.dal.mycareer.DAO.Interface.IEmployerJobsDAO;
 import com.dal.mycareer.DBConnection.DatabaseConnection;
 import com.dal.mycareer.DTO.Job;
 import com.dal.mycareer.DTO.JobDetails;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Repository;
+
 @Repository
-public class EmployerJobsDAO implements IEmployerJobsDAO {
-	private final Logger LOGGER = LoggerFactory.getLogger(this.getClass());
+public class EmployerJobsDAO implements IEmployerJobsDAO 
+{
+	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 	
 	@Override
-	public List<Job> getActiveJobs(String username) {
-		return fetchJobByStatus(username, true);
+	public List<Job> getActiveJobs(String username,List<Job> jobs) 
+	{
+		return fetchJobByStatus(username, true, jobs);
 	}
 	
 	@Override
@@ -31,6 +33,7 @@ public class EmployerJobsDAO implements IEmployerJobsDAO {
 	{
 		CallableStatement callStatement = null;
 		Connection con= null;
+		logger.info("DL: InsertJobDetails method started");
 		try
 		{
 		 con  = DatabaseConnection.getConnection();
@@ -53,40 +56,33 @@ public class EmployerJobsDAO implements IEmployerJobsDAO {
 		 }
 		 else
 		 {
-			LOGGER.error( "Error Occurred in InsertJobDetails while inserting record");
+			logger.error( "Error Occurred in InsertJobDetails while inserting record");
 		 }
 		}
 		catch(Exception ex)
 		{
-			LOGGER.error( "Error Occurred in InsertJobDetails :" + ex.getMessage());
+			logger.error( "Error Occurred in InsertJobDetails :" + ex.getMessage());
 		}
 		finally
 		{
-			try
-			{
-				con.close();
-			}
-			catch(Exception SqlEx)
-			{
-				LOGGER.error( "Error Occurred in closing the connection in InsertJobDetails :" + SqlEx.getMessage());
-			}
+			DatabaseConnection.closeDatabaseComponents(callStatement);
 		}
 		return postedJobDetails;
 	}
 
-	public JobDetails viewPostedJobDetails(int jobId)
+	public JobDetails viewPostedJobDetails(JobDetails jobDetails)
 	{
 		CallableStatement callStatement = null;
 		Connection con= null;
-		JobDetails jobDetails=null;
+		ResultSet result=null;
 		List <Integer> lstCourseList = new ArrayList<Integer>();
+		logger.info("DL: viewPostedJobDetails method started");
 		try
 		{
-			jobDetails = new JobDetails();
 			con  = DatabaseConnection.getConnection();
 			callStatement = con.prepareCall("{CALL getPostedJobDetails(?)}");
-			callStatement.setInt("jobId", jobId);
-			ResultSet result = callStatement.executeQuery();
+			callStatement.setInt("jobId", jobDetails.getId());
+		    result = callStatement.executeQuery();
 			while(result.next())
 			{
 			jobDetails.setId(result.getInt("id"));
@@ -109,47 +105,48 @@ public class EmployerJobsDAO implements IEmployerJobsDAO {
 		}
 		catch(Exception ex)
 		{
-			LOGGER.error( "Error Occurred in viewPostedJob :" + ex.getMessage());
+			logger.error( "Error Occurred in viewPostedJob :" + ex.getMessage());
 		}
 		finally
 		{
-			try
-			{
-				con.close();
-			}
-			catch(Exception SqlEx)
-			{
-				LOGGER.error( "Error Occurred in closing the connection in viewPostedJob :" + SqlEx.getMessage());
-			}
+			DatabaseConnection.closeDatabaseComponents(result, callStatement);
 		}
 		return jobDetails;
 	}
 
 	@Override
-	public List<Job> getClosedJobs(String username) {
-		return fetchJobByStatus(username, false);		
+	public List<Job> getClosedJobs(String username, List<Job> jobs) 
+	{
+		logger.info("DL: getClosedJobs method started");
+		return fetchJobByStatus(username, false, jobs);		
 	}
 
-	List<Job> fetchJobByStatus(String username, boolean isActive) {
-		List<Job> jobs = null;
+	private List<Job> fetchJobByStatus(String username, boolean isActive, List<Job> jobs) 
+	{
 		Connection conn = null;
 		String procedureName = "";
+		ResultSet result  = null;
+		CallableStatement statement = null;
+		logger.info("fetchJobByStatus method started");
 		if(isActive)
 		{
+			logger.info("Setting the procedure name for getting Active jobs -fetchJobByStatus Method");
 			procedureName = "getActiveJobsForEmployer";
 		}
 		else
 		{
+			logger.info("Setting the procedure name for getting closed jobs -fetchJobByStatus Method");
 			procedureName = "getClosedJobsForEmployer";
 		}
-		try {
+		try 
+		{
 			conn = DatabaseConnection.getConnection();
-			CallableStatement statement = conn.prepareCall("{CALL " + procedureName +"(?)}");
+			statement = conn.prepareCall("{CALL " + procedureName +"(?)}");
 			statement.setString("employerUserName", username);
-			ResultSet result = statement.executeQuery();
+			result = statement.executeQuery();
 			Job job;
-			jobs = new ArrayList<>();
-			while(result.next()) {
+			while(result.next()) 
+			{
 				job = new Job();
 				job.setId(result.getInt("id"));
 				job.setJobTitle(result.getString("jobTitle"));
@@ -160,18 +157,25 @@ public class EmployerJobsDAO implements IEmployerJobsDAO {
 				job.setRequiredCourses(result.getString("requiredCourses"));
 				jobs.add(job);
 			}
-		} catch (SQLException e) {
-			LOGGER.error("Exception occurred at EmployerJobsDAO:fetchJobByStatus " + e.getMessage());
-			e.printStackTrace();
+		} 
+		catch (SQLException e) 
+		{
+			logger.error("Exception occurred at EmployerJobsDAO:fetchJobByStatus " + e.getMessage());
+		}
+		finally
+		{
+			DatabaseConnection.closeDatabaseComponents(result, statement);
 		}
 		return jobs;
 	}
 
 	@Override
-	public boolean updatejobDetails(JobDetails updatedJobDetails) {
+	public boolean updatejobDetails(JobDetails updatedJobDetails) 
+	{
 		boolean isJobDetailsUpdated = false;
 		CallableStatement callStatement = null;
 		Connection con= null;
+		logger.info("DL: updatejobDetails method started");
 		try
 		{
 			con = DatabaseConnection.getConnection();
@@ -194,31 +198,25 @@ public class EmployerJobsDAO implements IEmployerJobsDAO {
 			else
 		 	{
 				isJobDetailsUpdated = false;
-			LOGGER.error( "Error Occurred in updatejobDetails while updating record");
+				logger.error( "Error Occurred in updatejobDetails while updating record");
 		 	}
 		}
 		catch(Exception ex)
 		{
-			LOGGER.error( "Error Occurred in updatejobDetails :" + ex.getMessage());
+			logger.error( "Error Occurred in updatejobDetails :" + ex.getMessage());
 		}
 		finally
 		{
-			try
-			{
-				con.close();
-			}
-			catch (SQLException sqlEx)
-			{
-				LOGGER.error( "Error Occurred in closing the connection in updatejobDetails :" + sqlEx.getMessage());
-			}
+			DatabaseConnection.closeDatabaseComponents(callStatement);
 		}
 		return isJobDetailsUpdated;
 	}
-	public boolean insertJobRequirement(int jobId, List <Integer> prerequisiteCourses)
+	public boolean insertJobRequirement(int jobId, List<Integer> prerequisiteCourses)
 	{
 		boolean isQuerySuccess = false;
 		CallableStatement callStatement = null;
 		Connection con= null;
+		logger.info("DL: insertJobRequirement method started");
 		try
 		{
 			con = DatabaseConnection.getConnection();
@@ -232,27 +230,21 @@ public class EmployerJobsDAO implements IEmployerJobsDAO {
 			if (rowAffected > 0)
 			{
 				isQuerySuccess= true;
+				logger.info( "Records inserted successfully in insertJobRequirement Method");
 			}
 			else
 		 	{
 				isQuerySuccess= false;
-				LOGGER.error( "Error Occurred in InsertJobDetails while inserting record");
+				logger.error( "Error Occurred in insertJobRequirement method while inserting record");
 		 	}	 
 		 }
 		catch (Exception ex)
 		{
-			LOGGER.error( "Error Occurred in insertJobRequirement :" + ex.getMessage());
+			logger.error( "Error Occurred in insertJobRequirement :" + ex.getMessage());
 		}
 		finally
 		{
-			try
-			{
-				con.close();
-			}
-			catch(SQLException SqlEx)
-			{
-				LOGGER.error( "Error Occurred in closing the connection in insertJobRequirement :" + SqlEx.getMessage());
-			}
+			DatabaseConnection.closeDatabaseComponents(callStatement);
 		}
 		return isQuerySuccess;
 	}
