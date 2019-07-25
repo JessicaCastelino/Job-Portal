@@ -5,16 +5,16 @@ import java.util.List;
 
 public class Job 
 {
-	int id;
-	String jobTitle;
-	String location;
-	String jobType;
-	Date applicationDeadline;
-	String organization;
-	String requiredCourses;
-	List<Integer> selectedCourseIds;
-	int employeeId;
-	Boolean jobStatus;
+	private int id;
+	private String jobTitle;
+	private String location;
+	private String jobType;
+	private Date applicationDeadline;
+	private String organization;
+	private String requiredCourses;
+	private List<Integer> selectedCourseIds;
+	private int employeeId;
+  private boolean jobStatus;
 
 	public int getId() 
 	{
@@ -106,12 +106,12 @@ public class Job
 		this.requiredCourses = requiredCourses;
 	}
 
-	public Boolean getJobStatus() 
+	public boolean getJobStatus() 
 	{
 		return jobStatus;
 	}
 
-	public void setJobStatus(Boolean jobStatus) 
+	public void setJobStatus(boolean jobStatus) 
 	{
 		this.jobStatus = jobStatus;
 	}

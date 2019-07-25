@@ -10,10 +10,21 @@ import org.springframework.stereotype.Service;
 public class JobsModel implements IJobsModel 
 {
     @Autowired
-	IJobsDAO jobsManagerDao;
+	private IJobsDAO jobsManagerDao;
+
+    public JobsModel()
+    {
+
+    }
+
+    public JobsModel(IJobsDAO jobsDAO)
+    {
+        this.jobsManagerDao = jobsDAO;
+    }
 
     @Override
-    public boolean updateJobStatus(int jobRecordId, boolean jobStatus) {
-        return jobsManagerDao.updateJobStatus(jobRecordId, jobStatus);
+    public boolean updateJobStatus(int jobRecordId, boolean jobStatus) 
+    {
+        return this.jobsManagerDao.updateJobStatus(jobRecordId, jobStatus);
     }
 }
