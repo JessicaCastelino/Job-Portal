@@ -14,6 +14,7 @@ public class Job
 	private String requiredCourses;
 	private List<Integer> selectedCourseIds;
 	private int employeeId;
+  private boolean jobStatus;
 
 	public int getId() 
 	{
@@ -103,5 +104,15 @@ public class Job
 	public void setRequiredCourses(String requiredCourses) 
 	{
 		this.requiredCourses = requiredCourses;
+	}
+
+	public boolean getJobStatus() 
+	{
+		return jobStatus;
+	}
+
+	public void setJobStatus(boolean jobStatus) 
+	{
+		this.jobStatus = jobStatus;
 	}
 }
