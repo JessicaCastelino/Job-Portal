@@ -5,13 +5,17 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import com.dal.mycareer.DAO.Interface.IEmployerJobsDAO;
 import com.dal.mycareer.DBConnection.DatabaseConnection;
 import com.dal.mycareer.DTO.Job;
 import com.dal.mycareer.DTO.JobDetails;
+import com.dal.mycareer.JDBC.insertHandler;
+import com.dal.mycareer.JDBC.jdbcManager;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,6 +25,7 @@ import org.springframework.stereotype.Repository;
 public class EmployerJobsDAO implements IEmployerJobsDAO 
 {
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());
+	private Map <String, Integer> procResults;
 	
 	@Override
 	public List<Job> getActiveJobs(String username,List<Job> jobs) 
@@ -36,22 +41,13 @@ public class EmployerJobsDAO implements IEmployerJobsDAO
 		logger.info("DL: InsertJobDetails method started");
 		try
 		{
-		 con  = DatabaseConnection.getConnection();
-		 callStatement = con.prepareCall("{call sp_insertjobdetails(?,?,?,?,?,?,?,?,?,?)}"); 
-		 callStatement.setString("jobTitle", postedJobDetails.getJobTitle());
-		 callStatement.setString("jobLocation", postedJobDetails.getLocation());
-		 callStatement.setString("jobType", postedJobDetails.getJobType());	
-		 callStatement.setString("noOfPosition", Integer.toString(postedJobDetails.noOfPosition));
-		 callStatement.setString("rateOfPay", Integer.toString(postedJobDetails.rateOfPay));
-		 callStatement.setString("hourPerWeek", Integer.toString(postedJobDetails.hourPerWeek));
-		 callStatement.setString("jobDescription", postedJobDetails.jobDescription);
-		 callStatement.setString("emailId", currentUser);
-		 callStatement.setDate("applicationDeadline", postedJobDetails.getApplicationDeadline());
-		 callStatement.registerOutParameter(10, java.sql.Types.INTEGER);
-		 int rowsAffected = callStatement.executeUpdate();
-		 if (rowsAffected > 0)
+		Map<String, Object> additionalParam = new HashMap<>();
+		additionalParam.put("emailId", currentUser);
+		jdbcManager jdbcInsertOperation = new insertHandler(); 
+		procResults = jdbcInsertOperation.executeProcedure("{call sp_insertjobdetails(?,?,?,?,?,?,?,?,?,?)}", "jobDetailsMapper", postedJobDetails, additionalParam);
+		 if (procResults.get("rowsAffected") > 0)
 		 {
-		 int jobId = callStatement.getInt(10);
+		 int jobId = procResults.get("10");
 		 insertJobRequirement(jobId,postedJobDetails.getSelectedCourseIds());
 		 }
 		 else
@@ -102,6 +98,7 @@ public class EmployerJobsDAO implements IEmployerJobsDAO
 			}
 			jobDetails.setSelectedCourseIds(lstCourseList);
 			}
+			
 		}
 		catch(Exception ex)
 		{

@@ -27,7 +27,7 @@ import org.springframework.ui.Model;
 public class CoopCoordinatorModel implements ICoopCoordinatorModel 
 {
 	@Autowired
-	ICoopCordinatorDAO coopCordinatorDAO;
+	private ICoopCordinatorDAO coopCordinatorDAO;
 
 	private static List<RecruiterRequest> requests = new ArrayList<RecruiterRequest>();
 	private static final String SESSION_NAME = "sessionName";
