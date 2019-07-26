@@ -31,7 +31,7 @@ public class LoginDAO implements ILoginDAO {
 			myStmt.setString(3, user.getRole());
 			myStmt.registerOutParameter(4, Types.INTEGER);
 			myStmt.execute();
-
+ 
 			if (myStmt.getInt(4) > 0) {
 				validUserFlag = true;
 			}
