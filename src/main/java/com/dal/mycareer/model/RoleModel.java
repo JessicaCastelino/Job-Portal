@@ -31,4 +31,8 @@ public class RoleModel implements IRoleModel {
 		return model;
 	}
 
+	public RoleModel() {
+		super();
+	}
+
 }
