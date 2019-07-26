@@ -1,28 +1,25 @@
 package com.dal.mycareer.passwordgenerator;
 
-import org.junit.Assert;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.PowerMockRunner;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
-@RunWith(PowerMockRunner.class)
-@PrepareForTest({StringBuilder.class})
+import org.junit.Test;
+import org.mockito.Mockito;
+
 public class PasswordGeneratorTest {
 
 	@Test
 	public void testGeneratePassword() {
-		PasswordGenerator pg = new PasswordGenerator();
-		/*
-		 StringBuilder mockBuilder =
-		 * PowerMockito.mock(StringBuilder.class); try {
-		 * PowerMockito.whenNew(StringBuilder.class).withArguments(8).thenReturn(
-		 * mockBuilder); } catch (Exception e) {
-		 * Assert.fail("Cannot create mock String builder"); }
-		 * PowerMockito.when(mockBuilder.toString()).thenReturn("dummypassword");
-		 */
-		
-		Assert.assertEquals("Test case pass:", pg.generatePassword(), "ty");
+
+		PasswordGenerator passGen = new PasswordGenerator();
+
+		StringBuilder mockBuffer = mock(StringBuilder.class);
+
+		when(new StringBuilder(8)).thenReturn(mockBuffer);
+		Mockito.when(mockBuffer.toString()).thenReturn("mockPassword");
+
+		passGen.generatePassword();
+
 	}
 
 }
