@@ -44,7 +44,7 @@ public abstract class jdbcManager
 			logger.error( "Error Occurred in prepareProcedureCall :" + ex.getMessage());
         }
     }
-    public abstract Map executeProc(CallableStatement callStatement, String mapperObjectName, Object dtoObject, Map<String,Object>  additionalParam);
+    public abstract Map<String, Integer> executeProc(CallableStatement callStatement, String mapperObjectName, Object dtoObject, Map<String,Object>  additionalParam);
     protected void setParameters(final PreparedStatement statement, final Object... parameters) throws SQLException {
 		for (int i = 0, length = parameters.length; i < length; i++) {
 			final Object parameter = parameters[i];

@@ -5,7 +5,7 @@ import java.util.Map;
 
 public class DTOMapper
 {
-    public static Map <String, IDTOMapper> dtoMap = new HashMap() 
+    public static Map <String, IDTOMapper> dtoMap = new HashMap<String, IDTOMapper>() 
     {{
         put("jobDetailsMapper", new JobDetailsMapper());
     }};
