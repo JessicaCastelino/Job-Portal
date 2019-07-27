@@ -10,23 +10,26 @@ import com.dal.mycareer.DBConnection.DatabaseConnection;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public abstract class jdbcManager
+public abstract class JdbcManager
 {
     private Connection con = null;
 	private CallableStatement callStatement = null;
 	private Map<String, Integer> procResults;
-    private final Logger logger = LoggerFactory.getLogger(this.getClass());
+	private final Logger logger = LoggerFactory.getLogger(this.getClass());
+	
     public Map<String, Integer> executeProcedure(String procedureName, String mapperObjectName, Object dtoObject, Map<String, Object> additionalParam)
     {
         createDBConnection();
         prepareProcedureCall(procedureName);
 		procResults = executeProc(callStatement, mapperObjectName, dtoObject, additionalParam);
 		return procResults;
-    } 
+	}
+	 
     private void createDBConnection()
     {
         con  = DatabaseConnection.getConnection();
-    }
+	}
+	
     private void prepareProcedureCall(String procedureName)
     {
         try

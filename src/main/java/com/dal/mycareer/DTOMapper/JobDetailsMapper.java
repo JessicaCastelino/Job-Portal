@@ -74,7 +74,6 @@ public class JobDetailsMapper implements IDTOMapper
             logger.error("Error Occurred in mapObjectToStatement for JobDetails :" + ex.getMessage());
         }
         return null;
-
     }
 
 }

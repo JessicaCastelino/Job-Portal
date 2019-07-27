@@ -12,7 +12,7 @@ import com.dal.mycareer.DTOMapper.IDTOMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class selectHandler extends jdbcManager 
+public class SelectHandler extends JdbcManager 
 {
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
     private Map<String, Integer> procResult;
@@ -23,6 +23,7 @@ public class selectHandler extends jdbcManager
         ResultSet result = null;
         try
         {
+            fillInputParameters(callStatement, additionalParam);
             result = callStatement.executeQuery();
             fillDTOObjectFromResultSet(mapperObjectName, result, dtoObject);
             procResult = new HashMap<>();
@@ -45,4 +46,26 @@ public class selectHandler extends jdbcManager
         mapper.mapStatementtoObject(result, dtoObject);
     }
 
+    private void fillInputParameters(CallableStatement callStatement, Map<String, Object> inputParams)
+    {
+        try 
+        {
+            for (String param : inputParams.keySet() ) 
+            {
+                Object paramValue = inputParams.get(param);
+                if(paramValue instanceof  Integer)
+                {
+                    callStatement.setInt(param, (Integer) paramValue);
+                }
+                else if(paramValue instanceof String)
+                {
+                    callStatement.setString(param, (String) paramValue);
+                }
+            }
+        } 
+        catch (Exception e) 
+        {
+            
+        }
+    }
 }
