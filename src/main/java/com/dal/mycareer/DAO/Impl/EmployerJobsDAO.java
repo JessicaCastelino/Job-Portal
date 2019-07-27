@@ -16,6 +16,7 @@ import com.dal.mycareer.DTO.JobDetails;
 import com.dal.mycareer.JDBC.InsertHandler;
 import com.dal.mycareer.JDBC.JdbcManager;
 import com.dal.mycareer.JDBC.SelectHandler;
+import com.dal.mycareer.JDBC.UpdateHandler;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -136,27 +137,17 @@ public class EmployerJobsDAO implements IEmployerJobsDAO
 	public boolean updatejobDetails(JobDetails updatedJobDetails) 
 	{
 		boolean isJobDetailsUpdated = false;
-		CallableStatement callStatement = null;
-		Connection con= null;
 		logger.info("DL: updatejobDetails method started");
 		try
 		{
-			con = DatabaseConnection.getConnection();
-			callStatement = con.prepareCall("{CALL updatejobdetails (?,?,?,?,?,?,?,?,?)}");
-			callStatement.setString("jobId", Integer.toString(updatedJobDetails.getId()));
-			callStatement.setString("jobTitle", updatedJobDetails.getJobTitle());
-			callStatement.setString("location", updatedJobDetails.getLocation());
-			callStatement.setString("jobType", updatedJobDetails.getJobType());	
-			callStatement.setString("noOfPosition", Integer.toString(updatedJobDetails.noOfPosition));
-			callStatement.setString("rateOfPay", Integer.toString(updatedJobDetails.rateOfPay));
-			callStatement.setString("hourPerWeek", Integer.toString(updatedJobDetails.hourPerWeek));
-			callStatement.setDate("applicationDeadline", (updatedJobDetails.getApplicationDeadline()));
-			callStatement.setString("jobDescription", updatedJobDetails.jobDescription);
-			int rowAffected = callStatement.executeUpdate();
-			
+			JdbcManager jdbcManager = new UpdateHandler();
+			Map<String, Object> inputParameters = new HashMap<>();
+			inputParameters.put("jobId", updatedJobDetails.getId());
+			Map<String, Integer> res = jdbcManager.executeProcedure("{CALL updatejobdetails (?,?,?,?,?,?,?,?,?)}", "jobDetailsMapper", updatedJobDetails, inputParameters);
+			int rowAffected = res.get("rowsAffected");
 			if (rowAffected > 0)
 			{
-				isJobDetailsUpdated = insertJobRequirement(updatedJobDetails.getId(),updatedJobDetails.getSelectedCourseIds());
+				isJobDetailsUpdated = insertJobRequirement(updatedJobDetails.getId(), updatedJobDetails.getSelectedCourseIds());
 			}
 			else
 		 	{
@@ -168,12 +159,9 @@ public class EmployerJobsDAO implements IEmployerJobsDAO
 		{
 			logger.error( "Error Occurred in updatejobDetails :" + ex.getMessage());
 		}
-		finally
-		{
-			DatabaseConnection.closeDatabaseComponents(callStatement);
-		}
 		return isJobDetailsUpdated;
 	}
+	
 	public boolean insertJobRequirement(int jobId, List<Integer> prerequisiteCourses)
 	{
 		boolean isQuerySuccess = false;
