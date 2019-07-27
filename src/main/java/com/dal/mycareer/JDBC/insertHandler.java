@@ -10,7 +10,7 @@ import com.dal.mycareer.DTOMapper.IDTOMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class insertHandler extends jdbcManager {
+public class InsertHandler extends jdbcManager {
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
     private Map<String, Integer> procResult;
     @Override
