@@ -3,7 +3,6 @@ package com.dal.mycareer.DAO.Impl;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -87,10 +86,7 @@ public class EmployerJobsDAO implements IEmployerJobsDAO
 
 	private List<Job> fetchJobByStatus(String username, boolean isActive, List<Job> jobs) 
 	{
-		Connection conn = null;
 		String procedureName = "";
-		ResultSet result  = null;
-		CallableStatement statement = null;
 		logger.info("fetchJobByStatus method started");
 		if(isActive)
 		{
@@ -104,31 +100,14 @@ public class EmployerJobsDAO implements IEmployerJobsDAO
 		}
 		try 
 		{
-			conn = DatabaseConnection.getConnection();
-			statement = conn.prepareCall("{CALL " + procedureName +"(?)}");
-			statement.setString("employerUserName", username);
-			result = statement.executeQuery();
-			Job job;
-			while(result.next()) 
-			{
-				job = new Job();
-				job.setId(result.getInt("id"));
-				job.setJobTitle(result.getString("jobTitle"));
-				job.setJobType(result.getString("jobType"));
-				job.setLocation(result.getString("location"));
-				job.setOrganization(result.getString("organization"));
-				job.setApplicationDeadline(result.getDate("applicationDeadline"));
-				job.setRequiredCourses(result.getString("requiredCourses"));
-				jobs.add(job);
-			}
+			JdbcManager jdbcManager = new SelectHandler();
+			Map<String, Object> inputParameters = new HashMap<>();
+			inputParameters.put("employerUserName", username);
+			jdbcManager.executeProcedure("{CALL " + procedureName + "(?)}", "jobsMapper", jobs, inputParameters);
 		} 
-		catch (SQLException e) 
+		catch (Exception e) 
 		{
 			logger.error("Exception occurred at EmployerJobsDAO:fetchJobByStatus " + e.getMessage());
-		}
-		finally
-		{
-			DatabaseConnection.closeDatabaseComponents(result, statement);
 		}
 		return jobs;
 	}
