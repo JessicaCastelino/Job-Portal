@@ -14,7 +14,7 @@ import com.dal.mycareer.DAO.Interface.IEmployerJobsDAO;
 import com.dal.mycareer.DBConnection.DatabaseConnection;
 import com.dal.mycareer.DTO.Job;
 import com.dal.mycareer.DTO.JobDetails;
-import com.dal.mycareer.JDBC.insertHandler;
+import com.dal.mycareer.JDBC.InsertHandler;
 import com.dal.mycareer.JDBC.jdbcManager;
 
 import org.slf4j.Logger;
@@ -41,7 +41,7 @@ public class EmployerJobsDAO implements IEmployerJobsDAO
 		{
 		Map<String, Object> additionalParam = new HashMap<>();
 		additionalParam.put("emailId", currentUser);
-		jdbcManager jdbcInsertOperation = new insertHandler(); 
+		jdbcManager jdbcInsertOperation = new InsertHandler(); 
 		procResults = jdbcInsertOperation.executeProcedure("{call sp_insertjobdetails(?,?,?,?,?,?,?,?,?,?)}", "jobDetailsMapper", postedJobDetails, additionalParam);
 		 if (procResults.get("rowsAffected") > 0)
 		 {
