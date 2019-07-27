@@ -1,11 +1,35 @@
 package com.dal.mycareer.DTO;
 
+import java.sql.Date;
+import java.util.List;
+
 public class JobDetails extends Job 
 {
 	public Integer noOfPosition;
 	public Integer rateOfPay;
 	public Integer hourPerWeek;
 	public String jobDescription;
+
+	
+	public JobDetails() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	
+
+	public JobDetails(Integer noOfPosition, Integer rateOfPay, Integer hourPerWeek, String jobDescription, 
+			int id, String jobTitle, String location, String jobType, Date applicationDeadline, String organization,
+			String requiredCourses, List<Integer> selectedCourseIds, int employeeId, boolean jobStatus) {
+		super(id, jobTitle, location, jobType, applicationDeadline, organization,
+				requiredCourses, selectedCourseIds, employeeId, jobStatus);
+		this.noOfPosition = noOfPosition;
+		this.rateOfPay = rateOfPay;
+		this.hourPerWeek = hourPerWeek;
+		this.jobDescription = jobDescription;
+	}
+
+
 
 	public Integer getNoOfPosition() 
 	{
