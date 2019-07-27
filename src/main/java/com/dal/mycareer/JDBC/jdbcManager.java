@@ -1,14 +1,8 @@
 package com.dal.mycareer.JDBC;
 
-import java.io.InputStream;
-import java.math.BigDecimal;
-import java.sql.Blob;
 import java.sql.CallableStatement;
 import java.sql.Connection;
-import java.sql.Date;
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.util.Calendar;
 import java.util.Map;
 
 import com.dal.mycareer.DBConnection.DatabaseConnection;
@@ -43,6 +37,7 @@ public abstract class jdbcManager
         {
 			logger.error( "Error Occurred in prepareProcedureCall :" + ex.getMessage());
         }
-    }
+	}
+	
     public abstract Map<String, Integer> executeProc(CallableStatement callStatement, String mapperObjectName, Object dtoObject, Map<String,Object>  additionalParam);
 }

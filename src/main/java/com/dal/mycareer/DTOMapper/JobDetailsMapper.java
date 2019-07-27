@@ -51,7 +51,7 @@ public class JobDetailsMapper implements IDTOMapper
     }
 
     @Override
-    public int[] mapObjectToStatement(Object postedJobDetails, CallableStatement callStatement, Map<String, Object> additionalParam) {
+    public int[] mapObjectToStatement(Object postedJobDetails, CallableStatement callStatement, Map <String,Object> additionalParam) {
         try 
         {
             JobDetails postJobDetails;

@@ -14,7 +14,7 @@ public class insertHandler extends jdbcManager {
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
     private Map<String, Integer> procResult;
     @Override
-    public Map<String, Integer> executeProc(CallableStatement callStatement, String mapperObjectName, Object dtoObject, Map<String, Object> additionalParam) {
+    public Map <String,Integer> executeProc(CallableStatement callStatement, String mapperObjectName, Object dtoObject, Map<String, Object> additionalParam) {
         IDTOMapper mapper = DTOMapper.dtoMap.get(mapperObjectName);
         int[] outParams = mapper.mapObjectToStatement(dtoObject, callStatement, additionalParam);
         try
