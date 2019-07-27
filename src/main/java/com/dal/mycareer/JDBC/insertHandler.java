@@ -10,11 +10,14 @@ import com.dal.mycareer.DTOMapper.IDTOMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class InsertHandler extends jdbcManager {
+public class insertHandler extends JdbcManager 
+{
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
     private Map<String, Integer> procResult;
+
     @Override
-    public Map <String,Integer> executeProc(CallableStatement callStatement, String mapperObjectName, Object dtoObject, Map<String, Object> additionalParam) {
+    public Map <String,Integer> executeProc(CallableStatement callStatement, String mapperObjectName, Object dtoObject, Map<String, Object> additionalParam) 
+    {
         IDTOMapper mapper = DTOMapper.dtoMap.get(mapperObjectName);
         int[] outParams = mapper.mapObjectToStatement(dtoObject, callStatement, additionalParam);
         try
@@ -28,6 +31,7 @@ public class InsertHandler extends jdbcManager {
         }
         return procResult;
     }
+
     private void extractOutputParam (CallableStatement callStatement, int[] outparamIndex, int rowsAffected)
     {
         procResult = new HashMap<>();
@@ -46,5 +50,4 @@ public class InsertHandler extends jdbcManager {
             logger.error( "Error Occurred in executeProc :" + ex.getMessage());
         }
     }
-
 }
