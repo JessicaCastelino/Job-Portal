@@ -26,7 +26,7 @@ import com.dal.mycareer.propertiesparser.PropertiesParser;
 
 @Controller
 public class StudentController {
-	static Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
+	static Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 	IStudentModel studentModel = null;
 	IRoleModel roleModel = null;
 	IStudentDAO dao = new StudentDAO();
@@ -34,72 +34,80 @@ public class StudentController {
 
 	@RequestMapping(value = { "/studentHome" }, method = RequestMethod.GET)
 	public String loadStudentHome(Model model, HttpServletRequest request) {
+		logger.info("StudentController: loadStudentHome method: Entered");
 		model.addAttribute("reqPage", PropertiesParser.getPropertyMap().get("studentHome").toString());
 		model.addAttribute("role", "student");
 		roleModel = new RoleModel();
 		model = roleModel.getBasePage(model, request);
 		studentModel = new StudentModel();
 		model = studentModel.fetchJobs(model, request, dao);
+		logger.info("StudentController: loadStudentHome method: Exit");
 		return model.asMap().get("view").toString();
 	}
 
 	@RequestMapping(value = { "/viewJob" }, method = RequestMethod.GET)
 	public String viewJob(@RequestParam("id") int jobId, Model model, HttpServletRequest request) {
+		logger.info("StudentController: viewJob method: Entered");
 		model.addAttribute("reqPage", PropertiesParser.getPropertyMap().get("viewJob").toString());
 		model.addAttribute("role", "student");
 		roleModel = new RoleModel();
 		model = roleModel.getBasePage(model, request);
 		studentModel = new StudentModel();
 		model = studentModel.viewJobs(model, jobId, request, dao);
+		logger.info("StudentController: viewJob method: Exit");
 		return model.asMap().get("view").toString();
 
 	}
 
 	@RequestMapping(value = { "/upload" }, method = RequestMethod.POST)
 	public String upload(@RequestParam("file") MultipartFile file, Model model, HttpServletRequest request,@RequestParam int jobId) {
-
+		logger.info("StudentController: upload method: Entered");
 		model.addAttribute("reqPage", PropertiesParser.getPropertyMap().get("submitted").toString());
 		model.addAttribute("role", "student");
 		roleModel = new RoleModel();
 		model = roleModel.getBasePage(model, request);
 		studentModel = new StudentModel();
 		model = studentModel.applyJob(model, file, request,jobId, dao);
+		logger.info("StudentController: upload method: Exit");
 		return model.asMap().get("view").toString();
 
 	}
 
 	@RequestMapping(value = { "/applyJob" }, method = RequestMethod.GET)
-	public String loadHome(Model model, HttpServletRequest request, @RequestParam int jobId) {
+	public String applyJob(Model model, HttpServletRequest request, @RequestParam int jobId) {
+		logger.info("StudentController: applyJob method: Entered");
 		model.addAttribute("reqPage", PropertiesParser.getPropertyMap().get("applyJob").toString());
 		model.addAttribute("role", "student");
 		model = studentModel.jobApplicationExists(model, request,jobId, dao);
 		roleModel = new RoleModel();
 		model = roleModel.getBasePage(model, request);
 		model.addAttribute("jobId",jobId);
+		logger.info("StudentController: applyJob method: Exit");
 		return model.asMap().get("view").toString();
 	}
 
 	@RequestMapping(value = { "/withdraw" }, method = RequestMethod.GET)
 	public String withdrawApplication(@RequestParam("id") int jobId, Model model, HttpServletRequest request) {
+		logger.info("StudentController: withdrawApplication method: Entered");
 		model.addAttribute("reqPage", PropertiesParser.getPropertyMap().get("studentHome").toString());
 		model.addAttribute("role", "student");
 		roleModel = new RoleModel();
 		model = roleModel.getBasePage(model, request);
 		studentModel = new StudentModel();
 		model = studentModel.withdrawApplication(model, jobId, request, dao);
+		logger.info("StudentController: withdrawApplication method: Exit");
 		return model.asMap().get("view").toString();
 	}
 	@RequestMapping(value = { "/filter" }, method = RequestMethod.GET)
-	public String loadStudentHome(Model model, HttpServletRequest request, @ModelAttribute(FILTER) Filter filter) {
-
+	public String filterResults(Model model, HttpServletRequest request, @ModelAttribute(FILTER) Filter filter) {
+		logger.info("StudentController: filterResults method: Entered");
 		model.addAttribute("reqPage", PropertiesParser.getPropertyMap().get("studentHome").toString());
 		model.addAttribute("role", "student");
 		roleModel = new RoleModel();
 		model = roleModel.getBasePage(model, request);
 		studentModel = new StudentModel();
-		System.out.println(filter.getLocation());
-		System.out.println(filter.getJobType());
 		model = studentModel.filterJobs(model, request, filter.getLocation(), filter.getJobType(), dao);
+		logger.info("StudentController: filterResults method: Exit");
 		return model.asMap().get("view").toString();
 
 	}
