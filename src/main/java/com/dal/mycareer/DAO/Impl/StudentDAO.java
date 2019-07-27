@@ -51,14 +51,12 @@ public class StudentDAO implements IStudentDAO {
 			}
 			return jobs;
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return jobs;
 		} finally {
 			try {
 				callableStatement.close();
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
@@ -102,14 +100,12 @@ public class StudentDAO implements IStudentDAO {
 			}
 			return appliedJobs;
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return appliedJobs;
 		} finally {
 			try {
 				callableStatement.close();
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
@@ -127,7 +123,6 @@ public class StudentDAO implements IStudentDAO {
 				return 0;
 
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return 0;
 		}
@@ -159,14 +154,12 @@ public class StudentDAO implements IStudentDAO {
 
 			return student;
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return student;
 		} finally {
 			try {
 				callableStatement.close();
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
@@ -184,7 +177,6 @@ public class StudentDAO implements IStudentDAO {
 				return 0;
 
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return 0;
 		}
@@ -206,7 +198,6 @@ public class StudentDAO implements IStudentDAO {
 				return 0;
 
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return 0;
 		}

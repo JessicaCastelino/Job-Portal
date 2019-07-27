@@ -34,7 +34,7 @@ import com.dal.mycareer.propertiesparser.PropertiesParser;
 public class CoopCoordinatorController 
 {
 	static Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
-	IRoleModel roleModel = null;
+	private IRoleModel roleModel = null;
 	@Autowired
 	ICoopCoordinatorModel coopCordinatorModel;
 	@Autowired
@@ -45,7 +45,7 @@ public class CoopCoordinatorController
 	IPasswordGenerator passwordGenerator = new PasswordGenerator();
 	@Autowired
 	IEmployerRejectionEmail rejectEmail = new EmployerRejectionEmailImpl();
-	
+
 	  @RequestMapping("/adminHome") 
 	  public String loadAdminHome(Model model,HttpServletRequest request) 
 	  { 
@@ -91,7 +91,7 @@ public class CoopCoordinatorController
 		logger.info("Controller: Inside showActiveRecruiter method");
 		return coopCordinatorModel.fetchActiveRecruiters();
 	}
-	
+
 	@ResponseBody
 	@RequestMapping(value ="/deleteRecruiter", method = RequestMethod.DELETE)
 	public boolean deleteActiveEmployer(@RequestParam(name = "id") int employerId)
