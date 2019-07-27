@@ -24,7 +24,6 @@ private String term;
 
 public AppliedJob() {
 	super();
-	// TODO Auto-generated constructor stub
 }
 public AppliedJob(String id, InputStream document, String applicationStatus, String studentId, String jobId,
 		String jobTitle, String location, String openPosition, String jobType, String rateOfPay, String hoursPerWeek,
