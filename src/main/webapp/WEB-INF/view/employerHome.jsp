@@ -54,7 +54,10 @@ table th, table td {
 .coursescheckbox {
 	margin-left: 26%;
 }
-
+.errorMsgColor
+{
+	color: red;
+}
 </style>
 </head>
 <body>
@@ -118,9 +121,13 @@ table th, table td {
 						<label class="col-sm-3">Courses Required</label>
 						<div id="courseRequired" class="coursescheckbox"></div>
 					</div>
+					<br>
+					<div id="errorMsgs">
+						<span id="errMsg"></span>
+					</div>
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-default btn btn-info" onclick="saveJob()" data-dismiss="modal">Submit</button>
+					<button type="button" class="btn btn-default btn btn-info" onclick="saveJob()">Submit</button>
 				</div>
 			</div>
 		</div>
@@ -196,9 +203,42 @@ if (selCourses[i].firstChild.checked)
 }
 return selCourseArray;	
 }
-
+function validateRegistration()
+{
+	isValidForm = true;
+	$("#errorMsgs span").empty();
+	var selectedCourses = fetchSelectedCourses();
+	if($('#txtjobtitle').val() == "")
+	{
+		$("#errorMsgs span").append("* jobTitle is mandatory <br>").addClass("errorMsgColor");
+		isValidForm = false;
+	}
+	if($('#txtLocation').val() == "")
+	{
+		$("#errorMsgs span").append("* Location is mandatory <br>").addClass("errorMsgColor");
+		isValidForm = false;
+	}
+	if($('#applicationDeadline').val() == "")
+	{
+		$("#errorMsgs span").append("* Application deadline is mandatory <br>").addClass("errorMsgColor");
+		isValidForm = false;
+	}
+	if($('#numOfOpenPosition').val() == "")
+	{
+		$("#errorMsgs span").append("* Number of position is mandatory <br>").addClass("errorMsgColor");
+		isValidForm = false;
+	}
+	if(selectedCourses.length == 0)
+	{
+		$("#errorMsgs span").append("* Prerequisite courses is mandatory").addClass("errorMsgColor");
+		isValidForm = false;
+	}
+	return isValidForm;
+}
 function saveJob()
 {
+	 if(validateRegistration())
+	 {
 	var  jobTitle = $('#txtjobtitle').val();
 	var  location = $('#txtLocation').val();
 	var  noOfPosition = $('#numOfOpenPosition').val();
@@ -219,6 +259,9 @@ function saveJob()
 		}).then(res => res.json())
 		.then(response => console.log('Success:', JSON.stringify(response)))
 		.catch(error => console.error('Error:', error));
+		$("#modalpopup").hide();
+		window.location.reload(true);
+	 }
 }
 // Add job code ends
 	  const http = new XMLHttpRequest();
