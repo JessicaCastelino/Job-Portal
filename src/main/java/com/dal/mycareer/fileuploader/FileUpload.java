@@ -1,4 +1,4 @@
-package com.dal.mycareer.utils;
+package com.dal.mycareer.fileuploader;
 
 import java.lang.invoke.MethodHandles;
 import java.util.Properties;

@@ -4,14 +4,19 @@ import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import com.dal.mycareer.DAO.Interface.IEmployerJobsDAO;
 import com.dal.mycareer.DBConnection.DatabaseConnection;
 import com.dal.mycareer.DTO.Job;
 import com.dal.mycareer.DTO.JobDetails;
+import com.dal.mycareer.JDBC.InsertHandler;
+import com.dal.mycareer.JDBC.JdbcManager;
+import com.dal.mycareer.JDBC.SelectHandler;
+import com.dal.mycareer.JDBC.UpdateHandler;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,6 +26,7 @@ import org.springframework.stereotype.Repository;
 public class EmployerJobsDAO implements IEmployerJobsDAO 
 {
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());
+	private Map <String, Integer> procResults;
 	
 	@Override
 	public List<Job> getActiveJobs(String username,List<Job> jobs) 
@@ -31,27 +37,16 @@ public class EmployerJobsDAO implements IEmployerJobsDAO
 	@Override
 	public JobDetails InsertJobDetails(JobDetails postedJobDetails,String currentUser) 
 	{
-		CallableStatement callStatement = null;
-		Connection con= null;
 		logger.info("DL: InsertJobDetails method started");
 		try
 		{
-		 con  = DatabaseConnection.getConnection();
-		 callStatement = con.prepareCall("{call sp_insertjobdetails(?,?,?,?,?,?,?,?,?,?)}"); 
-		 callStatement.setString("jobTitle", postedJobDetails.getJobTitle());
-		 callStatement.setString("jobLocation", postedJobDetails.getLocation());
-		 callStatement.setString("jobType", postedJobDetails.getJobType());	
-		 callStatement.setString("noOfPosition", Integer.toString(postedJobDetails.noOfPosition));
-		 callStatement.setString("rateOfPay", Integer.toString(postedJobDetails.rateOfPay));
-		 callStatement.setString("hourPerWeek", Integer.toString(postedJobDetails.hourPerWeek));
-		 callStatement.setString("jobDescription", postedJobDetails.jobDescription);
-		 callStatement.setString("emailId", currentUser);
-		 callStatement.setDate("applicationDeadline", postedJobDetails.getApplicationDeadline());
-		 callStatement.registerOutParameter(10, java.sql.Types.INTEGER);
-		 int rowsAffected = callStatement.executeUpdate();
-		 if (rowsAffected > 0)
+		Map<String, Object> additionalParam = new HashMap<>();
+		additionalParam.put("emailId", currentUser);
+		JdbcManager jdbcInsertOperation = new InsertHandler(); 
+		procResults = jdbcInsertOperation.executeProcedure("{call sp_insertjobdetails(?,?,?,?,?,?,?,?,?,?)}", "jobDetailsMapper", postedJobDetails, additionalParam);
+		 if (procResults.get("rowsAffected") > 0)
 		 {
-		 int jobId = callStatement.getInt(10);
+		 int jobId = procResults.get("10");
 		 insertJobRequirement(jobId,postedJobDetails.getSelectedCourseIds());
 		 }
 		 else
@@ -63,53 +58,22 @@ public class EmployerJobsDAO implements IEmployerJobsDAO
 		{
 			logger.error( "Error Occurred in InsertJobDetails :" + ex.getMessage());
 		}
-		finally
-		{
-			DatabaseConnection.closeDatabaseComponents(callStatement);
-		}
 		return postedJobDetails;
 	}
 
 	public JobDetails viewPostedJobDetails(JobDetails jobDetails)
 	{
-		CallableStatement callStatement = null;
-		Connection con= null;
-		ResultSet result=null;
-		List <Integer> lstCourseList = new ArrayList<Integer>();
 		logger.info("DL: viewPostedJobDetails method started");
 		try
 		{
-			con  = DatabaseConnection.getConnection();
-			callStatement = con.prepareCall("{CALL getPostedJobDetails(?)}");
-			callStatement.setInt("jobId", jobDetails.getId());
-		    result = callStatement.executeQuery();
-			while(result.next())
-			{
-			jobDetails.setId(result.getInt("id"));
-			jobDetails.setJobTitle(result.getString("jobTitle"));
-			jobDetails.setLocation(result.getString("location"));
-			jobDetails.setNoOfPosition(result.getInt("openPosition"));
-			jobDetails.setJobType(result.getString("jobType"));
-			jobDetails.setRateOfPay(result.getInt("rateofPay"));
-			jobDetails.setHourPerWeek(result.getInt("hoursPerWeek"));
-			jobDetails.setApplicationDeadline(result.getDate("applicationDeadline"));
-			jobDetails.setJobDescription(result.getString("jobDescription"));
-			String preRequisiteCourses = result.getString("prerequisitecourses");
-			String[] courseArray = preRequisiteCourses.trim().split(",");			
-			for (String course : courseArray)
-			{
-				lstCourseList.add(Integer.parseInt(course.trim()));	
-			}
-			jobDetails.setSelectedCourseIds(lstCourseList);
-			}
+			JdbcManager jdbcManager = new SelectHandler();
+			Map<String, Object> inputParameters = new HashMap<>();
+			inputParameters.put("jobId", jobDetails.getId());
+			jdbcManager.executeProcedure("{CALL getPostedJobDetails(?)}", "jobDetailsMapper", jobDetails, inputParameters);
 		}
 		catch(Exception ex)
 		{
 			logger.error( "Error Occurred in viewPostedJob :" + ex.getMessage());
-		}
-		finally
-		{
-			DatabaseConnection.closeDatabaseComponents(result, callStatement);
 		}
 		return jobDetails;
 	}
@@ -173,27 +137,17 @@ public class EmployerJobsDAO implements IEmployerJobsDAO
 	public boolean updatejobDetails(JobDetails updatedJobDetails) 
 	{
 		boolean isJobDetailsUpdated = false;
-		CallableStatement callStatement = null;
-		Connection con= null;
 		logger.info("DL: updatejobDetails method started");
 		try
 		{
-			con = DatabaseConnection.getConnection();
-			callStatement = con.prepareCall("{CALL updatejobdetails (?,?,?,?,?,?,?,?,?)}");
-			callStatement.setString("jobId", Integer.toString(updatedJobDetails.getId()));
-			callStatement.setString("jobTitle", updatedJobDetails.getJobTitle());
-			callStatement.setString("location", updatedJobDetails.getLocation());
-			callStatement.setString("jobType", updatedJobDetails.getJobType());	
-			callStatement.setString("noOfPosition", Integer.toString(updatedJobDetails.noOfPosition));
-			callStatement.setString("rateOfPay", Integer.toString(updatedJobDetails.rateOfPay));
-			callStatement.setString("hourPerWeek", Integer.toString(updatedJobDetails.hourPerWeek));
-			callStatement.setDate("applicationDeadline", (updatedJobDetails.getApplicationDeadline()));
-			callStatement.setString("jobDescription", updatedJobDetails.jobDescription);
-			int rowAffected = callStatement.executeUpdate();
-			
+			JdbcManager jdbcManager = new UpdateHandler();
+			Map<String, Object> inputParameters = new HashMap<>();
+			inputParameters.put("jobId", updatedJobDetails.getId());
+			Map<String, Integer> res = jdbcManager.executeProcedure("{CALL updatejobdetails (?,?,?,?,?,?,?,?,?)}", "jobDetailsMapper", updatedJobDetails, inputParameters);
+			int rowAffected = res.get("rowsAffected");
 			if (rowAffected > 0)
 			{
-				isJobDetailsUpdated = insertJobRequirement(updatedJobDetails.getId(),updatedJobDetails.getSelectedCourseIds());
+				isJobDetailsUpdated = insertJobRequirement(updatedJobDetails.getId(), updatedJobDetails.getSelectedCourseIds());
 			}
 			else
 		 	{
@@ -205,12 +159,9 @@ public class EmployerJobsDAO implements IEmployerJobsDAO
 		{
 			logger.error( "Error Occurred in updatejobDetails :" + ex.getMessage());
 		}
-		finally
-		{
-			DatabaseConnection.closeDatabaseComponents(callStatement);
-		}
 		return isJobDetailsUpdated;
 	}
+	
 	public boolean insertJobRequirement(int jobId, List<Integer> prerequisiteCourses)
 	{
 		boolean isQuerySuccess = false;

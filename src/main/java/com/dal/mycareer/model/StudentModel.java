@@ -28,58 +28,57 @@ public class StudentModel implements IStudentModel {
 	private static List<AppliedJob> appliedJobs = new ArrayList<AppliedJob>();
 	private static final String SESSION_NAME = "sessionName";
 	static Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
-	IStudentDAO dao = null;
 	Student student = null;
 
 	@Override
-	public Model fetchJobs(Model model, HttpServletRequest request) {
+	public Model fetchJobs(Model model, HttpServletRequest request, IStudentDAO dao) {
 		HttpSession session = request.getSession();
 		String userSessionName = (String) session.getAttribute(SESSION_NAME);
-		System.out.println("USERNAME :"+userSessionName);
 		if(userSessionName!="" && userSessionName!=null)
 		{
-		dao = new StudentDAO();
 		student = dao.getStudentDetails(userSessionName);
 		jobs = dao.getAllJobList(student.getId());
 		appliedJobs = dao.getAppliedJobList(student.getId());
 		model.addAttribute("jobs", jobs);
 		model.addAttribute("appliedJobs", appliedJobs);
 		}
+		
 		return model;
 	}
 
 	@Override
-	public Model viewJobs(Model model, int jobId, HttpServletRequest request) {
-
-		System.out.println("JOB ID:" + jobId);
-		for (Job job : jobs) {
-			if (job.getId() == jobId)
-				model.addAttribute("job", job);
+	public Model viewJobs(Model model, int jobId, HttpServletRequest request, IStudentDAO dao) {
+		HttpSession session = request.getSession();
+		String userSessionName = (String) session.getAttribute(SESSION_NAME);
+		if(userSessionName!="" && userSessionName!=null)
+		{
+			for (Job job : jobs) {
+				
+				if (job.getId() == jobId)
+				{
+					model.addAttribute("job", job);
+				}
+			}
 		}
 		return model;
 	}
 
 	@Override
-	public Model applyJob(Model model, MultipartFile file, HttpServletRequest request, int jobId) {
+	public Model applyJob(Model model, MultipartFile file, HttpServletRequest request, int jobId, IStudentDAO dao) {
 		InputStream inputStream = null;
 		HttpSession session = request.getSession();
 		String userSessionName = (String) session.getAttribute(SESSION_NAME);
 		if(userSessionName!="" && userSessionName!=null)
 		{
-		dao = new StudentDAO();
 		student = dao.getStudentDetails(userSessionName);
 		if (file != null) {
-			System.out.println(String.format("File name %s", file.getOriginalFilename()));
 			try {
 				inputStream = file.getInputStream();
-				System.out.println(student);
-				System.out.println(student.getId());
 				int i = dao.applyForJob(inputStream,student.getId(),jobId);
 				if (i == 1) {
-					System.out.println("File Uploaded..");
+					//System.out.println("File Uploaded..");
 				}
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
@@ -89,12 +88,11 @@ public class StudentModel implements IStudentModel {
 	}
 
 	@Override
-	public Model withdrawApplication(Model model, int jobId, HttpServletRequest request) {
+	public Model withdrawApplication(Model model, int jobId, HttpServletRequest request, IStudentDAO dao) {
 		HttpSession session = request.getSession();
 		String userSessionName = (String) session.getAttribute(SESSION_NAME);
 		if(userSessionName!="" && userSessionName!=null)
 		{
-		dao = new StudentDAO();
 		student = dao.getStudentDetails(userSessionName);
 		int i = dao.withdrawApplication(jobId);
 		appliedJobs = dao.getAppliedJobList(student.getId());
@@ -105,12 +103,13 @@ public class StudentModel implements IStudentModel {
 	}
 
 	@Override
-	public Model filterJobs(Model model, HttpServletRequest request, String location, String jobType) {
+	public Model filterJobs(Model model, HttpServletRequest request, String location, String jobType, IStudentDAO dao) {
 		HttpSession session = request.getSession();
 		String userSessionName = (String) session.getAttribute(SESSION_NAME);
 		if(userSessionName!="" && userSessionName!=null)
 		{
 			List<JobDetails> filteredJob=new ArrayList<JobDetails>();
+			
 		
 		for(JobDetails job:jobs)
 		{
@@ -132,12 +131,11 @@ public class StudentModel implements IStudentModel {
 	}
 
 	@Override
-	public Model jobApplicationExists(Model model, HttpServletRequest request, int jobId) {
+	public Model jobApplicationExists(Model model, HttpServletRequest request, int jobId, IStudentDAO dao) {
 		HttpSession session = request.getSession();
 		String userSessionName = (String) session.getAttribute(SESSION_NAME);
 		if(userSessionName!="" && userSessionName!=null)
 		{
-			dao = new StudentDAO();
 			student = dao.getStudentDetails(userSessionName);
 			int i=dao.alreadyApplied(student.getId(),jobId);
 			if(i==1)

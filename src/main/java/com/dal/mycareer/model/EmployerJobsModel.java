@@ -16,7 +16,7 @@ import org.springframework.stereotype.Service;
 public class EmployerJobsModel implements IEmployerJobsModel 
 {
 	@Autowired
-	IEmployerJobsDAO employerJobsDAO;
+	private IEmployerJobsDAO employerJobsDAO;
 
 	List<Job> jobs = null; 
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());	

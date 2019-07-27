@@ -24,7 +24,7 @@ import com.dal.mycareer.propertiesparser.PropertiesParser;
 public class EmployerJobsController
  {
 	@Autowired
-	IEmployerJobsModel employerJobs;
+	private IEmployerJobsModel employerJobs;
 	
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 	

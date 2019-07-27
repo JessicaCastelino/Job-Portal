@@ -85,7 +85,6 @@ public class ManageApplicationsDAO implements IManageApplicationsDAO {
 			return is;
 
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return null;
 		}

@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.dal.mycareer.DAO.Impl.StudentDAO;
+import com.dal.mycareer.DAO.Interface.IStudentDAO;
 import com.dal.mycareer.DTO.Filter;
 import com.dal.mycareer.DTO.UserLogin;
 import com.dal.mycareer.imodel.IRoleModel;
@@ -27,6 +29,7 @@ public class StudentController {
 	static Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 	IStudentModel studentModel = null;
 	IRoleModel roleModel = null;
+	IStudentDAO dao = new StudentDAO();
 	private static final String FILTER = "filter";
 
 	@RequestMapping(value = { "/studentHome" }, method = RequestMethod.GET)
@@ -36,7 +39,7 @@ public class StudentController {
 		roleModel = new RoleModel();
 		model = roleModel.getBasePage(model, request);
 		studentModel = new StudentModel();
-		model = studentModel.fetchJobs(model, request);
+		model = studentModel.fetchJobs(model, request, dao);
 		return model.asMap().get("view").toString();
 	}
 
@@ -47,7 +50,7 @@ public class StudentController {
 		roleModel = new RoleModel();
 		model = roleModel.getBasePage(model, request);
 		studentModel = new StudentModel();
-		model = studentModel.viewJobs(model, jobId, request);
+		model = studentModel.viewJobs(model, jobId, request, dao);
 		return model.asMap().get("view").toString();
 
 	}
@@ -60,7 +63,7 @@ public class StudentController {
 		roleModel = new RoleModel();
 		model = roleModel.getBasePage(model, request);
 		studentModel = new StudentModel();
-		model = studentModel.applyJob(model, file, request,jobId);
+		model = studentModel.applyJob(model, file, request,jobId, dao);
 		return model.asMap().get("view").toString();
 
 	}
@@ -69,7 +72,7 @@ public class StudentController {
 	public String loadHome(Model model, HttpServletRequest request, @RequestParam int jobId) {
 		model.addAttribute("reqPage", PropertiesParser.getPropertyMap().get("applyJob").toString());
 		model.addAttribute("role", "student");
-		model = studentModel.jobApplicationExists(model, request,jobId);
+		model = studentModel.jobApplicationExists(model, request,jobId, dao);
 		roleModel = new RoleModel();
 		model = roleModel.getBasePage(model, request);
 		model.addAttribute("jobId",jobId);
@@ -83,7 +86,7 @@ public class StudentController {
 		roleModel = new RoleModel();
 		model = roleModel.getBasePage(model, request);
 		studentModel = new StudentModel();
-		model = studentModel.withdrawApplication(model, jobId, request);
+		model = studentModel.withdrawApplication(model, jobId, request, dao);
 		return model.asMap().get("view").toString();
 	}
 	@RequestMapping(value = { "/filter" }, method = RequestMethod.GET)
@@ -96,7 +99,7 @@ public class StudentController {
 		studentModel = new StudentModel();
 		System.out.println(filter.getLocation());
 		System.out.println(filter.getJobType());
-		model = studentModel.filterJobs(model, request, filter.getLocation(), filter.getJobType());
+		model = studentModel.filterJobs(model, request, filter.getLocation(), filter.getJobType(), dao);
 		return model.asMap().get("view").toString();
 
 	}

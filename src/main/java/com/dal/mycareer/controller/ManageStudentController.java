@@ -49,7 +49,6 @@ public class ManageStudentController
 	@RequestMapping( value="/deletestudent", method=RequestMethod.DELETE)
     public boolean DeleteStudent(@RequestParam(name = "id") int studentId, HttpServletRequest request)
     {
-        String currentUser = (String) request.getSession().getAttribute("sessionName");
 		return manageStudentModel.DeleteStudent(studentId);
     }
 }
