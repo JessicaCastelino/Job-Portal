@@ -23,6 +23,7 @@ public class CoopCordinatorDAO implements ICoopCordinatorDAO
 	@Override
 	public List<RecruiterRequest> fetchRecruiterRequests() 
 	{
+		logger.info("CoopCoordinatorDAO: fetchRecruiterRequests method: Entered");
 		con = DatabaseConnection.getConnection();
 		RecruiterRequest recruiterRequest = null;
 		List<RecruiterRequest> requests = new ArrayList<RecruiterRequest>();
@@ -46,11 +47,12 @@ public class CoopCordinatorDAO implements ICoopCordinatorDAO
 				rs.close();
 				results = callableStatement.getMoreResults();
 			}
+			logger.info("CoopCoordinatorDAO: fetchRecruiterRequests method: Exit");
 			return requests;
 		} 
 		catch (SQLException ex) 
 		{
-			logger.error( "Error Occurred in fetchRecruiterRequests :" + ex.getMessage());
+			logger.error( "Error Occurred in CoopCoordinatorDAO: fetchRecruiterRequests method:" + ex.getMessage());
 			return requests;
 		} 
 		finally 
@@ -61,7 +63,7 @@ public class CoopCordinatorDAO implements ICoopCordinatorDAO
 			}
 			catch (SQLException e)
 			{
-				e.printStackTrace();
+				logger.error( "Error Occurred in CoopCoordinatorDAO: fetchRecruiterRequests method:" + e.getMessage());
 			}
 		}
 	}
@@ -127,9 +129,9 @@ public class CoopCordinatorDAO implements ICoopCordinatorDAO
 			{
 				callableStatement.close();
 			} 
-			catch (SQLException e) 
+			catch (SQLException e)
 			{
-				e.printStackTrace();
+				logger.error( "Error Occurred in CoopCoordinatorDAO: approveRequest method:" + e.getMessage());
 			}
 		}
 	}
@@ -159,9 +161,9 @@ public class CoopCordinatorDAO implements ICoopCordinatorDAO
 				{
 					callableStatement.close();
 				} 
-				catch (SQLException e) 
+				catch (SQLException e)
 				{
-					e.printStackTrace();
+					logger.error( "Error Occurred in CoopCoordinatorDAO: rejectRequest method:" + e.getMessage());
 				}
 			}
 	}
@@ -173,13 +175,10 @@ public class CoopCordinatorDAO implements ICoopCordinatorDAO
 				try {
 					callableStatement = con.prepareCall("{call fetchRecruiter("+reqID+")}");
 					boolean results = callableStatement.execute();
-					System.out.println("**********************************"+results);
 					ResultSet rs = callableStatement.getResultSet();
-					System.out.println("**********************************"+rs);
 					while (rs.next()) 
 					{
 						recruiterRequest = new RecruiterRequest();
-						System.out.println("**********************************"+rs.getInt(1));
 						recruiterRequest.setId(Integer.toString(rs.getInt(1)));
 						recruiterRequest.setFirstname(rs.getString(2));
 						recruiterRequest.setLastname(rs.getString(3));
@@ -200,9 +199,9 @@ public class CoopCordinatorDAO implements ICoopCordinatorDAO
 					{
 						callableStatement.close();
 					}
-					 catch (SQLException e) 
+					catch (SQLException e)
 					{
-						e.printStackTrace();
+						logger.error( "Error Occurred in CoopCoordinatorDAO: fetchRecruiter method:" + e.getMessage());
 					}
 				}
 			}

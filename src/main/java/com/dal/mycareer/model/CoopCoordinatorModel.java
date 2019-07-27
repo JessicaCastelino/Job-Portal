@@ -35,7 +35,6 @@ public class CoopCoordinatorModel implements ICoopCoordinatorModel
 
 	public CoopCoordinatorModel() 
 	{
-
 	}
 
 	public CoopCoordinatorModel(ICoopCordinatorDAO coopCordinatorDAO) 
@@ -44,33 +43,33 @@ public class CoopCoordinatorModel implements ICoopCoordinatorModel
 	}
 
 	@Override
-	public Model fetchRecruiterRequests(Model model, HttpServletRequest request) 
+	public Model fetchRecruiterRequests(Model model, HttpServletRequest request, ICoopCordinatorDAO coopCordinatorDAO) 
 	{
+		logger.info("CoopCoordinatorModel: fetchRecruiterRequests method: Entered");
 		HttpSession session = request.getSession();
 		String userSessionName = (String) session.getAttribute(SESSION_NAME);
-		System.out.println("USERNAME :" + userSessionName);
 		if (userSessionName != "" && userSessionName != null) 
 		{
 			model.addAttribute("isValid", "NA");
 			requests = coopCordinatorDAO.fetchRecruiterRequests();
 			model.addAttribute("recruiterRequests", requests);
 		}
+		logger.info("CoopCoordinatorModel: fetchRecruiterRequests method: Exit");
 		return model;
 	}
 
 	@Override
-	public Model approveRecruiterRequest(Model model, HttpServletRequest request, int recruiterRequestId) 
+	public Model approveRecruiterRequest(Model model, HttpServletRequest request, int recruiterRequestId, ICoopCordinatorDAO coopCordinatorDAO, IEmployerApprovalEmail approvalEmail, IPasswordGenerator passwordGenerator) 
 	{
+		logger.info("CoopCoordinatorModel: approveRecruiterRequest method: Entered");
 		HttpSession session = request.getSession();
 		String userSessionName = (String) session.getAttribute(SESSION_NAME);
-		System.out.println("USERNAME :" + userSessionName);
-		IEmployerApprovalEmail approvalEmail = new EmployerApprovalEmail();
+		
 		if (userSessionName != "" && userSessionName != null) 
 		{
-			IPasswordGenerator passwordGenerator = new PasswordGenerator();
 			String password = passwordGenerator.generatePassword();
 			RecruiterRequest recruiter = coopCordinatorDAO.fetchRecruiter(recruiterRequestId);
-			coopCordinatorDAO.approveRequest(recruiterRequestId, recruiter.getEmail(), password);
+			int i=coopCordinatorDAO.approveRequest(recruiterRequestId, recruiter.getEmail(), password);
 			approvalEmail.employerApprovalEmail(recruiter.getEmail(),
 					recruiter.getFirstname() + " " + recruiter.getLastname(), recruiter.getCompanyname(), password,
 					recruiter.getEmail());
@@ -78,26 +77,27 @@ public class CoopCoordinatorModel implements ICoopCoordinatorModel
 			model.addAttribute("isValid", "approve");
 			model.addAttribute("recruiterRequests", requests);
 		}
+		logger.info("CoopCoordinatorModel: approveRecruiterRequest method: Exit");
 		return model;
 	}
 
 	@Override
-	public Model rejectRecruiterRequest(Model model, HttpServletRequest request, int recruiterRequestId) 
+	public Model rejectRecruiterRequest(Model model, HttpServletRequest request, int recruiterRequestId, ICoopCordinatorDAO coopCordinatorDAO,IEmployerRejectionEmail rejectEmail) 
 	{
+		logger.info("CoopCoordinatorModel: rejectRecruiterRequest method: Entered");
 		HttpSession session = request.getSession();
 		String userSessionName = (String) session.getAttribute(SESSION_NAME);
-		System.out.println("USERNAME :" + userSessionName);
-		IEmployerRejectionEmail rejectEmail = new EmployerRejectionEmailImpl();
 		if (userSessionName != "" && userSessionName != null) 
 		{
 			RecruiterRequest recruiter = coopCordinatorDAO.fetchRecruiter(recruiterRequestId);
-			coopCordinatorDAO.rejectRequest(recruiterRequestId);
+			int i=coopCordinatorDAO.rejectRequest(recruiterRequestId);
 			rejectEmail.employerRejectionEmail(recruiter.getEmail(),
 					recruiter.getFirstname() + " " + recruiter.getLastname(), recruiter.getCompanyname());
 			requests = coopCordinatorDAO.fetchRecruiterRequests();
 			model.addAttribute("isValid", "reject");
 			model.addAttribute("recruiterRequests", requests);
 		}
+		logger.info("CoopCoordinatorModel: rejectRecruiterRequest method: Exit");
 		return model;
 	}
 
