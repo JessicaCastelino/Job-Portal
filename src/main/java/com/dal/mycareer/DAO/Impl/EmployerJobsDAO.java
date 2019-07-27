@@ -36,8 +36,6 @@ public class EmployerJobsDAO implements IEmployerJobsDAO
 	@Override
 	public JobDetails InsertJobDetails(JobDetails postedJobDetails,String currentUser) 
 	{
-		CallableStatement callStatement = null;
-		Connection con= null;
 		logger.info("DL: InsertJobDetails method started");
 		try
 		{
@@ -58,10 +56,6 @@ public class EmployerJobsDAO implements IEmployerJobsDAO
 		catch(Exception ex)
 		{
 			logger.error( "Error Occurred in InsertJobDetails :" + ex.getMessage());
-		}
-		finally
-		{
-			DatabaseConnection.closeDatabaseComponents(callStatement);
 		}
 		return postedJobDetails;
 	}
