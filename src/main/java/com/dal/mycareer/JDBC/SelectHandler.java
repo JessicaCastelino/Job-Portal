@@ -16,6 +16,12 @@ public class SelectHandler extends JdbcManager
 {
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
     private Map<String, Integer> procResult;
+
+    public SelectHandler()
+    {
+        procResult = new HashMap<>();
+    }
+
     @Override
     public Map<String, Integer> executeProc(CallableStatement callStatement, String mapperObjectName, Object dtoObject, 
                             Map<String, Object> additionalParam) 
@@ -23,10 +29,10 @@ public class SelectHandler extends JdbcManager
         ResultSet result = null;
         try
         {
-            fillInputParameters(callStatement, additionalParam);
+            ProcedureParamLoader paramLoader = new ProcedureParamLoader();
+            paramLoader.fillInputParameters(callStatement, additionalParam);
             result = callStatement.executeQuery();
             fillDTOObjectFromResultSet(mapperObjectName, result, dtoObject);
-            procResult = new HashMap<>();
             procResult.put("isObjectFilled", 1);
         }
         catch(Exception ex)
@@ -42,29 +48,24 @@ public class SelectHandler extends JdbcManager
 
     private void fillDTOObjectFromResultSet(String mapperObjectName, ResultSet result, Object dtoObject)
     {
-        IDTOMapper mapper = DTOMapper.dtoMap.get(mapperObjectName);
-        mapper.mapStatementtoObject(result, dtoObject);
-    }
-
-    private void fillInputParameters(CallableStatement callStatement, Map<String, Object> inputParams)
-    {
-        try 
+        if(dtoObject != null)
         {
-            for (String param : inputParams.keySet() ) 
+            IDTOMapper mapper = DTOMapper.dtoMap.get(mapperObjectName);
+            mapper.mapStatementtoObject(result, dtoObject);
+        }
+        else
+        {
+            try
             {
-                Object paramValue = inputParams.get(param);
-                if(paramValue instanceof  Integer)
+                if(result.next())
                 {
-                    callStatement.setInt(param, (Integer) paramValue);
-                }
-                else if(paramValue instanceof String)
-                {
-                    callStatement.setString(param, (String) paramValue);
+                    procResult.put("recordExist", 1);
                 }
             }
-        } 
-        catch (Exception e) 
-        {
+            catch(Exception ex)
+            {
+
+            }
             
         }
     }
