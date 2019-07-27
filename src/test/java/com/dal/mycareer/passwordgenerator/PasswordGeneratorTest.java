@@ -3,11 +3,8 @@ package com.dal.mycareer.passwordgenerator;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.PowerMockRunner;
 
-@RunWith(PowerMockRunner.class)
-@PrepareForTest({StringBuilder.class})
+
 public class PasswordGeneratorTest {
 
 	@Test

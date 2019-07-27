@@ -16,6 +16,26 @@ public class Job
 	private int employeeId;
   	private boolean jobStatus;
 
+	public Job() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	public Job(int id, String jobTitle, String location, String jobType, Date applicationDeadline, String organization,
+			String requiredCourses, List<Integer> selectedCourseIds, int employeeId, boolean jobStatus) {
+		super();
+		this.id = id;
+		this.jobTitle = jobTitle;
+		this.location = location;
+		this.jobType = jobType;
+		this.applicationDeadline = applicationDeadline;
+		this.organization = organization;
+		this.requiredCourses = requiredCourses;
+		this.selectedCourseIds = selectedCourseIds;
+		this.employeeId = employeeId;
+		this.jobStatus = jobStatus;
+	}
+
 	public int getId() 
 	{
 		return id;
