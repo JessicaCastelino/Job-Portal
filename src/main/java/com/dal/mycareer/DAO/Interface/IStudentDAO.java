@@ -11,7 +11,7 @@ import com.dal.mycareer.DTO.Student;
 public interface IStudentDAO {
 	public Student getStudentDetails(String userSessionName);
 
-	public List<JobDetails> getAllJobList(int studID);
+	public List<JobDetails> getAllJobList(int studID, String type);
 
 	public List<AppliedJob> getAppliedJobList(int studentId);
 

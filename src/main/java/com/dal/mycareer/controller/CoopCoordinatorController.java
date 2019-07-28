@@ -1,6 +1,7 @@
 package com.dal.mycareer.controller;
 
 import java.lang.invoke.MethodHandles;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Properties;
 
@@ -12,10 +13,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.dal.mycareer.DAO.Impl.CoopCordinatorDAO;
 import com.dal.mycareer.DAO.Interface.ICoopCordinatorDAO;
@@ -41,27 +44,36 @@ public class CoopCoordinatorController
 	ICoopCoordinatorModel coopCordinatorModel;
 	@Autowired
 	ICoopCordinatorDAO coopCordinatorDAO=new CoopCordinatorDAO();
-	//@Autowired
-	IEmployerApprovalEmail approvalEmail = new EmployerApprovalEmail();
-	//@Autowired
-	IPasswordGenerator passwordGenerator = new PasswordGenerator();
-	//@Autowired
-	IEmployerRejectionEmail rejectEmail = new EmployerRejectionEmailImpl();
+	@Autowired
+	IEmployerApprovalEmail approvalEmail;
+	@Autowired
+	IPasswordGenerator passwordGenerator;
+	@Autowired
+	IEmployerRejectionEmail rejectEmail;
 
 	  @RequestMapping("/adminHome") 
-	  public String loadAdminHome(Model model,HttpServletRequest request) 
+	  public String loadAdminHome(Model model,HttpServletRequest request)  
 	  { 
 		  logger.debug("CoopCoordinatorController: loadAdminHome method: Entered");
 		  model.addAttribute("reqPage", PROPERTY_MAP.get("adminHome").toString());
 		  model.addAttribute("role", "admin"); roleModel = new RoleModel(); 
 		  model = roleModel.getBasePage(model, request); 
-		  model = coopCordinatorModel.fetchRecruiterRequests(model, request, coopCordinatorDAO);
+		  try
+		{
+			logger.debug("Before");
+			model = coopCordinatorModel.fetchRecruiterRequests(model, request, coopCordinatorDAO);
+			logger.debug("After");
+		} catch (SQLException e)
+		{
+			logger.debug("Redirecting");
+			return "exception";
+		}
 		  logger.debug("CoopCoordinatorController: loadAdminHome method: Exit");
 		  return model.asMap().get("view").toString();
 	  }
 	 
 	  @RequestMapping(value = { "/approve" }, method = RequestMethod.GET)
-		public String approveRequest(@RequestParam("id") int recruiterRequestId, Model model, HttpServletRequest request) 
+		public String approveRequest(@RequestParam("id") int recruiterRequestId, Model model, HttpServletRequest request) throws SQLException 
 		{
 		  	logger.debug("CoopCoordinatorController: approveRequest method: Entered");
 			model.addAttribute("reqPage", PROPERTY_MAP.get("adminHome").toString());
@@ -74,7 +86,7 @@ public class CoopCoordinatorController
 		}
 	  
 	  @RequestMapping(value = { "/reject" }, method = RequestMethod.GET)
-		public String rejectRequest(@RequestParam("id") int recruiterRequestId, Model model, HttpServletRequest request) 
+		public String rejectRequest(@RequestParam("id") int recruiterRequestId, Model model, HttpServletRequest request) throws SQLException 
 		{
 		  	logger.debug("CoopCoordinatorController: rejectRequest method: Entered");
 			model.addAttribute("reqPage", PROPERTY_MAP.get("adminHome").toString());
@@ -101,4 +113,16 @@ public class CoopCoordinatorController
 		logger.debug("Controller: Inside deleteActiveEmployer method with employerId-" + employerId);
 		return coopCordinatorModel.deleteActiveRecruiter(employerId);
 	}
+	
+	@ExceptionHandler(SQLException.class)
+	  public ModelAndView myError(Exception exception) {
+	    ModelAndView mv = new ModelAndView();
+	    System.out.println(exception.getMessage());
+	    System.out.println(" ************** "+exception.getLocalizedMessage());
+	    mv.addObject("exception", exception);
+	    mv.setViewName("exception");
+	    logger.debug("Redirecting to error page");
+	    return mv;
+	  }
+	
 }

@@ -1,6 +1,7 @@
 package com.dal.mycareer.model;
 
 import java.lang.invoke.MethodHandles;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
@@ -25,7 +26,7 @@ public class CoopCoordinatorModel implements ICoopCoordinatorModel
 
 	private static List<RecruiterRequest> requests = new ArrayList<RecruiterRequest>();
 	private static final String SESSION_NAME = "sessionName";
-	static Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
+	private static Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 
 	public CoopCoordinatorModel() 
 	{
@@ -45,7 +46,14 @@ public class CoopCoordinatorModel implements ICoopCoordinatorModel
 		if (userSessionName != "" && userSessionName != null) 
 		{
 			model.addAttribute("isValid", "NA");
-			requests = coopCordinatorDAO.fetchRecruiterRequests();
+			try
+			{
+				requests = coopCordinatorDAO.fetchRecruiterRequests();
+			} catch (SQLException e)
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			model.addAttribute("recruiterRequests", requests);
 		}
 		logger.info("CoopCoordinatorModel: fetchRecruiterRequests method: Exit");
@@ -53,7 +61,7 @@ public class CoopCoordinatorModel implements ICoopCoordinatorModel
 	}
 
 	@Override
-	public Model approveRecruiterRequest(Model model, HttpServletRequest request, int recruiterRequestId, ICoopCordinatorDAO coopCordinatorDAO, IEmployerApprovalEmail approvalEmail, IPasswordGenerator passwordGenerator) 
+	public Model approveRecruiterRequest(Model model, HttpServletRequest request, int recruiterRequestId, ICoopCordinatorDAO coopCordinatorDAO, IEmployerApprovalEmail approvalEmail, IPasswordGenerator passwordGenerator) throws SQLException 
 	{
 		logger.info("CoopCoordinatorModel: approveRecruiterRequest method: Entered");
 		HttpSession session = request.getSession();
@@ -76,7 +84,7 @@ public class CoopCoordinatorModel implements ICoopCoordinatorModel
 	}
 
 	@Override
-	public Model rejectRecruiterRequest(Model model, HttpServletRequest request, int recruiterRequestId, ICoopCordinatorDAO coopCordinatorDAO,IEmployerRejectionEmail rejectEmail) 
+	public Model rejectRecruiterRequest(Model model, HttpServletRequest request, int recruiterRequestId, ICoopCordinatorDAO coopCordinatorDAO,IEmployerRejectionEmail rejectEmail) throws SQLException 
 	{
 		logger.info("CoopCoordinatorModel: rejectRecruiterRequest method: Entered");
 		HttpSession session = request.getSession();

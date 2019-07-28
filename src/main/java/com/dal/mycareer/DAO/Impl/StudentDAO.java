@@ -26,14 +26,14 @@ public class StudentDAO implements IStudentDAO {
 	private static final String CALL_FETCH_STUDENT_DETAILS = "{call fetchStudentDetails(?)}";
 	private static final String CALL_APPLY_FOR_JOB = "{call applyForJob(?,?,?,?)}";
 	private static final String CALL_GET_APPLIED_JOB_LIST = "{call getAppliedJobList(?)}";
-	private static final String CALL_GET_ALL_JOB_LIST = "{call getAllJobList(?)}";
+	private static final String CALL_GET_ALL_JOB_LIST = "{call getAllJobList(?,?)}";
 	private static final Properties PROPERTY_MAP = PropertiesParser.getPropertyMap();
 	Connection con = null;
 	CallableStatement callableStatement = null;
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 	
 	@Override
-	public List<JobDetails> getAllJobList(int studID) {
+	public List<JobDetails> getAllJobList(int studID, String type) {
 		logger.debug("StudentDAO: getAllJobList method: Entered");
 		con = DatabaseConnection.getConnection();
 		JobDetails job = null;
@@ -42,6 +42,7 @@ public class StudentDAO implements IStudentDAO {
 		try {
 			callableStatement = con.prepareCall(CALL_GET_ALL_JOB_LIST);
 			callableStatement.setInt(1, studID);
+			callableStatement.setString(1, type);
 			boolean results = callableStatement.execute();
 			while (results) {
 				rs = callableStatement.getResultSet();

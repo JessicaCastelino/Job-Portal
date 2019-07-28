@@ -5,6 +5,7 @@ import java.io.InputStream;
 import java.lang.invoke.MethodHandles;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -14,7 +15,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.ui.Model;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.dal.mycareer.DAO.Impl.StudentDAO;
 import com.dal.mycareer.DAO.Interface.IStudentDAO;
 import com.dal.mycareer.DTO.AppliedJob;
 import com.dal.mycareer.DTO.Job;
@@ -24,6 +24,7 @@ import com.dal.mycareer.imodel.IStudentModel;
 import com.dal.mycareer.propertiesparser.PropertiesParser;
 
 public class StudentModel implements IStudentModel {
+	private static final Properties PROPERTY_MAP = PropertiesParser.getPropertyMap();
 	private static List<JobDetails> jobs = new ArrayList<JobDetails>();
 	private static List<AppliedJob> appliedJobs = new ArrayList<AppliedJob>();
 	private static final String SESSION_NAME = "sessionName";
@@ -38,7 +39,7 @@ public class StudentModel implements IStudentModel {
 		if(userSessionName!="" && userSessionName!=null)
 		{
 		student = dao.getStudentDetails(userSessionName);
-		jobs = dao.getAllJobList(student.getId());
+		jobs = dao.getAllJobList(student.getId(), PROPERTY_MAP.get("job_type").toString());
 		appliedJobs = dao.getAppliedJobList(student.getId());
 		model.addAttribute("jobs", jobs);
 		model.addAttribute("appliedJobs", appliedJobs);

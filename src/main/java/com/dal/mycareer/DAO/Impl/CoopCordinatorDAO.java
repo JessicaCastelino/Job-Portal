@@ -27,8 +27,9 @@ public class CoopCordinatorDAO implements ICoopCordinatorDAO
 	CallableStatement callableStatement = null;
 	
 	@Override
-	public List<RecruiterRequest> fetchRecruiterRequests() 
+	public List<RecruiterRequest> fetchRecruiterRequests() throws SQLException 
 	{
+		
 		logger.debug("CoopCoordinatorDAO: fetchRecruiterRequests method: Entered");
 		con = DatabaseConnection.getConnection();
 		RecruiterRequest recruiterRequest = null;
@@ -54,16 +55,19 @@ public class CoopCordinatorDAO implements ICoopCordinatorDAO
 				}
 				results = callableStatement.getMoreResults();
 			}
-			return requests;
+			//return requests;
+			throw new SQLException("Error in fetching recruiter requests. Please try again later.");
+			
 		} 
 		catch (SQLException ex) 
 		{
 			logger.error( "SQLException Occurred in CoopCoordinatorDAO: fetchRecruiterRequests method:" + ex.getMessage());
-			return requests;
+			throw new SQLException("Error in fetching recruiter requests. Please try again later.");
 		} 
 		finally {
 			DatabaseConnection.closeDatabaseComponents(rs, callableStatement, con);
 			logger.debug("CoopCoordinatorDAO: fetchRecruiterRequests method: Exit");
+			
 		}
 		
 	}
