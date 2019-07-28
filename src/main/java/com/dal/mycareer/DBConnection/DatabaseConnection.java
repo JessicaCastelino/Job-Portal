@@ -28,18 +28,23 @@ public class DatabaseConnection {
 				String driverClass = dbProps.getProperty("databaseDriverClass");
 				Class.forName(driverClass);
 				connection = DriverManager.getConnection(dbURL, dbUsername, dbPassword);
-				
+
 				logger.info("Connected to Database");
-			
-			  } catch (SQLException | ClassNotFoundException ex) {
-			  logger.info("Error while connecting to db : " + ex.getMessage()); }
-			 
+
+			} catch (SQLException | ClassNotFoundException ex) {
+				logger.info("Error while connecting to db : " + ex.getMessage());
+			}
+
 		}
 		return connection;
 	}
 
-	public static void closeConnection() throws SQLException {
-		connection.close();
+	public static void closeConnection(Connection conn) {
+		try {
+			conn.close();
+		} catch (SQLException e) {
+			logger.info("Error while closing the connection : " + e.getMessage());
+		}
 	}
 
 	public static void closeDatabaseComponents(ResultSet resultSet, CallableStatement callableStatement) {
