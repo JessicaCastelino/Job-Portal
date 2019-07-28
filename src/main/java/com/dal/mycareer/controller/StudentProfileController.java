@@ -1,6 +1,6 @@
 package com.dal.mycareer.controller;
 
-import java.lang.invoke.MethodHandles;
+import java.util.Properties;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -22,15 +22,25 @@ import com.dal.mycareer.propertiesparser.PropertiesParser;
 @Controller
 public class StudentProfileController {
 	
-	static Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
+	private static final Properties PROPERTY_MAP = PropertiesParser.getPropertyMap();
+	private static final String VIEW = "view";
+	private static final String SESSION_NAME = "sessionName";
+	private static final String STUDENT = "student";
+	private static final String ROLE = "role";
+	private static final String STUDENT_PROFILE = "studentProfile";
+	private static final String REQ_PAGE = "reqPage";
+	
+	
+	
+	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	@RequestMapping(value = "/studentProfile", method = RequestMethod.GET)
 	public String Login(Model model, HttpServletRequest request) {
 		
-		LOGGER.info("Student controller : Entered");
+		logger.info("Student controller : START");
 
-		model.addAttribute("reqPage", PropertiesParser.getPropertyMap().get("studentProfile").toString());
-		model.addAttribute("role", "student");
+		model.addAttribute(REQ_PAGE, PROPERTY_MAP.get(STUDENT_PROFILE).toString());
+		model.addAttribute(ROLE, STUDENT);
 		
 		IStudentProfileModel spModel = new StudentProfileModel();
 		IStudentProfileDAO spDAO = new StudentProfileDAO();
@@ -39,13 +49,15 @@ public class StudentProfileController {
 
 		model = roleModel.getBasePage(model, request);
 		
-		if(request.getSession().getAttribute("sessionName") != null) {
-			spModel.getStudentProfile(model, request.getSession().getAttribute("sessionName").toString(), spDAO);
+		if(request.getSession().getAttribute(SESSION_NAME) != null) {
+			spModel.getStudentProfile(model, request.getSession().getAttribute(SESSION_NAME).toString(), spDAO);
+			
+			logger.debug("Student profile fetched");
 		}
 		
-		LOGGER.info("Student controller : Exit");
+		logger.info("Student controller : END");
 
-		return model.asMap().get("view").toString();
+		return model.asMap().get(VIEW).toString();
 	}
 
 }
