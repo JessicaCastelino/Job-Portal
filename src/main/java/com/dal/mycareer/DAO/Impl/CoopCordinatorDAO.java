@@ -61,17 +61,8 @@ public class CoopCordinatorDAO implements ICoopCordinatorDAO
 			logger.error( "SQLException Occurred in CoopCoordinatorDAO: fetchRecruiterRequests method:" + ex.getMessage());
 			return requests;
 		} 
-		finally 
-		{
-			try 
-			{
-				callableStatement.close();
-				rs.close();
-			}
-			catch (SQLException e)
-			{
-				logger.error( "SQLException Occurred in CoopCoordinatorDAO: fetchRecruiterRequests method:" + e.getMessage());
-			}
+		finally {
+			DatabaseConnection.closeDatabaseComponents(rs, callableStatement);
 			logger.debug("CoopCoordinatorDAO: fetchRecruiterRequests method: Exit");
 		}
 		
@@ -129,16 +120,8 @@ public class CoopCordinatorDAO implements ICoopCordinatorDAO
 			logger.error( "SQLException Occurred in CoopCoordinatorDAO: approveRequest method:" + ex.getMessage());
 			return 0;
 		} 
-		finally 
-		{
-			try 
-			{
-				callableStatement.close();
-			} 
-			catch (SQLException e)
-			{
-				logger.error( "SQLException Occurred in CoopCoordinatorDAO: approveRequest method:" + e.getMessage());
-			}
+		finally {
+			DatabaseConnection.closeDatabaseComponents(callableStatement);
 			logger.debug("CoopCoordinatorDAO: approveRequest method: Exit");
 		}
 	}
@@ -161,18 +144,9 @@ public class CoopCordinatorDAO implements ICoopCordinatorDAO
 				logger.error( "SQLException Occurred in CoopCoordinatorDAO: rejectRequest method:" + e.getMessage());
 				return 0;
 			}
-			finally 
-			{
-				try 
-				{
-					callableStatement.close();
-				} 
-				catch (SQLException e)
-				{
-					logger.error( "SQLException Occurred in CoopCoordinatorDAO: rejectRequest method:" + e.getMessage());
-				}
+			finally {
+				DatabaseConnection.closeDatabaseComponents(callableStatement);
 				logger.debug("CoopCoordinatorDAO: rejectRequest method: Exit");
-				
 			}
 	}
 		
@@ -204,17 +178,8 @@ public class CoopCordinatorDAO implements ICoopCordinatorDAO
 					logger.error( "SQLException Occurred in CoopCoordinatorDAO: fetchRecruiter method:" + e.getMessage());
 					return recruiterRequest;
 				} 
-				finally 
-				{
-					try 
-					{
-						callableStatement.close();
-						rs.close();
-					}
-					catch (SQLException e)
-					{
-						logger.error( "SQLException Occurred in CoopCoordinatorDAO: fetchRecruiter method:" + e.getMessage());
-					}
+				finally {
+					DatabaseConnection.closeDatabaseComponents(rs, callableStatement);
 					logger.debug("CoopCoordinatorDAO: fetchRecruiter method: Exit");
 				}
 			}

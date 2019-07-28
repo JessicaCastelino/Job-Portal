@@ -69,14 +69,8 @@ public class StudentDAO implements IStudentDAO {
 			logger.error( "SQLException Occurred in StudentDAO: getAllJobList method:" + e.getMessage());
 			return jobs;
 		} finally {
-			try {
-				rs.close();
-				callableStatement.close();
-			} catch (SQLException e) {
-				logger.error( "SQLException Occurred in StudentDAO: getAllJobList method:" + e.getMessage());
-				
-			}
-			logger.debug("StudentDAO: getAllJobList method: Exit");
+				DatabaseConnection.closeDatabaseComponents(rs, callableStatement);
+				logger.debug("StudentDAO: getAllJobList method: Exit");
 			
 		}
 	}
@@ -124,13 +118,8 @@ public class StudentDAO implements IStudentDAO {
 		} catch (SQLException e) {
 			logger.error( "SQLException Occurred in StudentDAO: getAppliedJobList method:" + e.getMessage());
 			return appliedJobs;
-		} finally {
-			try {
-				callableStatement.close();
-				rs.close();
-			} catch (SQLException e) {
-				logger.error( "SQLException Occurred in StudentDAO: getAppliedJobList method:" + e.getMessage());
-			}
+		}  finally {
+			DatabaseConnection.closeDatabaseComponents(rs, callableStatement);
 			logger.debug("StudentDAO: getAppliedJobList method: Exit");
 		}
 	}
@@ -154,11 +143,7 @@ public class StudentDAO implements IStudentDAO {
 			return 0;
 		}
 		finally {
-			try {
-				callableStatement.close();
-			} catch (SQLException e) {
-				logger.error( "SQLException Occurred in StudentDAO: applyForJob method:" + e.getMessage());
-			}
+			DatabaseConnection.closeDatabaseComponents(callableStatement);
 			logger.debug("StudentDAO: applyForJob method: Exit");	
 		}
 		
@@ -195,12 +180,7 @@ public class StudentDAO implements IStudentDAO {
 			logger.error( "SQLException Occurred in StudentDAO: getStudentDetails method:" + e.getMessage());
 			return student;
 		} finally {
-			try {
-				callableStatement.close();
-				rs.close();
-			} catch (SQLException e) {
-				logger.error( "SQLException Occurred in StudentDAO: getStudentDetails method:" + e.getMessage());
-			}
+			DatabaseConnection.closeDatabaseComponents(rs, callableStatement);
 			logger.debug("StudentDAO: getStudentDetails method: Exit");
 		}
 	}
@@ -221,11 +201,7 @@ public class StudentDAO implements IStudentDAO {
 			return 0;
 		}
 		finally {
-			try {
-				callableStatement.close();
-			} catch (SQLException e) {
-				logger.error( "SQLException Occurred in StudentDAO: withdrawApplication method:" + e.getMessage());
-			}
+			DatabaseConnection.closeDatabaseComponents(callableStatement);
 			logger.debug("StudentDAO: withdrawApplication method: Exit");
 		}
 	}
@@ -257,12 +233,7 @@ public class StudentDAO implements IStudentDAO {
 			return 0;
 		}
 		finally {
-			try {
-				rs.close();
-				callableStatement.close();
-			} catch (SQLException e) {
-				logger.error( "SQLException Occurred in StudentDAO: alreadyApplied method:" + e.getMessage());
-			}
+			DatabaseConnection.closeDatabaseComponents(rs, callableStatement);
 			logger.debug("StudentDAO: alreadyApplied method: Exit");
 		}
 	}
