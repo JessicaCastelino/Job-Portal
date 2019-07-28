@@ -23,8 +23,8 @@ public class CoopCordinatorDAO implements ICoopCordinatorDAO
 	private static final String CALL_MAKE_EMPLOYER_ACTIVE = "{call makeEmployerActive(?,?,?)}";
 	private static final String CALL_FETCH_RECRUITER_REQUESTS = "{call fetchRecruiterRequests()}";
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());
-	Connection con = null;
-	CallableStatement callableStatement = null;
+	private Connection con = null;
+	private CallableStatement callableStatement = null;
 	
 	@Override
 	public List<RecruiterRequest> fetchRecruiterRequests() throws SQLException 

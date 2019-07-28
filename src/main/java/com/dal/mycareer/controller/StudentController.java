@@ -28,9 +28,9 @@ import com.dal.mycareer.propertiesparser.PropertiesParser;
 public class StudentController {
 	private static final Properties PROPERTY_MAP = PropertiesParser.getPropertyMap();
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());
-	IStudentModel studentModel = null;
-	IRoleModel roleModel = null;
-	IStudentDAO dao = new StudentDAO();
+	private IStudentModel studentModel = null;
+	private IRoleModel roleModel = null;
+	private IStudentDAO dao = new StudentDAO();
 	private static final String FILTER = "filter";
 
 	@RequestMapping(value = { "/studentHome" }, method = RequestMethod.GET)

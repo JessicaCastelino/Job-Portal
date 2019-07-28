@@ -29,8 +29,8 @@ public class StudentModel implements IStudentModel {
 	private static List<JobDetails> jobs = new ArrayList<JobDetails>();
 	private static List<AppliedJob> appliedJobs = new ArrayList<AppliedJob>();
 	private static final String SESSION_NAME = "sessionName";
-	static Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
-	Student student = null;
+	private final Logger logger = LoggerFactory.getLogger(this.getClass());
+    private Student student = null;
 
 	@Override
 	public Model fetchJobs(Model model, HttpServletRequest request, IStudentDAO dao) throws SQLException {
