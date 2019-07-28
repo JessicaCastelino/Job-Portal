@@ -15,11 +15,11 @@ public class JobDetailsMapper implements IDTOMapper
 {
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    public JobDetails mapStatementtoObject(ResultSet result, Object jobDetails) 
+    public JobDetails mapStatementtoObject(ResultSet result, Object dtoObject) 
     {
         List<Integer> lstCourseList = new ArrayList<Integer>();
         JobDetails postJobDetails;
-        postJobDetails = (JobDetails) jobDetails;
+        postJobDetails = (JobDetails) dtoObject;
         try 
         {
             while (result.next()) 

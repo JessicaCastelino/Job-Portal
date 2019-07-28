@@ -11,6 +11,8 @@ import com.dal.mycareer.DAO.Interface.IManageStudentDAO;
 import com.dal.mycareer.DAO.Interface.IPrerequisiteCoursesDAO;
 import com.dal.mycareer.DBConnection.DatabaseConnection;
 import com.dal.mycareer.DTO.Student;
+import com.dal.mycareer.JDBC.JdbcManager;
+import com.dal.mycareer.JDBC.SelectHandler;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,7 +25,7 @@ public class ManageStudentDAO implements IManageStudentDAO {
     @Autowired
     IPrerequisiteCoursesDAO prereqDAO;
 
-    private final Logger LOGGER = LoggerFactory.getLogger(this.getClass());
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Override
     public Student RegisterStudent(Student studentDetails) 
@@ -54,59 +56,34 @@ public class ManageStudentDAO implements IManageStudentDAO {
             } 
             else 
             {
-                LOGGER.error("Error Occurred while registering student");
+                logger.error("Error Occurred while registering student");
             }
         } 
         catch (Exception ex) 
         {
-            LOGGER.error("Error Occurred in RegisterStudent :" + ex.getMessage());
+            logger.error("Error Occurred in RegisterStudent :" + ex.getMessage());
         }
 
         return studentDetails;
     }
+
     @Override
     public List<Student> getRegisteredStudents()
     {
-        CallableStatement callStatement = null;
-        Connection con = null;
-        Student student = null;
-        List <Student> registeredStudentList = new ArrayList<Student>();
-        try
-        {
-            
-            con = DatabaseConnection.getConnection();
-            callStatement = con.prepareCall("{call fetchRegisteredStudents()}");
-            ResultSet regStudentsSet = callStatement.executeQuery();
-            while (regStudentsSet.next())
-            {
-                student = new Student();
-                student.setId(regStudentsSet.getInt("id"));
-                student.setFirstname(regStudentsSet.getString("firstname"));
-                student.setLastname(regStudentsSet.getString("lastname"));
-                student.setBannerid(regStudentsSet.getString("bannerid"));
-                student.setEmail(regStudentsSet.getString("email"));
-                student.setRequiredCourses(regStudentsSet.getString("requiredCourses"));
-                registeredStudentList.add(student);
-            }
-        }
-        catch (Exception ex)
-        {
-            LOGGER.error( "Error Occurred in getRegisteredStudents :" + ex.getMessage());
-        }
-        finally
+        List<Student> students = new ArrayList<>();
+        try 
 		{
-            try 
-            {
-				callStatement.close();
-            }
-             catch (SQLException e) 
-             {
-				e.printStackTrace();
-			}
+			JdbcManager jdbcManager = new SelectHandler();
+			jdbcManager.executeProcedure("{call fetchRegisteredStudents()}", "studentsMapper", students, null);
+		} 
+		catch (Exception e) 
+		{
+			logger.error("Exception occurred at ManageStudentDAO:getRegisteredStudents " + e.getMessage());
 		}
-        return registeredStudentList;
+        return students;
     }
-   @Override
+
+    @Override
     public boolean DeleteStudent(int studentId) {
         CallableStatement callStatement = null;
         Connection con = null;
@@ -124,13 +101,13 @@ public class ManageStudentDAO implements IManageStudentDAO {
             else 
             {
                 isDeleteSuccess = false;
-                LOGGER.error("Error Occurred while deleting student");
+                logger.error("Error Occurred while deleting student");
             }
         } 
         catch (Exception ex) 
         {
             isDeleteSuccess = false;
-            LOGGER.error("Error Occurred in DeleteStudent :" + ex.getMessage());
+            logger.error("Error Occurred in DeleteStudent :" + ex.getMessage());
         }
 
         return isDeleteSuccess;
