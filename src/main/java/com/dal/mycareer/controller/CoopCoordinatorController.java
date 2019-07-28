@@ -2,6 +2,7 @@ package com.dal.mycareer.controller;
 
 import java.lang.invoke.MethodHandles;
 import java.util.List;
+import java.util.Properties;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -33,6 +34,7 @@ import com.dal.mycareer.propertiesparser.PropertiesParser;
 @Controller
 public class CoopCoordinatorController 
 {
+	private static final Properties PROPERTY_MAP = PropertiesParser.getPropertyMap();
 	static Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 	private IRoleModel roleModel = null;
 	@Autowired
@@ -49,38 +51,38 @@ public class CoopCoordinatorController
 	  @RequestMapping("/adminHome") 
 	  public String loadAdminHome(Model model,HttpServletRequest request) 
 	  { 
-		  logger.info("CoopCoordinatorController: loadAdminHome method: Entered");
-		  model.addAttribute("reqPage", PropertiesParser.getPropertyMap().get("adminHome").toString());
+		  logger.debug("CoopCoordinatorController: loadAdminHome method: Entered");
+		  model.addAttribute("reqPage", PROPERTY_MAP.get("adminHome").toString());
 		  model.addAttribute("role", "admin"); roleModel = new RoleModel(); 
 		  model = roleModel.getBasePage(model, request); 
 		  model = coopCordinatorModel.fetchRecruiterRequests(model, request, coopCordinatorDAO);
-		  logger.info("CoopCoordinatorController: loadAdminHome method: Exit");
+		  logger.debug("CoopCoordinatorController: loadAdminHome method: Exit");
 		  return model.asMap().get("view").toString();
 	  }
 	 
 	  @RequestMapping(value = { "/approve" }, method = RequestMethod.GET)
 		public String approveRequest(@RequestParam("id") int recruiterRequestId, Model model, HttpServletRequest request) 
 		{
-		  	logger.info("CoopCoordinatorController: approveRequest method: Entered");
-			model.addAttribute("reqPage", PropertiesParser.getPropertyMap().get("adminHome").toString());
+		  	logger.debug("CoopCoordinatorController: approveRequest method: Entered");
+			model.addAttribute("reqPage", PROPERTY_MAP.get("adminHome").toString());
 			model.addAttribute("role", "admin");
 			roleModel = new RoleModel();
 			model = roleModel.getBasePage(model, request);
 			model = coopCordinatorModel.approveRecruiterRequest(model, request, recruiterRequestId, coopCordinatorDAO, approvalEmail, passwordGenerator);
-			logger.info("CoopCoordinatorController: approveRequest method: Exit");
+			logger.debug("CoopCoordinatorController: approveRequest method: Exit");
 			return model.asMap().get("view").toString();
 		}
 	  
 	  @RequestMapping(value = { "/reject" }, method = RequestMethod.GET)
 		public String rejectRequest(@RequestParam("id") int recruiterRequestId, Model model, HttpServletRequest request) 
 		{
-		  	logger.info("CoopCoordinatorController: rejectRequest method: Entered");
-			model.addAttribute("reqPage", PropertiesParser.getPropertyMap().get("adminHome").toString());
+		  	logger.debug("CoopCoordinatorController: rejectRequest method: Entered");
+			model.addAttribute("reqPage", PROPERTY_MAP.get("adminHome").toString());
 			model.addAttribute("role", "admin");
 			roleModel = new RoleModel();
 			model = roleModel.getBasePage(model, request);
 			model = coopCordinatorModel.rejectRecruiterRequest(model, request, recruiterRequestId, coopCordinatorDAO, rejectEmail);
-			logger.info("CoopCoordinatorController: rejectRequest method: Entered");
+			logger.debug("CoopCoordinatorController: rejectRequest method: Entered");
 			return model.asMap().get("view").toString();
 		}
 
@@ -88,7 +90,7 @@ public class CoopCoordinatorController
 	@RequestMapping(value = "/activeRecruiters", method = RequestMethod.GET)
 	public List<RecruiterRequest> showActiveRecruiter(ModelMap model) 
 	{
-		logger.info("Controller: Inside showActiveRecruiter method");
+		logger.debug("Controller: Inside showActiveRecruiter method");
 		return coopCordinatorModel.fetchActiveRecruiters();
 	}
 
@@ -96,7 +98,7 @@ public class CoopCoordinatorController
 	@RequestMapping(value ="/deleteRecruiter", method = RequestMethod.DELETE)
 	public boolean deleteActiveEmployer(@RequestParam(name = "id") int employerId)
 	{
-		logger.info("Controller: Inside deleteActiveEmployer method with employerId-" + employerId);
+		logger.debug("Controller: Inside deleteActiveEmployer method with employerId-" + employerId);
 		return coopCordinatorModel.deleteActiveRecruiter(employerId);
 	}
 }
