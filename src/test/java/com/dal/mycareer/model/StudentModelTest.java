@@ -9,6 +9,7 @@ import static org.mockito.Mockito.when;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Date;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import java.util.List;
@@ -70,14 +71,29 @@ public class StudentModelTest {
 		// Output for Mock Methods
 		Mockito.when(req.getSession()).thenReturn(mockSession);
 		Mockito.when(mockSession.getAttribute("sessionName")).thenReturn("mock@dal.ca");
-		Mockito.when(mockStudentDAO.getStudentDetails("mock@dal.ca")).thenReturn(mockStudent);
 		Mockito.when(mockStudent.getId()).thenReturn(1);
-		Mockito.when(mockStudentDAO.getAllJobList(1)).thenReturn(mockJobList);
-		Mockito.when(mockStudentDAO.getAppliedJobList(1)).thenReturn(mockAppliedJobList);
+		try
+		{
+			Mockito.when(mockStudentDAO.getAllJobList(1,"prerequisite")).thenReturn(mockJobList);
+			Mockito.when(mockStudentDAO.getStudentDetails("mock@dal.ca")).thenReturn(mockStudent);
+			Mockito.when(mockStudentDAO.getAppliedJobList(1)).thenReturn(mockAppliedJobList);
+		} catch (SQLException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		// Class object creation
 		StudentModel sm =new StudentModel();
-		Model returnedModel = sm.fetchJobs(mockModel, req, mockStudentDAO);
+		Model returnedModel = null;
+		try
+		{
+			returnedModel = sm.fetchJobs(mockModel, req, mockStudentDAO);
+		} catch (SQLException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		//Fetch returned values
 		List<JobDetails> returnedJobs= (List<JobDetails>) returnedModel.asMap().get("jobs");
@@ -130,18 +146,29 @@ public class StudentModelTest {
 		// Output for Mock Methods
 		Mockito.when(req.getSession()).thenReturn(mockSession);
 		Mockito.when(mockSession.getAttribute("sessionName")).thenReturn("mock@dal.ca");
-		Mockito.when(mockStudentDAO.getStudentDetails("mock@dal.ca")).thenReturn(mockStudent);
-		Mockito.when(mockStudent.getId()).thenReturn(1);
-		try {
+		try
+		{
+			Mockito.when(mockStudentDAO.getStudentDetails("mock@dal.ca")).thenReturn(mockStudent);
+			Mockito.when(mockStudentDAO.applyForJob(mockStream, 1, 1)).thenReturn(1);
 			Mockito.when(mockFile.getInputStream()).thenReturn(mockStream);
-		} catch (IOException e) {
-			fail("IOException in testApplyJob");
+		} catch (Exception e1)
+		{
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
 		}
-		Mockito.when(mockStudentDAO.applyForJob(mockStream, 1, 1)).thenReturn(1);
+		Mockito.when(mockStudent.getId()).thenReturn(1);
+		
 		
 		// Class object creation
 		StudentModel sm =new StudentModel();
-		Model returnedModel = sm.applyJob(mockModel, mockFile, req, 1, mockStudentDAO);
+		try
+		{
+			Model returnedModel = sm.applyJob(mockModel, mockFile, req, 1, mockStudentDAO);
+		} catch (SQLException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 			
 	}
@@ -165,18 +192,36 @@ public class StudentModelTest {
 		// Output for Mock Methods
 		Mockito.when(req.getSession()).thenReturn(mockSession);
 		Mockito.when(mockSession.getAttribute("sessionName")).thenReturn("mock@dal.ca");
-		Mockito.when(mockStudentDAO.getStudentDetails("mock@dal.ca")).thenReturn(mockStudent);
-		Mockito.when(mockStudentDAO.withdrawApplication(1)).thenReturn(1);
-		Mockito.when(mockStudentDAO.getAppliedJobList(1)).thenReturn(mockAppliedJobList);
+		try
+		{
+			Mockito.when(mockStudentDAO.getStudentDetails("mock@dal.ca")).thenReturn(mockStudent);
+			Mockito.when(mockStudentDAO.withdrawApplication(1)).thenReturn(1);
+			Mockito.when(mockStudentDAO.getAppliedJobList(1)).thenReturn(mockAppliedJobList);
+			
+		} catch (SQLException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		Mockito.when(mockStudent.getId()).thenReturn(1);
 			
 		// Class object creation
 		StudentModel sm =new StudentModel();
-		Model returnedModel = sm.withdrawApplication(mockModel, 1, req, mockStudentDAO);
+		List<JobDetails> returnedJobs = null;
+		List<AppliedJob> returnedAppliedJobs = null;
+		try
+		{
+			Model returnedModel = sm.withdrawApplication(mockModel, 1, req, mockStudentDAO);
+			//Fetch returned values
+			returnedJobs= (List<JobDetails>) returnedModel.asMap().get("jobs");
+			returnedAppliedJobs =(List<AppliedJob>) returnedModel.asMap().get("appliedJobs");
+			
+		} catch (SQLException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
-		//Fetch returned values
-		List<JobDetails> returnedJobs= (List<JobDetails>) returnedModel.asMap().get("jobs");
-		List<AppliedJob> returnedAppliedJobs =(List<AppliedJob>) returnedModel.asMap().get("appliedJobs");
 				
 		//Assertion
 		Assert.assertEquals(returnedJobs.get(0).getHourPerWeek().intValue(), 38);
@@ -225,13 +270,29 @@ public class StudentModelTest {
 		// Output for Mock Methods
 		Mockito.when(req.getSession()).thenReturn(mockSession);
 		Mockito.when(mockSession.getAttribute("sessionName")).thenReturn("mock@dal.ca");
-		Mockito.when(mockStudentDAO.getStudentDetails("mock@dal.ca")).thenReturn(mockStudent);
-		Mockito.when(mockStudentDAO.alreadyApplied(1,2)).thenReturn(1);
+		try
+		{
+			Mockito.when(mockStudentDAO.getStudentDetails("mock@dal.ca")).thenReturn(mockStudent);
+			Mockito.when(mockStudentDAO.alreadyApplied(1,2)).thenReturn(1);
+		} catch (SQLException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		Mockito.when(mockStudent.getId()).thenReturn(1);
 		
 		// Class object creation
 		StudentModel sm =new StudentModel();
-		Model returnedModel = sm.jobApplicationExists(mockModel, req, 2, mockStudentDAO);
+		Model returnedModel = null;
+		try
+		{
+			returnedModel = sm.jobApplicationExists(mockModel, req, 2, mockStudentDAO);
+		} catch (SQLException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 		//Fetch returned values
 		String returnedStatus= (String) returnedModel.asMap().get("reqPage");							

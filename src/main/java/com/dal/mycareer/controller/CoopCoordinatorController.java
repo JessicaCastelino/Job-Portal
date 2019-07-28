@@ -44,30 +44,18 @@ public class CoopCoordinatorController
 	ICoopCoordinatorModel coopCordinatorModel;
 	@Autowired
 	ICoopCordinatorDAO coopCordinatorDAO=new CoopCordinatorDAO();
-	@Autowired
-	IEmployerApprovalEmail approvalEmail;
-	@Autowired
-	IPasswordGenerator passwordGenerator;
-	@Autowired
-	IEmployerRejectionEmail rejectEmail;
+	IEmployerApprovalEmail approvalEmail = new EmployerApprovalEmail();
+	IPasswordGenerator passwordGenerator =  new PasswordGenerator();
+	IEmployerRejectionEmail rejectEmail = new EmployerRejectionEmailImpl();
 
 	  @RequestMapping("/adminHome") 
-	  public String loadAdminHome(Model model,HttpServletRequest request)  
+	  public String loadAdminHome(Model model,HttpServletRequest request) throws SQLException  
 	  { 
 		  logger.debug("CoopCoordinatorController: loadAdminHome method: Entered");
 		  model.addAttribute("reqPage", PROPERTY_MAP.get("adminHome").toString());
 		  model.addAttribute("role", "admin"); roleModel = new RoleModel(); 
 		  model = roleModel.getBasePage(model, request); 
-		  try
-		{
-			logger.debug("Before");
-			model = coopCordinatorModel.fetchRecruiterRequests(model, request, coopCordinatorDAO);
-			logger.debug("After");
-		} catch (SQLException e)
-		{
-			logger.debug("Redirecting");
-			return "exception";
-		}
+		  model = coopCordinatorModel.fetchRecruiterRequests(model, request, coopCordinatorDAO);
 		  logger.debug("CoopCoordinatorController: loadAdminHome method: Exit");
 		  return model.asMap().get("view").toString();
 	  }
@@ -113,16 +101,4 @@ public class CoopCoordinatorController
 		logger.debug("Controller: Inside deleteActiveEmployer method with employerId-" + employerId);
 		return coopCordinatorModel.deleteActiveRecruiter(employerId);
 	}
-	
-	@ExceptionHandler(SQLException.class)
-	  public ModelAndView myError(Exception exception) {
-	    ModelAndView mv = new ModelAndView();
-	    System.out.println(exception.getMessage());
-	    System.out.println(" ************** "+exception.getLocalizedMessage());
-	    mv.addObject("exception", exception);
-	    mv.setViewName("exception");
-	    logger.debug("Redirecting to error page");
-	    return mv;
-	  }
-	
 }

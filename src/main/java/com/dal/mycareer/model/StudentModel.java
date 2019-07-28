@@ -3,6 +3,7 @@ package com.dal.mycareer.model;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.invoke.MethodHandles;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
@@ -32,7 +33,7 @@ public class StudentModel implements IStudentModel {
 	Student student = null;
 
 	@Override
-	public Model fetchJobs(Model model, HttpServletRequest request, IStudentDAO dao) {
+	public Model fetchJobs(Model model, HttpServletRequest request, IStudentDAO dao) throws SQLException {
 		logger.info("StudentModel: fetchJobs method: Entered");
 		HttpSession session = request.getSession();
 		String userSessionName = (String) session.getAttribute(SESSION_NAME);
@@ -68,7 +69,7 @@ public class StudentModel implements IStudentModel {
 	}
 
 	@Override
-	public Model applyJob(Model model, MultipartFile file, HttpServletRequest request, int jobId, IStudentDAO dao) {
+	public Model applyJob(Model model, MultipartFile file, HttpServletRequest request, int jobId, IStudentDAO dao) throws SQLException {
 		logger.info("StudentModel: applyJob method: Entered");
 		InputStream inputStream = null;
 		HttpSession session = request.getSession();
@@ -93,7 +94,7 @@ public class StudentModel implements IStudentModel {
 	}
 
 	@Override
-	public Model withdrawApplication(Model model, int jobId, HttpServletRequest request, IStudentDAO dao) {
+	public Model withdrawApplication(Model model, int jobId, HttpServletRequest request, IStudentDAO dao) throws SQLException {
 		logger.info("StudentModel: withdrawApplication method: Entered");
 		HttpSession session = request.getSession();
 		String userSessionName = (String) session.getAttribute(SESSION_NAME);
@@ -142,7 +143,7 @@ public class StudentModel implements IStudentModel {
 	}
 
 	@Override
-	public Model jobApplicationExists(Model model, HttpServletRequest request, int jobId, IStudentDAO dao) {
+	public Model jobApplicationExists(Model model, HttpServletRequest request, int jobId, IStudentDAO dao) throws SQLException {
 		logger.info("StudentModel: jobApplicationExists method: Entered");
 		HttpSession session = request.getSession();
 		String userSessionName = (String) session.getAttribute(SESSION_NAME);

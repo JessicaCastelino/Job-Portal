@@ -55,19 +55,17 @@ public class CoopCordinatorDAO implements ICoopCordinatorDAO
 				}
 				results = callableStatement.getMoreResults();
 			}
-			//return requests;
-			throw new SQLException("Error in fetching recruiter requests. Please try again later.");
+			return requests;
 			
 		} 
 		catch (SQLException ex) 
 		{
 			logger.error( "SQLException Occurred in CoopCoordinatorDAO: fetchRecruiterRequests method:" + ex.getMessage());
-			throw new SQLException("Error in fetching recruiter requests. Please try again later.");
+			throw new SQLException("Error in fetching recruiter requests.");
 		} 
 		finally {
 			DatabaseConnection.closeDatabaseComponents(rs, callableStatement, con);
 			logger.debug("CoopCoordinatorDAO: fetchRecruiterRequests method: Exit");
-			
 		}
 		
 	}
@@ -106,7 +104,7 @@ public class CoopCordinatorDAO implements ICoopCordinatorDAO
 	}
 	
 	@Override
-	public int approveRequest(int requestId, String username, String password) {
+	public int approveRequest(int requestId, String username, String password) throws SQLException {
 		logger.debug("CoopCoordinatorDAO: approveRequest method: Entered");
 		con = DatabaseConnection.getConnection();
 		try 
@@ -122,7 +120,7 @@ public class CoopCordinatorDAO implements ICoopCordinatorDAO
 		catch (SQLException ex) 
 		{
 			logger.error( "SQLException Occurred in CoopCoordinatorDAO: approveRequest method:" + ex.getMessage());
-			return 0;
+			throw new SQLException("Error while approving employer's request.");
 		} 
 		finally {
 			DatabaseConnection.closeDatabaseComponents(callableStatement);
@@ -131,7 +129,7 @@ public class CoopCordinatorDAO implements ICoopCordinatorDAO
 	}
 		
 		@Override
-		public int rejectRequest(int requestId) 
+		public int rejectRequest(int requestId) throws SQLException 
 		{
 			logger.debug("CoopCoordinatorDAO: rejectRequest method: Entered");
 			con = DatabaseConnection.getConnection();
@@ -146,7 +144,7 @@ public class CoopCordinatorDAO implements ICoopCordinatorDAO
 				catch (SQLException e) 
 				{
 				logger.error( "SQLException Occurred in CoopCoordinatorDAO: rejectRequest method:" + e.getMessage());
-				return 0;
+				throw new SQLException("Error while rejecting the employer's request.");
 			}
 			finally {
 				DatabaseConnection.closeDatabaseComponents(callableStatement);
@@ -155,7 +153,7 @@ public class CoopCordinatorDAO implements ICoopCordinatorDAO
 	}
 		
 			@Override
-			public RecruiterRequest fetchRecruiter(int reqID) {
+			public RecruiterRequest fetchRecruiter(int reqID) throws SQLException {
 				logger.debug("CoopCoordinatorDAO: fetchRecruiter method: Entered");
 				con = DatabaseConnection.getConnection();
 				RecruiterRequest recruiterRequest = null;
@@ -180,7 +178,7 @@ public class CoopCordinatorDAO implements ICoopCordinatorDAO
 				catch (SQLException e) 
 				{
 					logger.error( "SQLException Occurred in CoopCoordinatorDAO: fetchRecruiter method:" + e.getMessage());
-					return recruiterRequest;
+					throw new SQLException("Error while fetching the employer details.");
 				} 
 				finally {
 					DatabaseConnection.closeDatabaseComponents(rs, callableStatement, con);

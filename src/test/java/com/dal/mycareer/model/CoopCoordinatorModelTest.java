@@ -55,7 +55,15 @@ public class CoopCoordinatorModelTest {
 		
 		// Class object creation
 		CoopCoordinatorModel cm=new CoopCoordinatorModel();
-		Model returnedModel=cm.fetchRecruiterRequests(mockModel, req, coopCordinatorDAO);
+		Model returnedModel=null;
+		try
+		{
+			returnedModel = cm.fetchRecruiterRequests(mockModel, req, coopCordinatorDAO);
+		} catch (SQLException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		//Fetch returned values
 		String isValid= (String)returnedModel.asMap().get("isValid");
@@ -91,10 +99,10 @@ public class CoopCoordinatorModelTest {
 		Mockito.when(req.getSession()).thenReturn(mockSession);
 		Mockito.when(mockSession.getAttribute("sessionName")).thenReturn("mock@dal.ca");
 		Mockito.when(passwordGenerator.generatePassword()).thenReturn("TESTPWPD");
-		Mockito.when(coopCordinatorDAO.fetchRecruiter(101)).thenReturn(mockRequest1);
-		Mockito.when(coopCordinatorDAO.approveRequest(101, "mock@dal.ca", "TESTPWPD")).thenReturn(1);
 		try
 		{
+			Mockito.when(coopCordinatorDAO.fetchRecruiter(101)).thenReturn(mockRequest1);
+			Mockito.when(coopCordinatorDAO.approveRequest(101, "mock@dal.ca", "TESTPWPD")).thenReturn(1);
 			Mockito.when(coopCordinatorDAO.fetchRecruiterRequests()).thenReturn(requests);
 		} catch (SQLException e)
 		{
@@ -145,10 +153,10 @@ public class CoopCoordinatorModelTest {
 		// Output for Mock Methods
 		Mockito.when(req.getSession()).thenReturn(mockSession);
 		Mockito.when(mockSession.getAttribute("sessionName")).thenReturn("mock@dal.ca");
-		Mockito.when(coopCordinatorDAO.fetchRecruiter(101)).thenReturn(mockRequest1);
-		Mockito.when(coopCordinatorDAO.rejectRequest(101)).thenReturn(1);
 		try
 		{
+		Mockito.when(coopCordinatorDAO.fetchRecruiter(101)).thenReturn(mockRequest1);
+		Mockito.when(coopCordinatorDAO.rejectRequest(101)).thenReturn(1);
 			Mockito.when(coopCordinatorDAO.fetchRecruiterRequests()).thenReturn(requests);
 		} catch (SQLException e)
 		{

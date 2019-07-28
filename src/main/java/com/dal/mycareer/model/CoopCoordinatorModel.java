@@ -38,7 +38,7 @@ public class CoopCoordinatorModel implements ICoopCoordinatorModel
 	}
 
 	@Override
-	public Model fetchRecruiterRequests(Model model, HttpServletRequest request, ICoopCordinatorDAO coopCordinatorDAO) 
+	public Model fetchRecruiterRequests(Model model, HttpServletRequest request, ICoopCordinatorDAO coopCordinatorDAO) throws SQLException 
 	{
 		logger.info("CoopCoordinatorModel: fetchRecruiterRequests method: Entered");
 		HttpSession session = request.getSession();
@@ -46,14 +46,7 @@ public class CoopCoordinatorModel implements ICoopCoordinatorModel
 		if (userSessionName != "" && userSessionName != null) 
 		{
 			model.addAttribute("isValid", "NA");
-			try
-			{
-				requests = coopCordinatorDAO.fetchRecruiterRequests();
-			} catch (SQLException e)
-			{
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			requests = coopCordinatorDAO.fetchRecruiterRequests();	
 			model.addAttribute("recruiterRequests", requests);
 		}
 		logger.info("CoopCoordinatorModel: fetchRecruiterRequests method: Exit");
