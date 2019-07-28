@@ -45,7 +45,8 @@ public class DatabaseConnection {
 		}
 	}
 
-	public static void closeDatabaseComponents(ResultSet resultSet, CallableStatement callableStatement) {
+	public static void closeDatabaseComponents(ResultSet resultSet, CallableStatement callableStatement,
+			Connection conn) {
 		if (resultSet != null) {
 			try {
 				resultSet.close();
@@ -54,11 +55,12 @@ public class DatabaseConnection {
 			}
 		}
 		if (callableStatement != null) {
-			try {
-				callableStatement.close();
-			} catch (SQLException sqlEx) {
-				logger.error("Error Occurred in closing callable Statement :" + sqlEx.getMessage());
-			}
+			closeDatabaseComponents(callableStatement);
+		}
+		if (conn != null) {
+
+			closeConnection(conn);
+
 		}
 	}
 

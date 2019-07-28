@@ -128,7 +128,7 @@ public class EmployerJobsDAO implements IEmployerJobsDAO
 		}
 		finally
 		{
-			DatabaseConnection.closeDatabaseComponents(result, statement);
+			DatabaseConnection.closeDatabaseComponents(result, statement, conn);
 		}
 		return jobs;
 	}

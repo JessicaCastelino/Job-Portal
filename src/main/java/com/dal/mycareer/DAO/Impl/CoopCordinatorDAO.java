@@ -62,7 +62,7 @@ public class CoopCordinatorDAO implements ICoopCordinatorDAO
 			return requests;
 		} 
 		finally {
-			DatabaseConnection.closeDatabaseComponents(rs, callableStatement);
+			DatabaseConnection.closeDatabaseComponents(rs, callableStatement, con);
 			logger.debug("CoopCoordinatorDAO: fetchRecruiterRequests method: Exit");
 		}
 		
@@ -96,7 +96,7 @@ public class CoopCordinatorDAO implements ICoopCordinatorDAO
 		}
 		finally
 		{
-			DatabaseConnection.closeDatabaseComponents(activeEmployerSet,callableStatement);
+			DatabaseConnection.closeDatabaseComponents(activeEmployerSet,callableStatement, con);
 		}
 		return lstActiveRecruiter;
 	}
@@ -179,7 +179,7 @@ public class CoopCordinatorDAO implements ICoopCordinatorDAO
 					return recruiterRequest;
 				} 
 				finally {
-					DatabaseConnection.closeDatabaseComponents(rs, callableStatement);
+					DatabaseConnection.closeDatabaseComponents(rs, callableStatement, con);
 					logger.debug("CoopCoordinatorDAO: fetchRecruiter method: Exit");
 				}
 			}

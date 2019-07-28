@@ -44,7 +44,7 @@ public class PrerequisiteCoursesDAO implements IPrerequisiteCoursesDAO
 		}
 		finally
 		{
-			DatabaseConnection.closeDatabaseComponents(courses, callStatement);
+			DatabaseConnection.closeDatabaseComponents(courses, callStatement, con);
 		}
 		return lstPrerequisteCourses;
 	}
