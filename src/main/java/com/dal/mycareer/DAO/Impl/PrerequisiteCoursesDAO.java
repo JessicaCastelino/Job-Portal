@@ -82,5 +82,41 @@ public class PrerequisiteCoursesDAO implements IPrerequisiteCoursesDAO
 			DatabaseConnection.closeDatabaseComponents(callStatement);
 		}
 		return isSuccess;
+	}
+	public boolean insertJobPrerequisiteCourses(int jobId, List<Integer> prerequisiteCourses)
+	{
+		boolean isQuerySuccess = false;
+		CallableStatement callStatement = null;
+		Connection con= null;
+		logger.info("DL: insertJobRequirement method started");
+		try
+		{
+			con = DatabaseConnection.getConnection();
+			String courses = prerequisiteCourses.stream().map(n-> n.toString())
+			.collect(Collectors.joining(","));
+			callStatement = con.prepareCall("{call insertjobRequirementRecord(?,?)}");
+			callStatement.setString("courseIds",courses); 
+			callStatement.setString("jobRecordId", Integer.toString(jobId));
+			int rowAffected = callStatement.executeUpdate();
+			if (rowAffected > 0)
+			{
+				isQuerySuccess= true;
+				logger.info( "Records inserted successfully in insertJobRequirement Method");
+			}
+			else
+		 	{
+				isQuerySuccess= false;
+				logger.error( "Error Occurred in insertJobRequirement method while inserting record");
+		 	}	 
+		 }
+		catch (Exception ex)
+		{
+			logger.error( "Error Occurred in insertJobRequirement :" + ex.getMessage());
+		}
+		finally
+		{
+			DatabaseConnection.closeDatabaseComponents(callStatement);
+		}
+		return isQuerySuccess;
 	}	
 }
