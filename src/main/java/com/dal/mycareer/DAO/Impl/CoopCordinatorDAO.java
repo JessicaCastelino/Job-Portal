@@ -55,7 +55,8 @@ public class CoopCordinatorDAO implements ICoopCordinatorDAO
 				}
 				results = callableStatement.getMoreResults();
 			}
-			return requests;
+			//return requests;
+			throw new SQLException("Error in fetching recruiter requests.");
 			
 		} 
 		catch (SQLException ex) 

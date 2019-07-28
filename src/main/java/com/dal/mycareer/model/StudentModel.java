@@ -34,7 +34,7 @@ public class StudentModel implements IStudentModel {
 
 	@Override
 	public Model fetchJobs(Model model, HttpServletRequest request, IStudentDAO dao) throws SQLException {
-		logger.info("StudentModel: fetchJobs method: Entered");
+		logger.debug("StudentModel: fetchJobs method: Entered");
 		HttpSession session = request.getSession();
 		String userSessionName = (String) session.getAttribute(SESSION_NAME);
 		if(userSessionName!="" && userSessionName!=null)
@@ -45,13 +45,13 @@ public class StudentModel implements IStudentModel {
 		model.addAttribute("jobs", jobs);
 		model.addAttribute("appliedJobs", appliedJobs);
 		}
-		logger.info("StudentModel: fetchJobs method: Exit");
+		logger.debug("StudentModel: fetchJobs method: Exit");
 		return model;
 	}
 
 	@Override
 	public Model viewJobs(Model model, int jobId, HttpServletRequest request, IStudentDAO dao) {
-		logger.info("StudentModel: viewJobs method: Entered");
+		logger.debug("StudentModel: viewJobs method: Entered");
 		HttpSession session = request.getSession();
 		String userSessionName = (String) session.getAttribute(SESSION_NAME);
 		if(userSessionName!="" && userSessionName!=null)
@@ -64,13 +64,13 @@ public class StudentModel implements IStudentModel {
 				}
 			}
 		}
-		logger.info("StudentModel: viewJobs method: Exit");
+		logger.debug("StudentModel: viewJobs method: Exit");
 		return model;
 	}
 
 	@Override
 	public Model applyJob(Model model, MultipartFile file, HttpServletRequest request, int jobId, IStudentDAO dao) throws SQLException {
-		logger.info("StudentModel: applyJob method: Entered");
+		logger.debug("StudentModel: applyJob method: Entered");
 		InputStream inputStream = null;
 		HttpSession session = request.getSession();
 		String userSessionName = (String) session.getAttribute(SESSION_NAME);
@@ -82,20 +82,20 @@ public class StudentModel implements IStudentModel {
 				inputStream = file.getInputStream();
 				int i = dao.applyForJob(inputStream,student.getId(),jobId);
 				if (i == 1) {
-					logger.info("Resume file Uploaded..");
+					logger.debug("Job application successful.");
 				}
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
 		}
 		}
-		logger.info("StudentModel: applyJob method: Exit");
+		logger.debug("StudentModel: applyJob method: Exit");
 		return model;
 	}
 
 	@Override
 	public Model withdrawApplication(Model model, int jobId, HttpServletRequest request, IStudentDAO dao) throws SQLException {
-		logger.info("StudentModel: withdrawApplication method: Entered");
+		logger.debug("StudentModel: withdrawApplication method: Entered");
 		HttpSession session = request.getSession();
 		String userSessionName = (String) session.getAttribute(SESSION_NAME);
 		if(userSessionName!="" && userSessionName!=null)
@@ -106,13 +106,13 @@ public class StudentModel implements IStudentModel {
 		model.addAttribute("jobs", jobs);
 		model.addAttribute("appliedJobs", appliedJobs);
 		}
-		logger.info("StudentModel: withdrawApplication method: Exit");
+		logger.debug("StudentModel: withdrawApplication method: Exit");
 		return model;
 	}
 
 	@Override
 	public Model filterJobs(Model model, HttpServletRequest request, String location, String jobType, IStudentDAO dao) {
-		logger.info("StudentModel: filterJobs method: Entered");
+		logger.debug("StudentModel: filterJobs method: Entered");
 		HttpSession session = request.getSession();
 		String userSessionName = (String) session.getAttribute(SESSION_NAME);
 		if(userSessionName!="" && userSessionName!=null)
@@ -138,13 +138,13 @@ public class StudentModel implements IStudentModel {
 		model.addAttribute("jobs", filteredJob);
 		model.addAttribute("appliedJobs", appliedJobs);
 		}
-		logger.info("StudentModel: filterJobs method: Exit");
+		logger.debug("StudentModel: filterJobs method: Exit");
 		return model;
 	}
 
 	@Override
 	public Model jobApplicationExists(Model model, HttpServletRequest request, int jobId, IStudentDAO dao) throws SQLException {
-		logger.info("StudentModel: jobApplicationExists method: Entered");
+		logger.debug("StudentModel: jobApplicationExists method: Entered");
 		HttpSession session = request.getSession();
 		String userSessionName = (String) session.getAttribute(SESSION_NAME);
 		if(userSessionName!="" && userSessionName!=null)
@@ -156,7 +156,7 @@ public class StudentModel implements IStudentModel {
 				model.addAttribute("reqPage", PropertiesParser.getPropertyMap().get("alreadyApplied").toString());
 			}
 		}
-		logger.info("StudentModel: jobApplicationExists method: Exit");
+		logger.debug("StudentModel: jobApplicationExists method: Exit");
 		return model;
 	}
 	

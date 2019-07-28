@@ -2,7 +2,6 @@ package com.dal.mycareer.model;
 
 import static org.mockito.Mockito.mock;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,6 +11,8 @@ import javax.servlet.http.HttpSession;
 import org.junit.Assert;
 import org.junit.Test;
 import org.mockito.Mockito;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.ui.ExtendedModelMap;
 import org.springframework.ui.Model;
 
@@ -22,7 +23,7 @@ import com.dal.mycareer.emailengine.EmployerRejectionEmailImpl;
 import com.dal.mycareer.passwordgenerator.PasswordGenerator;
 
 public class CoopCoordinatorModelTest {
-
+	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 	@Test
 	public void testFetchRecruiterRequests() {
 		
@@ -40,40 +41,29 @@ public class CoopCoordinatorModelTest {
 		requests.add(mockRequest1);
 		requests.add(mockRequest2);
 		requests.add(mockRequest3);
-		
-		// Output for Mock Methods
-		Mockito.when(req.getSession()).thenReturn(mockSession);
-		Mockito.when(mockSession.getAttribute("sessionName")).thenReturn("mock@dal.ca");
 		try
 		{
+			// Output for Mock Methods
+			Mockito.when(req.getSession()).thenReturn(mockSession);
+			Mockito.when(mockSession.getAttribute("sessionName")).thenReturn("mock@dal.ca");
 			Mockito.when(coopCordinatorDAO.fetchRecruiterRequests()).thenReturn(requests);
-		} catch (Exception e)
-		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			
+			// Class object creation
+			CoopCoordinatorModel cm=new CoopCoordinatorModel();
+			Model returnedModel = cm.fetchRecruiterRequests(mockModel, req, coopCordinatorDAO);
+		
+			//Fetch returned values
+			String isValid= (String)returnedModel.asMap().get("isValid");
+			List<RecruiterRequest> returnedRequests = (List<RecruiterRequest>)returnedModel.asMap().get("recruiterRequests");
+		
+			//Assertion
+			Assert.assertEquals(isValid, "NA");
+			Assert.assertEquals(returnedRequests.get(0).getId(),"101");
 		}
-		
-		// Class object creation
-		CoopCoordinatorModel cm=new CoopCoordinatorModel();
-		Model returnedModel=null;
-		try
+		catch (Exception e)
 		{
-			returnedModel = cm.fetchRecruiterRequests(mockModel, req, coopCordinatorDAO);
-		} catch (SQLException e)
-		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		//Fetch returned values
-		String isValid= (String)returnedModel.asMap().get("isValid");
-		List<RecruiterRequest> returnedRequests = (List<RecruiterRequest>)returnedModel.asMap().get("recruiterRequests");
-		
-		//Assertion
-		Assert.assertEquals(isValid, "NA");
-		Assert.assertEquals(returnedRequests.get(0).getId(),"101");
-				
-		
+			logger.debug("Error during execution of CoopCoordinatorModelTest: testFetchRecruiterRequests()");
+		}	
 	}
 
 	@Test
@@ -94,43 +84,32 @@ public class CoopCoordinatorModelTest {
 		requests.add(mockRequest2);
 		requests.add(mockRequest3);
 		
-		
-		// Output for Mock Methods
-		Mockito.when(req.getSession()).thenReturn(mockSession);
-		Mockito.when(mockSession.getAttribute("sessionName")).thenReturn("mock@dal.ca");
-		Mockito.when(passwordGenerator.generatePassword()).thenReturn("TESTPWPD");
 		try
-		{
+		{		
+			// Output for Mock Methods
+			Mockito.when(req.getSession()).thenReturn(mockSession);
+			Mockito.when(mockSession.getAttribute("sessionName")).thenReturn("mock@dal.ca");
+			Mockito.when(passwordGenerator.generatePassword()).thenReturn("TESTPWPD");
 			Mockito.when(coopCordinatorDAO.fetchRecruiter(101)).thenReturn(mockRequest1);
 			Mockito.when(coopCordinatorDAO.approveRequest(101, "mock@dal.ca", "TESTPWPD")).thenReturn(1);
 			Mockito.when(coopCordinatorDAO.fetchRecruiterRequests()).thenReturn(requests);
-		} catch (SQLException e)
-		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+
+			// Class object creation
+			CoopCoordinatorModel cm=new CoopCoordinatorModel();
+			Model returnedModel = cm.approveRecruiterRequest(mockModel, req, 101, coopCordinatorDAO, approvalEmail, passwordGenerator);
+				
+			//Fetch returned values
+			String isValid= (String)returnedModel.asMap().get("isValid");
+			List<RecruiterRequest> returnedRequests = (List<RecruiterRequest>)returnedModel.asMap().get("recruiterRequests");
+				
+			//Assertion
+			Assert.assertEquals(isValid, "approve");
+			Assert.assertEquals(returnedRequests.get(0).getId(),"102");
 		}
-		
-		//Mockito.when(approvalEmail.employerApprovalEmail(mockRequest1.getEmail(), mockRequest1.getFirstname(), mockRequest1.getCompanyname(), "TESTPWPD", "mock@dal.ca"));
-		// Class object creation
-		CoopCoordinatorModel cm=new CoopCoordinatorModel();
-		Model returnedModel = null;
-		try
+		catch (Exception e)
 		{
-			returnedModel = cm.approveRecruiterRequest(mockModel, req, 101, coopCordinatorDAO, approvalEmail, passwordGenerator);
-		} catch (SQLException e)
-		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-				
-		//Fetch returned values
-		String isValid= (String)returnedModel.asMap().get("isValid");
-		List<RecruiterRequest> returnedRequests = (List<RecruiterRequest>)returnedModel.asMap().get("recruiterRequests");
-				
-		//Assertion
-		Assert.assertEquals(isValid, "approve");
-		Assert.assertEquals(returnedRequests.get(0).getId(),"102");
-				
+			logger.debug("Error during execution of CoopCoordinatorModelTest: testApproveRecruiterRequest()");
+		}		
 	}
 
 	@Test
@@ -150,39 +129,32 @@ public class CoopCoordinatorModelTest {
 		requests.add(mockRequest2);
 		requests.add(mockRequest3);
 		
-		// Output for Mock Methods
-		Mockito.when(req.getSession()).thenReturn(mockSession);
-		Mockito.when(mockSession.getAttribute("sessionName")).thenReturn("mock@dal.ca");
 		try
 		{
-		Mockito.when(coopCordinatorDAO.fetchRecruiter(101)).thenReturn(mockRequest1);
-		Mockito.when(coopCordinatorDAO.rejectRequest(101)).thenReturn(1);
-			Mockito.when(coopCordinatorDAO.fetchRecruiterRequests()).thenReturn(requests);
-		} catch (SQLException e)
-		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+			// Output for Mock Methods
+			Mockito.when(req.getSession()).thenReturn(mockSession);
+			Mockito.when(mockSession.getAttribute("sessionName")).thenReturn("mock@dal.ca");
 		
-		// Class object creation
-		CoopCoordinatorModel cm=new CoopCoordinatorModel();
-		Model returnedModel = null;
-		try
-		{
-			returnedModel = cm.rejectRecruiterRequest(mockModel, req, 101, coopCordinatorDAO, rejectEmail);
-		} catch (SQLException e)
-		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		//Fetch returned values
-		String isValid= (String)returnedModel.asMap().get("isValid");
-		List<RecruiterRequest> returnedRequests = (List<RecruiterRequest>)returnedModel.asMap().get("recruiterRequests");
+			Mockito.when(coopCordinatorDAO.fetchRecruiter(101)).thenReturn(mockRequest1);
+			Mockito.when(coopCordinatorDAO.rejectRequest(101)).thenReturn(1);
+			Mockito.when(coopCordinatorDAO.fetchRecruiterRequests()).thenReturn(requests);
+		
+			// Class object creation
+			CoopCoordinatorModel cm=new CoopCoordinatorModel();
+			Model returnedModel = cm.rejectRecruiterRequest(mockModel, req, 101, coopCordinatorDAO, rejectEmail);
+		
+			//Fetch returned values
+			String isValid= (String)returnedModel.asMap().get("isValid");
+			List<RecruiterRequest> returnedRequests = (List<RecruiterRequest>)returnedModel.asMap().get("recruiterRequests");
 						
-		//Assertion
-		Assert.assertEquals(isValid, "reject");
-		Assert.assertEquals(returnedRequests.get(0).getId(),"102");
-				
+			//Assertion
+			Assert.assertEquals(isValid, "reject");
+			Assert.assertEquals(returnedRequests.get(0).getId(),"102");
+		}
+		catch (Exception e)
+		{
+			logger.debug("Error during execution of CoopCoordinatorModelTest: testRejectRecruiterRequest()");
+		}		
 	}
 
 }
