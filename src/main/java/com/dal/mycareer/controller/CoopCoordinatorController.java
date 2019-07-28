@@ -36,15 +36,14 @@ import com.dal.mycareer.propertiesparser.PropertiesParser;
 public class CoopCoordinatorController 
 {
 	private static final Properties PROPERTY_MAP = PropertiesParser.getPropertyMap();
-	static Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
+	private static Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 	private IRoleModel roleModel = null;
 	@Autowired
-	ICoopCoordinatorModel coopCordinatorModel;
-	@Autowired
-	ICoopCordinatorDAO coopCordinatorDAO=new CoopCordinatorDAO();
-	IEmployerApprovalEmail approvalEmail = new EmployerApprovalEmail();
-	IPasswordGenerator passwordGenerator =  new PasswordGenerator();
-	IEmployerRejectionEmail rejectEmail = new EmployerRejectionEmailImpl();
+	private ICoopCoordinatorModel coopCordinatorModel;
+	private ICoopCordinatorDAO coopCordinatorDAO=new CoopCordinatorDAO();
+	private IEmployerApprovalEmail approvalEmail = new EmployerApprovalEmail();
+	private IPasswordGenerator passwordGenerator =  new PasswordGenerator();
+	private IEmployerRejectionEmail rejectEmail = new EmployerRejectionEmailImpl();
 
 	  @RequestMapping("/adminHome") 
 	  public String loadAdminHome(Model model,HttpServletRequest request) throws SQLException  

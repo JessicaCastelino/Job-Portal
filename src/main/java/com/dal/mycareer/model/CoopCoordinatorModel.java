@@ -26,11 +26,11 @@ public class CoopCoordinatorModel implements ICoopCoordinatorModel
 {
 	@Autowired
 	private ICoopCordinatorDAO coopCordinatorDAO;
-
-	private static List<RecruiterRequest> requests = new ArrayList<RecruiterRequest>();
+	@Autowired
+	private static List<RecruiterRequest> requests;
 	private static final String SESSION_NAME = "sessionName";
-	private static Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
-
+	private final Logger logger = LoggerFactory.getLogger(this.getClass());
+	
 	public CoopCoordinatorModel() 
 	{
 	}

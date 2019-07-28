@@ -28,8 +28,8 @@ public class StudentDAO implements IStudentDAO {
 	private static final String CALL_GET_APPLIED_JOB_LIST = "{call getAppliedJobList(?)}";
 	private static final String CALL_GET_ALL_JOB_LIST = "{call getAllJobList(?,?)}";
 	private static final Properties PROPERTY_MAP = PropertiesParser.getPropertyMap();
-	Connection con = null;
-	CallableStatement callableStatement = null;
+	private Connection con = null;
+	private CallableStatement callableStatement = null;
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 	
 	@Override
