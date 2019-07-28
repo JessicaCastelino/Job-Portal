@@ -7,7 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.dal.mycareer.DTO.Student;
 
-public class StudentMapper implements IDTOMapper 
+public class StudentDetailsMapper implements IDTOMapper 
 {
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
     @Override

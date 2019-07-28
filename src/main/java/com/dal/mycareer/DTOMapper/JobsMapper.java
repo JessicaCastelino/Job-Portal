@@ -10,14 +10,15 @@ import com.dal.mycareer.DTO.Job;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class JobsMapper implements IDTOMapper {
+public class JobsMapper implements IDTOMapper 
+{
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Override
     public int[] mapObjectToStatement(Object jobDetails, CallableStatement callStatement,
             Map<String, Object> additionalParam) 
     {
-        // This method will be implemented, if bulk insert of Job feature is added
+        // This method will be implemented, if bulk insert of Job feature is added in future
         return null;
     }
 

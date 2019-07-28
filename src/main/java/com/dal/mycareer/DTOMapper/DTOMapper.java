@@ -9,5 +9,7 @@ public class DTOMapper
     {{
         put("jobDetailsMapper", new JobDetailsMapper());
         put("jobsMapper", new JobsMapper());
+        put("studentDetailsMapper", new StudentDetailsMapper());
+        put("studentsMapper", new StudentsMapper());
     }};
 }
