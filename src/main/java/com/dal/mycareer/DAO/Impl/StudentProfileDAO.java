@@ -60,6 +60,10 @@ public class StudentProfileDAO implements IStudentProfileDAO {
 			logger.error("Error while fetching student profile:" + e.getMessage());
 			
 		}
+		
+		finally {
+			DatabaseConnection.closeConnection(dbConn);
+		}
 		logger.info("fetching student profile : STOP");
 		return spDTO;
 
