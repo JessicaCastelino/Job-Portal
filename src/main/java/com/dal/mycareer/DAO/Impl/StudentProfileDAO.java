@@ -15,9 +15,11 @@ import com.dal.mycareer.DTO.StudentProfileDTO;
 
 public class StudentProfileDAO implements IStudentProfileDAO {
 
-	private final Logger LOGGER = LoggerFactory.getLogger(this.getClass());
+	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	public StudentProfileDTO getStudentProfile(String email) {
+
+		logger.info("fetching student profile : START");
 
 		Connection dbConn = DatabaseConnection.getConnection();
 		StudentProfileDTO spDTO = new StudentProfileDTO();
@@ -34,6 +36,8 @@ public class StudentProfileDAO implements IStudentProfileDAO {
 				ResultSet rs = myStmt.getResultSet();
 				ArrayList<String> courses = new ArrayList<String>();
 
+				logger.debug("Courses registered by student:");
+
 				while (rs.next()) {
 					spDTO.setFirstname(rs.getString(1));
 					spDTO.setLastname(rs.getString(2));
@@ -44,14 +48,19 @@ public class StudentProfileDAO implements IStudentProfileDAO {
 					spDTO.setDepartment(rs.getString(7));
 					spDTO.setProgram(rs.getString(8));
 					courses.add(rs.getString(11));
+
+					logger.debug(rs.getString(11));
 				}
 
 				spDTO.setCourseName(courses);
 			}
 
 		} catch (SQLException e) {
-			LOGGER.error("Error while fetching student profile:" + e.getMessage());
+			
+			logger.error("Error while fetching student profile:" + e.getMessage());
+			
 		}
+		logger.info("fetching student profile : STOP");
 		return spDTO;
 
 	}
