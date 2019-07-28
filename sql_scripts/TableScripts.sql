@@ -164,7 +164,11 @@ DROP procedure IF EXISTS `getAllJobList`;
 DELIMITER //
 CREATE PROCEDURE `getAllJobList`()
 BEGIN
-select * from jobs j where j.jobStatus=1 and j.id IN(select distinct(jr.jobId) from jobRequirement jr left join studentRegisteredCourses src on jr.courseId=src.courseId where studentId=1);
+IF (criteria = 'all') THEN
+    select * from jobs j where j.jobStatus=1;
+ELSE
+    select * from jobs j where j.jobStatus=1 and j.id IN(select distinct(jr.jobId) from jobRequirement jr left join studentRegisteredCourses src on jr.courseId=src.courseId where studentId=studId);
+END IF;
 END//
 
 DELIMITER ;
@@ -237,9 +241,9 @@ DELIMITER ;
 
 DROP procedure IF EXISTS `getAllJobList`;
 DELIMITER $$
-CREATE PROCEDURE `getAllJobList`()
+CREATE PROCEDURE `getAllJobList`(IN studId INT(11))
 BEGIN
-select * from jobs j where j.jobStatus=1 and j.id IN(select distinct(jr.jobId) from jobRequirement jr left join studentRegisteredCourses src on jr.courseId=src.courseId where studentId=1);
+select * from jobs j where j.jobStatus=1 and j.id IN(select distinct(jr.jobId) from jobRequirement jr left join studentRegisteredCourses src on jr.courseId=src.courseId where studentId=studId);
 END$$
 DELIMITER ;
 

@@ -1,21 +1,25 @@
 package com.dal.mycareer.model;
 
 import java.lang.invoke.MethodHandles;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
+
 import com.dal.mycareer.DAO.Interface.ICoopCordinatorDAO;
 import com.dal.mycareer.DTO.RecruiterRequest;
 import com.dal.mycareer.emailengine.IEmployerApprovalEmail;
 import com.dal.mycareer.emailengine.IEmployerRejectionEmail;
 import com.dal.mycareer.imodel.ICoopCoordinatorModel;
 import com.dal.mycareer.passwordgenerator.IPasswordGenerator;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.ui.Model;
 
 @Service
 public class CoopCoordinatorModel implements ICoopCoordinatorModel 
@@ -25,7 +29,7 @@ public class CoopCoordinatorModel implements ICoopCoordinatorModel
 
 	private static List<RecruiterRequest> requests = new ArrayList<RecruiterRequest>();
 	private static final String SESSION_NAME = "sessionName";
-	static Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
+	private static Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 
 	public CoopCoordinatorModel() 
 	{
@@ -37,25 +41,25 @@ public class CoopCoordinatorModel implements ICoopCoordinatorModel
 	}
 
 	@Override
-	public Model fetchRecruiterRequests(Model model, HttpServletRequest request, ICoopCordinatorDAO coopCordinatorDAO) 
+	public Model fetchRecruiterRequests(Model model, HttpServletRequest request, ICoopCordinatorDAO coopCordinatorDAO) throws SQLException 
 	{
-		logger.info("CoopCoordinatorModel: fetchRecruiterRequests method: Entered");
+		logger.debug("CoopCoordinatorModel: fetchRecruiterRequests method: Entered");
 		HttpSession session = request.getSession();
 		String userSessionName = (String) session.getAttribute(SESSION_NAME);
 		if (userSessionName != "" && userSessionName != null) 
 		{
 			model.addAttribute("isValid", "NA");
-			requests = coopCordinatorDAO.fetchRecruiterRequests();
+			requests = coopCordinatorDAO.fetchRecruiterRequests();	
 			model.addAttribute("recruiterRequests", requests);
 		}
-		logger.info("CoopCoordinatorModel: fetchRecruiterRequests method: Exit");
+		logger.debug("CoopCoordinatorModel: fetchRecruiterRequests method: Exit");
 		return model;
 	}
 
 	@Override
-	public Model approveRecruiterRequest(Model model, HttpServletRequest request, int recruiterRequestId, ICoopCordinatorDAO coopCordinatorDAO, IEmployerApprovalEmail approvalEmail, IPasswordGenerator passwordGenerator) 
+	public Model approveRecruiterRequest(Model model, HttpServletRequest request, int recruiterRequestId, ICoopCordinatorDAO coopCordinatorDAO, IEmployerApprovalEmail approvalEmail, IPasswordGenerator passwordGenerator) throws SQLException 
 	{
-		logger.info("CoopCoordinatorModel: approveRecruiterRequest method: Entered");
+		logger.debug("CoopCoordinatorModel: approveRecruiterRequest method: Entered");
 		HttpSession session = request.getSession();
 		String userSessionName = (String) session.getAttribute(SESSION_NAME);
 		
@@ -71,14 +75,14 @@ public class CoopCoordinatorModel implements ICoopCoordinatorModel
 			model.addAttribute("isValid", "approve");
 			model.addAttribute("recruiterRequests", requests);
 		}
-		logger.info("CoopCoordinatorModel: approveRecruiterRequest method: Exit");
+		logger.debug("CoopCoordinatorModel: approveRecruiterRequest method: Exit");
 		return model;
 	}
 
 	@Override
-	public Model rejectRecruiterRequest(Model model, HttpServletRequest request, int recruiterRequestId, ICoopCordinatorDAO coopCordinatorDAO,IEmployerRejectionEmail rejectEmail) 
+	public Model rejectRecruiterRequest(Model model, HttpServletRequest request, int recruiterRequestId, ICoopCordinatorDAO coopCordinatorDAO,IEmployerRejectionEmail rejectEmail) throws SQLException 
 	{
-		logger.info("CoopCoordinatorModel: rejectRecruiterRequest method: Entered");
+		logger.debug("CoopCoordinatorModel: rejectRecruiterRequest method: Entered");
 		HttpSession session = request.getSession();
 		String userSessionName = (String) session.getAttribute(SESSION_NAME);
 		if (userSessionName != "" && userSessionName != null) 
@@ -91,21 +95,21 @@ public class CoopCoordinatorModel implements ICoopCoordinatorModel
 			model.addAttribute("isValid", "reject");
 			model.addAttribute("recruiterRequests", requests);
 		}
-		logger.info("CoopCoordinatorModel: rejectRecruiterRequest method: Exit");
+		logger.debug("CoopCoordinatorModel: rejectRecruiterRequest method: Exit");
 		return model;
 	}
 
 	@Override
 	public boolean deleteActiveRecruiter(int employerId) 
 	{
-		logger.info("BL: deleteActiveRecruiter method started for-" + employerId);
+		logger.debug("BL: deleteActiveRecruiter method started for-" + employerId);
 		return coopCordinatorDAO.deleteActiveRecruiter(employerId);
 	}
 
 	@Override
 	public List<RecruiterRequest> fetchActiveRecruiters() 
 	{
-		logger.info("BL: fetchActiveRecruiters method started");
+		logger.debug("BL: fetchActiveRecruiters method started");
 		return coopCordinatorDAO.fetchActiveRecruiters();
 	}
 }
