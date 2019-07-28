@@ -41,7 +41,11 @@ public class LoginDAO implements ILoginDAO {
 		}
 
 		finally {
-			DatabaseConnection.closeConnection(dbConn);
+			try {
+				dbConn.close();
+			} catch (SQLException e) {
+				LOGGER.error("Error while closing connection");
+			}
 		}
 
 		return validUserFlag;

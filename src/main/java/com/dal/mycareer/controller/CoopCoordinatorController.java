@@ -41,11 +41,11 @@ public class CoopCoordinatorController
 	ICoopCoordinatorModel coopCordinatorModel;
 	@Autowired
 	ICoopCordinatorDAO coopCordinatorDAO=new CoopCordinatorDAO();
-	@Autowired
+	//@Autowired
 	IEmployerApprovalEmail approvalEmail = new EmployerApprovalEmail();
-	@Autowired
+	//@Autowired
 	IPasswordGenerator passwordGenerator = new PasswordGenerator();
-	@Autowired
+	//@Autowired
 	IEmployerRejectionEmail rejectEmail = new EmployerRejectionEmailImpl();
 
 	  @RequestMapping("/adminHome") 

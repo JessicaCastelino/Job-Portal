@@ -19,23 +19,21 @@ public class DatabaseConnection {
 	private static Connection connection;
 
 	public static Connection getConnection() {
-		if (connection == null) {
-			try {
-				Properties dbProps = PropertiesParser.getPropertyMap();
-				String dbURL = dbProps.getProperty("devIntDbURL");
-				String dbPassword = dbProps.getProperty("devIntDbPassword");
-				String dbUsername = dbProps.getProperty("devIntDbUsername");
-				String driverClass = dbProps.getProperty("databaseDriverClass");
-				Class.forName(driverClass);
-				connection = DriverManager.getConnection(dbURL, dbUsername, dbPassword);
+		try {
+			Properties dbProps = PropertiesParser.getPropertyMap();
+			String dbURL = dbProps.getProperty("devIntDbURL");
+			String dbPassword = dbProps.getProperty("devIntDbPassword");
+			String dbUsername = dbProps.getProperty("devIntDbUsername");
+			String driverClass = dbProps.getProperty("databaseDriverClass");
+			Class.forName(driverClass);
+			connection = DriverManager.getConnection(dbURL, dbUsername, dbPassword);
 
-				logger.info("Connected to Database");
+			logger.info("Connected to Database");
 
-			} catch (SQLException | ClassNotFoundException ex) {
-				logger.info("Error while connecting to db : " + ex.getMessage());
-			}
-
+		} catch (SQLException | ClassNotFoundException ex) {
+			logger.info("Error while connecting to db : " + ex.getMessage());
 		}
+
 		return connection;
 	}
 
