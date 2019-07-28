@@ -25,19 +25,27 @@ public class LoginDAO implements ILoginDAO {
 		try {
 			CallableStatement myStmt = dbConn.prepareCall("{call isValidLogin(?, ?, ?, ?)}");
 
-			//Set the parameters
+			// Set the parameters
 			myStmt.setString(1, user.getUsername());
 			myStmt.setString(2, user.getPassword());
 			myStmt.setString(3, user.getRole());
 			myStmt.registerOutParameter(4, Types.INTEGER);
 			myStmt.execute();
- 
+
 			if (myStmt.getInt(4) > 0) {
 				validUserFlag = true;
 			}
 
 		} catch (SQLException e) {
 			LOGGER.error(e.getMessage());
+		}
+
+		finally {
+			try {
+				dbConn.close();
+			} catch (SQLException e) {
+				LOGGER.error("Error while closing connection");
+			}
 		}
 
 		return validUserFlag;

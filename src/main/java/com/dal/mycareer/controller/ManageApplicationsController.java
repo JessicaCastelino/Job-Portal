@@ -24,12 +24,11 @@ public class ManageApplicationsController {
 	@Autowired
 	IManageApplicationsModel applicationManager;
 	
-	private final Logger LOGGER = LoggerFactory.getLogger(this.getClass());
+	private final Logger logger = LoggerFactory.getLogger(this.getClass());
     
     @RequestMapping("/applications")
 	public String viewApplicants(ModelMap model, @RequestParam(name = "jobId")int id) {
-        LOGGER.info("Redirect to applications.jsp");
-        //System.out.println("******************88"+id);
+        logger.info("Redirect to applications.jsp");
         model.addAttribute("jobId",id);
 		model.addAttribute("applicants", applicationManager.getApplications(id));
 		model.addAttribute("appStatus", PropertiesParser.getPropertyMap().get("applicationStatus").toString().split(","));
@@ -53,7 +52,7 @@ public class ManageApplicationsController {
 		      org.apache.commons.io.IOUtils.copy(is, response.getOutputStream());
 		      response.flushBuffer();
 		    } catch (IOException ex) {
-		      System.out.println("Error writing file to output stream. Filename was '{}'");
+		      logger.error("Error writing file to output stream. Filename was '{}'");
 		      throw new RuntimeException("IOError writing file to output stream");
 		    }
 		

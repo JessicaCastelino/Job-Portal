@@ -85,8 +85,11 @@ public class ManageApplicationsDAO implements IManageApplicationsDAO {
 			return is;
 
 		} catch (SQLException e) {
-			e.printStackTrace();
+			LOGGER.error(" SQL exception occured ");
 			return null;
+		}
+		finally {
+			DatabaseConnection.closeConnection(con);
 		}
 	}
 }

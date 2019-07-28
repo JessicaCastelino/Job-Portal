@@ -42,7 +42,6 @@ public class PropertiesParser {
 	}
 
 	public static Properties getPropertyMap() {
-		System.out.println();
 		return prop;
 	}
 

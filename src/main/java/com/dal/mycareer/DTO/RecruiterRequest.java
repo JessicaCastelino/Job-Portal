@@ -7,6 +7,21 @@ String lastname;
 String email;
 String companyname;
 String designation;
+
+public RecruiterRequest() {
+	super();
+	// TODO Auto-generated constructor stub
+}
+public RecruiterRequest(String id, String firstname, String lastname, String email, String companyname,
+		String designation) {
+	super();
+	this.id = id;
+	this.firstname = firstname;
+	this.lastname = lastname;
+	this.email = email;
+	this.companyname = companyname;
+	this.designation = designation;
+}
 public String getId() {
 	return id;
 }
