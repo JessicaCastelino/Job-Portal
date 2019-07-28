@@ -20,6 +20,7 @@ public class CoopCordinatorDAO implements ICoopCordinatorDAO
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 	Connection con = null;
 	CallableStatement callableStatement = null;
+	
 	@Override
 	public List<RecruiterRequest> fetchRecruiterRequests() 
 	{
@@ -47,7 +48,6 @@ public class CoopCordinatorDAO implements ICoopCordinatorDAO
 				rs.close();
 				results = callableStatement.getMoreResults();
 			}
-			logger.info("CoopCoordinatorDAO: fetchRecruiterRequests method: Exit");
 			return requests;
 		} 
 		catch (SQLException ex) 
@@ -65,7 +65,9 @@ public class CoopCordinatorDAO implements ICoopCordinatorDAO
 			{
 				logger.error( "Error Occurred in CoopCoordinatorDAO: fetchRecruiterRequests method:" + e.getMessage());
 			}
+			logger.info("CoopCoordinatorDAO: fetchRecruiterRequests method: Exit");
 		}
+		
 	}
 	public List<RecruiterRequest> fetchActiveRecruiters()
 	{
@@ -103,6 +105,7 @@ public class CoopCordinatorDAO implements ICoopCordinatorDAO
 	
 	@Override
 	public int approveRequest(int requestId, String username, String password) {
+		logger.info("CoopCoordinatorDAO: approveRequest method: Entered");
 		con = DatabaseConnection.getConnection();
 		try 
 		{
@@ -120,7 +123,7 @@ public class CoopCordinatorDAO implements ICoopCordinatorDAO
 			}
 		catch (SQLException ex) 
 		{
-			logger.error( "Error Occurred in approveRequest :" + ex.getMessage());
+			logger.error( "Error Occurred in CoopCoordinatorDAO: approveRequest method:" + ex.getMessage());
 			return 0;
 		} 
 		finally 
@@ -133,26 +136,32 @@ public class CoopCordinatorDAO implements ICoopCordinatorDAO
 			{
 				logger.error( "Error Occurred in CoopCoordinatorDAO: approveRequest method:" + e.getMessage());
 			}
+			logger.info("CoopCoordinatorDAO: approveRequest method: Exit");
 		}
 	}
 		
 		@Override
 		public int rejectRequest(int requestId) 
 		{
+			logger.info("CoopCoordinatorDAO: rejectRequest method: Entered");
 			con = DatabaseConnection.getConnection();
 			try 
 			{	
 				callableStatement = con.prepareCall("{call rejectEmployer("+requestId+")}");
 				boolean results = callableStatement.execute();
 				if (results)
+				{
 					return 1;
+				}
 				else
+				{
 					return 0;
+				}
 		
 				}
 				catch (SQLException e) 
 				{
-				logger.error( "Error Occurred in rejectRequest :" + e.getMessage());
+				logger.error( "Error Occurred in CoopCoordinatorDAO: rejectRequest method:" + e.getMessage());
 				return 0;
 			}
 			finally 
@@ -165,11 +174,14 @@ public class CoopCordinatorDAO implements ICoopCordinatorDAO
 				{
 					logger.error( "Error Occurred in CoopCoordinatorDAO: rejectRequest method:" + e.getMessage());
 				}
+				logger.info("CoopCoordinatorDAO: rejectRequest method: Exit");
+				
 			}
 	}
 		
 			@Override
 			public RecruiterRequest fetchRecruiter(int reqID) {
+				logger.info("CoopCoordinatorDAO: fetchRecruiter method: Entered");
 				con = DatabaseConnection.getConnection();
 				RecruiterRequest recruiterRequest = null;
 				try {
@@ -190,7 +202,7 @@ public class CoopCordinatorDAO implements ICoopCordinatorDAO
 				} 
 				catch (SQLException e) 
 				{
-					logger.error( "Error Occurred in fetchRecruiter :" + e.getMessage());
+					logger.error( "Error Occurred in CoopCoordinatorDAO: fetchRecruiter method:" + e.getMessage());
 					return recruiterRequest;
 				} 
 				finally 
@@ -203,6 +215,7 @@ public class CoopCordinatorDAO implements ICoopCordinatorDAO
 					{
 						logger.error( "Error Occurred in CoopCoordinatorDAO: fetchRecruiter method:" + e.getMessage());
 					}
+					logger.info("CoopCoordinatorDAO: fetchRecruiter method: Exit");
 				}
 			}
 
