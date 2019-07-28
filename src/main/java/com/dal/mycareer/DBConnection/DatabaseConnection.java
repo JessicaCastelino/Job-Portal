@@ -27,10 +27,10 @@ public class DatabaseConnection {
 			String driverClass = dbProps.getProperty("databaseDriverClass");
 			Class.forName(driverClass);
 			connection = DriverManager.getConnection(dbURL, dbUsername, dbPassword);
-			System.out.println("Connected to Database"+connection);
+			logger.info("Connected to Database"+connection);
 		} 
 		catch (SQLException | ClassNotFoundException ex) {
-			System.out.println("Error while connecting to db : " + ex.getMessage());
+			logger.info("Error while connecting to db : " + ex.getMessage());
 		}
 	}
 
@@ -62,7 +62,6 @@ public class DatabaseConnection {
 				logger.error( "Error Occurred in closing callable Statement :" + sqlEx.getMessage());
 			}
 		}
-	
 	}
 	public static void closeDatabaseComponents(CallableStatement callableStatement)
 	{

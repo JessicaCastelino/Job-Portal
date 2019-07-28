@@ -173,7 +173,6 @@ public class EmployerJobsDAO implements IEmployerJobsDAO
 			con = DatabaseConnection.getConnection();
 			String courses = prerequisiteCourses.stream().map(n-> n.toString())
 			.collect(Collectors.joining(","));
-			System.out.println(courses);
 			callStatement = con.prepareCall("{call insertjobRequirementRecord(?,?)}");
 			callStatement.setString("courseIds",courses); 
 			callStatement.setString("jobRecordId", Integer.toString(jobId));
