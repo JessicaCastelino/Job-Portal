@@ -1,12 +1,9 @@
 package com.dal.mycareer.DAO.Impl;
 
-import java.sql.CallableStatement;
-import java.sql.Connection;
 import java.util.HashMap;
 import java.util.Map;
 
 import com.dal.mycareer.DAO.Interface.IJobsDAO;
-import com.dal.mycareer.DBConnection.DatabaseConnection;
 import com.dal.mycareer.JDBC.JdbcManager;
 import com.dal.mycareer.JDBC.UpdateHandler;
 
@@ -27,8 +24,8 @@ public class JobsDAO implements IJobsDAO {
 		{
 			JdbcManager jdbcManager = new UpdateHandler();
 			Map<String, Object> inputParameters = new HashMap<>();
-			inputParameters.put("jobId", jobRecordId);
-			inputParameters.put("jobId", jobStatus);
+			inputParameters.put("jobRecordId", jobRecordId);
+			inputParameters.put("status", jobStatus);
 			Map<String, Integer> res = jdbcManager.executeProcedure("{call sp_updateJobStatus(?, ?)}", "", null,
 					inputParameters);
 			int rowsAffected = res.get("rowsAffected");

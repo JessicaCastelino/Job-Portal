@@ -20,6 +20,10 @@ public class ProcedureParamLoader
                 {
                     callStatement.setString(param, (String) paramValue);
                 }
+                else if(paramValue instanceof Boolean)
+                {
+                    callStatement.setBoolean(param, (Boolean) paramValue);
+                }
             }
         } 
         catch (Exception e) 
