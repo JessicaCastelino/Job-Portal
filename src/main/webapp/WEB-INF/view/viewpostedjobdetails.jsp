@@ -104,7 +104,7 @@ function editDetails()
 						
 						<tr>
 						<th>Open Positions</th>
-						<td id="numOfOpenPosition">${jobDetails.noOfPosition}</td>
+						<td id="numOfOpenPosition">${jobDetails.hourPerWeek}</td>
 						</tr>
 						
 						<tr>

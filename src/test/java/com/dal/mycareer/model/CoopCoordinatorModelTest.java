@@ -1,6 +1,5 @@
 package com.dal.mycareer.model;
 
-import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
 
 import java.util.ArrayList;
@@ -9,30 +8,22 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.junit.Assert;
+import org.junit.Test;
+import org.mockito.Mockito;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.ui.ExtendedModelMap;
+import org.springframework.ui.Model;
+
 import com.dal.mycareer.DAO.Impl.CoopCordinatorDAO;
-import com.dal.mycareer.DAO.Interface.ICoopCordinatorDAO;
-import com.dal.mycareer.DAOMocks.CoopCordinatorDAOMock;
 import com.dal.mycareer.DTO.RecruiterRequest;
 import com.dal.mycareer.emailengine.EmployerApprovalEmail;
 import com.dal.mycareer.emailengine.EmployerRejectionEmailImpl;
 import com.dal.mycareer.passwordgenerator.PasswordGenerator;
 
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
-import org.mockito.Mockito;
-import org.springframework.ui.ExtendedModelMap;
-import org.springframework.ui.Model;
-
-public class CoopCoordinatorModelTest 
-{
-	ICoopCordinatorDAO coopCordinatorDAO;
-    @Before
-    public void setUp()
-    {
-        coopCordinatorDAO = new CoopCordinatorDAOMock();
-    }
-
+public class CoopCoordinatorModelTest {
+	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 	@Test
 	public void testFetchRecruiterRequests() {
 		
@@ -164,34 +155,6 @@ public class CoopCoordinatorModelTest
 		{
 			logger.debug("Error during execution of CoopCoordinatorModelTest: testRejectRecruiterRequest()");
 		}		
-	}
-
-	@Test 
-    public void testFetchActiveRecruiters ()
-    {
-        int expectedActiveRecruiter = 3;
-        CoopCoordinatorModel coopCoordinatorModel = new CoopCoordinatorModel(coopCordinatorDAO);
-        List <RecruiterRequest> fetchedActiveRecruiter = coopCoordinatorModel.fetchActiveRecruiters();
-        assertEquals(expectedActiveRecruiter,fetchedActiveRecruiter.size());
-
-	}
-	@Test
-	public void testDeleteActiveRecruiter()
-	{
-		CoopCoordinatorModel coopCoordinatorModel = new CoopCoordinatorModel(coopCordinatorDAO);
-		Boolean isRecruiterDeleted = coopCoordinatorModel.deleteActiveRecruiter(3);
-		Assert.assertEquals("Test for checking whether the recruiter got deleted", isRecruiterDeleted, true);
-
-	}
-	@Test
-	public void testDeleteEmployerCount()
-	{
-		int expectedRecruiterAfterDelete = 2;
-		CoopCoordinatorModel coopCoordinatorModel = new CoopCoordinatorModel(coopCordinatorDAO);
-		coopCoordinatorModel.deleteActiveRecruiter(3);
-		List <RecruiterRequest> fetchedActiveRecruiter = coopCoordinatorModel.fetchActiveRecruiters();
-		int updatedRecruiterCount = fetchedActiveRecruiter.size();
-		assertEquals(expectedRecruiterAfterDelete, updatedRecruiterCount);
 	}
 
 }

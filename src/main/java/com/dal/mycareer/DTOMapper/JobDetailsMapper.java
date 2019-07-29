@@ -77,9 +77,9 @@ public class JobDetailsMapper implements IDTOMapper
                     callStatement.registerOutParameter(10, java.sql.Types.INTEGER);
                     outparamIndex = new int[] { 10 };
                 }
-                if(additionalParam.containsKey("jobId") && additionalParam.get("jobId") instanceof Integer)
+                if(additionalParam.containsKey("jobId"))
                 {
-                    callStatement.setInt("jobId", (Integer) additionalParam.get("jobId"));
+                    callStatement.setString("jobId", (String) additionalParam.get("jobId"));
                 }
             }
         } 
