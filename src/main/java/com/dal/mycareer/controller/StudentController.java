@@ -1,5 +1,6 @@
 package com.dal.mycareer.controller;
 
+import java.sql.SQLException;
 import java.util.Properties;
 
 import javax.servlet.http.HttpServletRequest;
@@ -27,13 +28,13 @@ import com.dal.mycareer.propertiesparser.PropertiesParser;
 public class StudentController {
 	private static final Properties PROPERTY_MAP = PropertiesParser.getPropertyMap();
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());
-	IStudentModel studentModel = null;
-	IRoleModel roleModel = null;
-	IStudentDAO dao = new StudentDAO();
+	private IStudentModel studentModel = null;
+	private IRoleModel roleModel = null;
+	private IStudentDAO dao = new StudentDAO();
 	private static final String FILTER = "filter";
 
 	@RequestMapping(value = { "/studentHome" }, method = RequestMethod.GET)
-	public String loadStudentHome(Model model, HttpServletRequest request) {
+	public String loadStudentHome(Model model, HttpServletRequest request) throws SQLException {
 		logger.debug("StudentController: loadStudentHome method: Entered");
 		model.addAttribute("reqPage", PROPERTY_MAP.get("studentHome").toString());
 		model.addAttribute("role", "student");
@@ -60,7 +61,7 @@ public class StudentController {
 	}
 
 	@RequestMapping(value = { "/upload" }, method = RequestMethod.POST)
-	public String upload(@RequestParam("file") MultipartFile file, Model model, HttpServletRequest request,@RequestParam int jobId) {
+	public String upload(@RequestParam("file") MultipartFile file, Model model, HttpServletRequest request,@RequestParam int jobId) throws SQLException {
 		logger.debug("StudentController: upload method: Entered");
 		model.addAttribute("reqPage", PROPERTY_MAP.get("submitted").toString());
 		model.addAttribute("role", "student");
@@ -74,7 +75,7 @@ public class StudentController {
 	}
 
 	@RequestMapping(value = { "/applyJob" }, method = RequestMethod.GET)
-	public String applyJob(Model model, HttpServletRequest request, @RequestParam int jobId) {
+	public String applyJob(Model model, HttpServletRequest request, @RequestParam int jobId) throws SQLException {
 		logger.debug("StudentController: applyJob method: Entered");
 		model.addAttribute("reqPage", PROPERTY_MAP.get("applyJob").toString());
 		model.addAttribute("role", "student");
@@ -87,7 +88,7 @@ public class StudentController {
 	}
 
 	@RequestMapping(value = { "/withdraw" }, method = RequestMethod.GET)
-	public String withdrawApplication(@RequestParam("id") int jobId, Model model, HttpServletRequest request) {
+	public String withdrawApplication(@RequestParam("id") int jobId, Model model, HttpServletRequest request) throws SQLException {
 		logger.debug("StudentController: withdrawApplication method: Entered");
 		model.addAttribute("reqPage", PROPERTY_MAP.get("studentHome").toString());
 		model.addAttribute("role", "student");

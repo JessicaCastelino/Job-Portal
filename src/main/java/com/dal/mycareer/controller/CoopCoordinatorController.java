@@ -1,6 +1,7 @@
 package com.dal.mycareer.controller;
 
 import java.lang.invoke.MethodHandles;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Properties;
 
@@ -35,21 +36,17 @@ import com.dal.mycareer.propertiesparser.PropertiesParser;
 public class CoopCoordinatorController 
 {
 	private static final Properties PROPERTY_MAP = PropertiesParser.getPropertyMap();
-	static Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
+	private static Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 	private IRoleModel roleModel = null;
 	@Autowired
-	ICoopCoordinatorModel coopCordinatorModel;
-	@Autowired
-	ICoopCordinatorDAO coopCordinatorDAO=new CoopCordinatorDAO();
-	//@Autowired
-	IEmployerApprovalEmail approvalEmail = new EmployerApprovalEmail();
-	//@Autowired
-	IPasswordGenerator passwordGenerator = new PasswordGenerator();
-	//@Autowired
-	IEmployerRejectionEmail rejectEmail = new EmployerRejectionEmailImpl();
+	private ICoopCoordinatorModel coopCordinatorModel;
+	private ICoopCordinatorDAO coopCordinatorDAO=new CoopCordinatorDAO();
+	private IEmployerApprovalEmail approvalEmail = new EmployerApprovalEmail();
+	private IPasswordGenerator passwordGenerator =  new PasswordGenerator();
+	private IEmployerRejectionEmail rejectEmail = new EmployerRejectionEmailImpl();
 
 	  @RequestMapping("/adminHome") 
-	  public String loadAdminHome(Model model,HttpServletRequest request) 
+	  public String loadAdminHome(Model model,HttpServletRequest request) throws SQLException  
 	  { 
 		  logger.debug("CoopCoordinatorController: loadAdminHome method: Entered");
 		  model.addAttribute("reqPage", PROPERTY_MAP.get("adminHome").toString());
@@ -61,7 +58,7 @@ public class CoopCoordinatorController
 	  }
 	 
 	  @RequestMapping(value = { "/approve" }, method = RequestMethod.GET)
-		public String approveRequest(@RequestParam("id") int recruiterRequestId, Model model, HttpServletRequest request) 
+		public String approveRequest(@RequestParam("id") int recruiterRequestId, Model model, HttpServletRequest request) throws SQLException 
 		{
 		  	logger.debug("CoopCoordinatorController: approveRequest method: Entered");
 			model.addAttribute("reqPage", PROPERTY_MAP.get("adminHome").toString());
@@ -74,7 +71,7 @@ public class CoopCoordinatorController
 		}
 	  
 	  @RequestMapping(value = { "/reject" }, method = RequestMethod.GET)
-		public String rejectRequest(@RequestParam("id") int recruiterRequestId, Model model, HttpServletRequest request) 
+		public String rejectRequest(@RequestParam("id") int recruiterRequestId, Model model, HttpServletRequest request) throws SQLException 
 		{
 		  	logger.debug("CoopCoordinatorController: rejectRequest method: Entered");
 			model.addAttribute("reqPage", PROPERTY_MAP.get("adminHome").toString());

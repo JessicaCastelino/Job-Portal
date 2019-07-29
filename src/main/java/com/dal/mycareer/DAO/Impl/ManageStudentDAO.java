@@ -1,9 +1,5 @@
 package com.dal.mycareer.DAO.Impl;
 
-import java.sql.CallableStatement;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -11,8 +7,10 @@ import java.util.Map;
 
 import com.dal.mycareer.DAO.Interface.IManageStudentDAO;
 import com.dal.mycareer.DAO.Interface.IPrerequisiteCoursesDAO;
-import com.dal.mycareer.DBConnection.DatabaseConnection;
 import com.dal.mycareer.DTO.Student;
+
+import com.dal.mycareer.JDBC.DeleteHandler;
+import com.dal.mycareer.JDBC.InsertHandler;
 import com.dal.mycareer.JDBC.JdbcManager;
 import com.dal.mycareer.JDBC.SelectHandler;
 
@@ -27,103 +25,63 @@ public class ManageStudentDAO implements IManageStudentDAO {
     @Autowired
     IPrerequisiteCoursesDAO prereqDAO;
 
-    private final Logger LOGGER = LoggerFactory.getLogger(this.getClass());
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Override
     public Student RegisterStudent(Student studentDetails) 
     {
-        CallableStatement callStatement = null;
-        Connection con = null;
-        try 
+        Map<String, Integer> procResults;
+        try
         {
-            con = DatabaseConnection.getConnection();
-            if(isNewStudent(studentDetails))
+            JdbcManager jdbcManager = new InsertHandler(); 
+            procResults = jdbcManager.executeProcedure("{call sp_insertStudent(?,?,?,?,?,?,?,?,?,?,?)}", "studentDetailsMapper", studentDetails, null);
+            int rowsAffected = procResults.get("rowsAffected");
+            int studentId = procResults.get("10");
+            int userId = procResults.get("11");
+            if(rowsAffected > 0 && studentId > 0 && userId > 0)
             {
-            callStatement = con.prepareCall("{call sp_insertStudent(?,?,?,?,?,?,?,?,?,?,?)}");
-            callStatement.setString("fname", studentDetails.getFirstname());
-            callStatement.setString("lname", studentDetails.getLastname());
-            callStatement.setString("bannerid", studentDetails.getBannerid());
-            callStatement.setString("email", studentDetails.getEmail());
-            callStatement.setString("phone", studentDetails.getPhonenumber());
-            callStatement.setString("degree", studentDetails.getDegree());
-            callStatement.setString("dept", studentDetails.getDepartment());
-            callStatement.setString("pgm", studentDetails.getProgram());
-            callStatement.setString("pswrd", studentDetails.getPassword());
-            callStatement.registerOutParameter(10, java.sql.Types.INTEGER);
-            callStatement.registerOutParameter(11, java.sql.Types.INTEGER);
-            int rowsAffected = callStatement.executeUpdate();
-            if (rowsAffected > 0) 
-            {
-                int studentId = callStatement.getInt(10);
-                int userId = callStatement.getInt(11);
                 prereqDAO.addStudentCompletedPrereq(studentId, studentDetails.getCompletedCourses());
-            } 
+            }
             else 
             {
-                LOGGER.error("Error Occurred while registering student");
+                logger.error("Error Occurred while registering student");
             }
         }
-        } 
-        catch (Exception ex) 
+        catch(Exception ex)
         {
-            LOGGER.error("Error Occurred in RegisterStudent :" + ex.getMessage());
+            logger.error("Error Occurred in RegisterStudent :" + ex.getMessage());
         }
-
         return studentDetails;
     }
+
     @Override
     public List<Student> getRegisteredStudents()
     {
-        CallableStatement callStatement = null;
-        Connection con = null;
-        Student student = null;
-        List <Student> registeredStudentList = new ArrayList<Student>();
+        List<Student> students = new ArrayList<>();
+        try 
+		{
+			JdbcManager jdbcManager = new SelectHandler();
+			jdbcManager.executeProcedure("{call fetchRegisteredStudents()}", "studentsMapper", students, null);
+		} 
+		catch (Exception e) 
+		{
+			logger.error("Exception occurred at ManageStudentDAO:getRegisteredStudents " + e.getMessage());
+		}
+        return students;
+    }
+
+    @Override
+    public boolean DeleteStudent(int studentId) 
+    {
+        Map<String, Integer> procResult;
+        boolean isDeleteSuccess;
         try
         {
-            
-            con = DatabaseConnection.getConnection();
-            callStatement = con.prepareCall("{call fetchRegisteredStudents()}");
-            ResultSet regStudentsSet = callStatement.executeQuery();
-            while (regStudentsSet.next())
-            {
-                student = new Student();
-                student.setId(regStudentsSet.getInt("id"));
-                student.setFirstname(regStudentsSet.getString("firstname"));
-                student.setLastname(regStudentsSet.getString("lastname"));
-                student.setBannerid(regStudentsSet.getString("bannerid"));
-                student.setEmail(regStudentsSet.getString("email"));
-                student.setRequiredCourses(regStudentsSet.getString("requiredCourses"));
-                registeredStudentList.add(student);
-            }
-        }
-        catch (Exception ex)
-        {
-            LOGGER.error( "Error Occurred in getRegisteredStudents :" + ex.getMessage());
-        }
-        finally
-		{
-            try 
-            {
-				callStatement.close();
-            }
-             catch (SQLException e) 
-             {
-				e.printStackTrace();
-			}
-		}
-        return registeredStudentList;
-    }
-   @Override
-    public boolean DeleteStudent(int studentId) {
-        CallableStatement callStatement = null;
-        Connection con = null;
-        boolean isDeleteSuccess = false;
-        try 
-        {
-            con = DatabaseConnection.getConnection();
-            callStatement = con.prepareCall("{call sp_deleteStudent(?)}");
-            callStatement.setInt("studentId", studentId);
-            int rowsAffected = callStatement.executeUpdate();
+            Map<String, Object> additionalParam = new HashMap<>();
+            additionalParam.put("studentId", studentId);
+            JdbcManager jdbcManager = new DeleteHandler();
+            procResult = jdbcManager.executeProcedure("{call sp_deleteStudent(?)}", null, null, additionalParam);
+            int rowsAffected = procResult.get("rowsAffected");
             if (rowsAffected > 0) 
             {
                 isDeleteSuccess = true;
@@ -131,15 +89,14 @@ public class ManageStudentDAO implements IManageStudentDAO {
             else 
             {
                 isDeleteSuccess = false;
-                LOGGER.error("Error Occurred while deleting student");
+                logger.error("Error Occurred while deleting student");
             }
-        } 
-        catch (Exception ex) 
+        }
+        catch(Exception ex)
         {
             isDeleteSuccess = false;
-            LOGGER.error("Error Occurred in DeleteStudent :" + ex.getMessage());
+            logger.error("Error Occurred in DeleteStudent :" + ex.getMessage());
         }
-
         return isDeleteSuccess;
     }
 

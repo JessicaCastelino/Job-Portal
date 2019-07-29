@@ -26,14 +26,14 @@ public class StudentDAO implements IStudentDAO {
 	private static final String CALL_FETCH_STUDENT_DETAILS = "{call fetchStudentDetails(?)}";
 	private static final String CALL_APPLY_FOR_JOB = "{call applyForJob(?,?,?,?)}";
 	private static final String CALL_GET_APPLIED_JOB_LIST = "{call getAppliedJobList(?)}";
-	private static final String CALL_GET_ALL_JOB_LIST = "{call getAllJobList(?)}";
+	private static final String CALL_GET_ALL_JOB_LIST = "{call getAllJobList(?,?)}";
 	private static final Properties PROPERTY_MAP = PropertiesParser.getPropertyMap();
-	Connection con = null;
-	CallableStatement callableStatement = null;
+	private Connection con = null;
+	private CallableStatement callableStatement = null;
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 	
 	@Override
-	public List<JobDetails> getAllJobList(int studID) {
+	public List<JobDetails> getAllJobList(int studID, String type) throws SQLException {
 		logger.debug("StudentDAO: getAllJobList method: Entered");
 		con = DatabaseConnection.getConnection();
 		JobDetails job = null;
@@ -42,6 +42,7 @@ public class StudentDAO implements IStudentDAO {
 		try {
 			callableStatement = con.prepareCall(CALL_GET_ALL_JOB_LIST);
 			callableStatement.setInt(1, studID);
+			callableStatement.setString(1, type);
 			boolean results = callableStatement.execute();
 			while (results) {
 				rs = callableStatement.getResultSet();
@@ -67,7 +68,7 @@ public class StudentDAO implements IStudentDAO {
 			return jobs;
 		} catch (SQLException e) {
 			logger.error( "SQLException Occurred in StudentDAO: getAllJobList method:" + e.getMessage());
-			return jobs;
+			throw new SQLException("Error in fetching the job list.");
 		} finally {
 				DatabaseConnection.closeDatabaseComponents(rs, callableStatement, con);
 				logger.debug("StudentDAO: getAllJobList method: Exit");
@@ -76,7 +77,7 @@ public class StudentDAO implements IStudentDAO {
 	}
 
 	@Override
-	public List<AppliedJob> getAppliedJobList(int studentId) {
+	public List<AppliedJob> getAppliedJobList(int studentId) throws SQLException {
 		logger.debug("StudentDAO: getAppliedJobList method: Entered");
 		con = DatabaseConnection.getConnection();
 		AppliedJob job = null;
@@ -117,7 +118,7 @@ public class StudentDAO implements IStudentDAO {
 			return appliedJobs;
 		} catch (SQLException e) {
 			logger.error( "SQLException Occurred in StudentDAO: getAppliedJobList method:" + e.getMessage());
-			return appliedJobs;
+			throw new SQLException("Error in fetching the applied job list.");
 		}  finally {
 			DatabaseConnection.closeDatabaseComponents(rs, callableStatement, con);
 			logger.debug("StudentDAO: getAppliedJobList method: Exit");
@@ -125,7 +126,7 @@ public class StudentDAO implements IStudentDAO {
 	}
 
 	@Override
-	public int applyForJob(InputStream inputStream, int studentId, int jobId) {
+	public int applyForJob(InputStream inputStream, int studentId, int jobId) throws SQLException {
 		logger.debug("StudentDAO: applyForJob method: Entered");
 		con = DatabaseConnection.getConnection();
 		try {
@@ -140,7 +141,7 @@ public class StudentDAO implements IStudentDAO {
 
 		} catch (SQLException e) {
 			logger.error( "SQLException Occurred in StudentDAO: applyForJob method:" + e.getMessage());
-			return 0;
+			throw new SQLException("Error while applying for the job.");
 		}
 		finally {
 			DatabaseConnection.closeDatabaseComponents(callableStatement);
@@ -151,7 +152,7 @@ public class StudentDAO implements IStudentDAO {
 	}
 
 	@Override
-	public Student getStudentDetails(String userSessionName) {
+	public Student getStudentDetails(String userSessionName) throws SQLException {
 		logger.debug("StudentDAO: getStudentDetails method: Entered");
 		con = DatabaseConnection.getConnection();
 		Student student = null;
@@ -178,7 +179,7 @@ public class StudentDAO implements IStudentDAO {
 			return student;
 		} catch (SQLException e) {
 			logger.error( "SQLException Occurred in StudentDAO: getStudentDetails method:" + e.getMessage());
-			return student;
+			throw new SQLException("Error while fetching student details.");
 		} finally {
 			DatabaseConnection.closeDatabaseComponents(rs, callableStatement, con);
 			logger.debug("StudentDAO: getStudentDetails method: Exit");
@@ -186,7 +187,7 @@ public class StudentDAO implements IStudentDAO {
 	}
 
 	@Override
-	public int withdrawApplication(int jobId) {
+	public int withdrawApplication(int jobId) throws SQLException {
 		logger.debug("StudentDAO: withdrawApplication method: Entered");
 		con = DatabaseConnection.getConnection();
 		try {
@@ -198,7 +199,7 @@ public class StudentDAO implements IStudentDAO {
 
 		} catch (SQLException e) {
 			logger.error( "SQLException Occurred in StudentDAO: withdrawApplication method:" + e.getMessage());
-			return 0;
+			throw new SQLException("Error while withdrawing the job application.");
 		}
 		finally {
 			DatabaseConnection.closeDatabaseComponents(callableStatement);
@@ -207,7 +208,7 @@ public class StudentDAO implements IStudentDAO {
 	}
 
 	@Override
-	public int alreadyApplied(int studentId, int jobId) {
+	public int alreadyApplied(int studentId, int jobId) throws SQLException {
 		logger.debug("StudentDAO: alreadyApplied method: Entered");
 		con = DatabaseConnection.getConnection();
 		ResultSet rs=null;
@@ -230,7 +231,7 @@ public class StudentDAO implements IStudentDAO {
 
 		} catch (SQLException e) {
 			logger.error( "SQLException Occurred in StudentDAO: alreadyApplied method:" + e.getMessage());
-			return 0;
+			throw new SQLException("Error while checking if the student has already applied for the job.");
 		}
 		finally {
 			DatabaseConnection.closeDatabaseComponents(rs, callableStatement, con);
