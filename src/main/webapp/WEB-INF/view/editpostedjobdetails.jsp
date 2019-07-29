@@ -142,7 +142,7 @@
 		<br>
 		<div>
 			<label class="col-sm-3">Open Positions</label> <input type="number"
-				id="numOfOpenPosition" value="${jobDetails.hourPerWeek}" /> <label
+				id="numOfOpenPosition" value="${jobDetails.noOfPosition}" /> <label
 				class="col-sm-3">Job Type</label> <select name="jobType"
 				id="selJobType">
 				<c:forEach var="jobType" items="${jobTypes}">

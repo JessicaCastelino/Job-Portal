@@ -1,14 +1,11 @@
 package com.dal.mycareer.DAO.Impl;
 
-import java.sql.CallableStatement;
-import java.sql.Connection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 import com.dal.mycareer.DAO.Interface.IEmployerJobsDAO;
-import com.dal.mycareer.DBConnection.DatabaseConnection;
+import com.dal.mycareer.DAO.Interface.IPrerequisiteCoursesDAO;
 import com.dal.mycareer.DTO.Job;
 import com.dal.mycareer.DTO.JobDetails;
 import com.dal.mycareer.JDBC.InsertHandler;
@@ -18,6 +15,7 @@ import com.dal.mycareer.JDBC.UpdateHandler;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -25,6 +23,8 @@ public class EmployerJobsDAO implements IEmployerJobsDAO
 {
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 	private Map <String, Integer> procResults;
+	@Autowired
+	private IPrerequisiteCoursesDAO preReqDAO;
 	
 	@Override
 	public List<Job> getActiveJobs(String username,List<Job> jobs) 
@@ -45,7 +45,7 @@ public class EmployerJobsDAO implements IEmployerJobsDAO
 		 if (procResults.get("rowsAffected") > 0)
 		 {
 		 int jobId = procResults.get("10");
-		 insertJobRequirement(jobId,postedJobDetails.getSelectedCourseIds());
+		 preReqDAO.insertJobPrerequisiteCourses(jobId,postedJobDetails.getSelectedCourseIds());
 		 }
 		 else
 		 {
@@ -125,7 +125,7 @@ public class EmployerJobsDAO implements IEmployerJobsDAO
 			int rowAffected = res.get("rowsAffected");
 			if (rowAffected > 0)
 			{
-				isJobDetailsUpdated = insertJobRequirement(updatedJobDetails.getId(), updatedJobDetails.getSelectedCourseIds());
+				isJobDetailsUpdated = preReqDAO.insertJobPrerequisiteCourses(updatedJobDetails.getId(), updatedJobDetails.getSelectedCourseIds());
 			}
 			else
 		 	{
@@ -140,40 +140,5 @@ public class EmployerJobsDAO implements IEmployerJobsDAO
 		return isJobDetailsUpdated;
 	}
 	
-	public boolean insertJobRequirement(int jobId, List<Integer> prerequisiteCourses)
-	{
-		boolean isQuerySuccess = false;
-		CallableStatement callStatement = null;
-		Connection con= null;
-		logger.info("DL: insertJobRequirement method started");
-		try
-		{
-			con = DatabaseConnection.getConnection();
-			String courses = prerequisiteCourses.stream().map(n-> n.toString())
-			.collect(Collectors.joining(","));
-			callStatement = con.prepareCall("{call insertjobRequirementRecord(?,?)}");
-			callStatement.setString("courseIds",courses); 
-			callStatement.setString("jobRecordId", Integer.toString(jobId));
-			int rowAffected = callStatement.executeUpdate();
-			if (rowAffected > 0)
-			{
-				isQuerySuccess= true;
-				logger.info( "Records inserted successfully in insertJobRequirement Method");
-			}
-			else
-		 	{
-				isQuerySuccess= false;
-				logger.error( "Error Occurred in insertJobRequirement method while inserting record");
-		 	}	 
-		 }
-		catch (Exception ex)
-		{
-			logger.error( "Error Occurred in insertJobRequirement :" + ex.getMessage());
-		}
-		finally
-		{
-			DatabaseConnection.closeDatabaseComponents(callStatement);
-		}
-		return isQuerySuccess;
-	}
+
 }

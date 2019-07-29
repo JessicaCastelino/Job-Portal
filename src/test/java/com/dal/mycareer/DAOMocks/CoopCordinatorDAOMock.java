@@ -46,7 +46,7 @@ public class CoopCordinatorDAOMock implements ICoopCordinatorDAO
     @Override
     public boolean deleteActiveRecruiter(int employerId) 
     {
-        return lstRecruiters.removeIf(recruiter -> recruiter.getId() == Integer.toString(employerId));
+        return lstRecruiters.removeIf(recruiter -> recruiter.getId().equals(Integer.toString(employerId)));
     }
 
     @Override
