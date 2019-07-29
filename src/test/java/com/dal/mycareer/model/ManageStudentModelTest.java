@@ -1,4 +1,4 @@
-package com.dal.mycareer.controller;
+package com.dal.mycareer.model;
 
 import java.util.List;
 
