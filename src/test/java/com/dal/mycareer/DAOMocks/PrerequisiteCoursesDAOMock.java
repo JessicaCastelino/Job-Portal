@@ -6,11 +6,10 @@ import java.util.List;
 import com.dal.mycareer.DAO.Interface.IPrerequisiteCoursesDAO;
 import com.dal.mycareer.DTO.PrerequisiteCourses;
 
-public class PrerequisiteCoursesDAOMock implements IPrerequisiteCoursesDAO 
-{
-    ArrayList <PrerequisiteCourses> PrerequisiteCoursesList;
-    public PrerequisiteCoursesDAOMock ()
-    {
+public class PrerequisiteCoursesDAOMock implements IPrerequisiteCoursesDAO {
+    ArrayList<PrerequisiteCourses> PrerequisiteCoursesList;
+
+    public PrerequisiteCoursesDAOMock() {
         PrerequisiteCoursesList = new ArrayList<PrerequisiteCourses>();
         PrerequisiteCourses prerequisiteCourse1 = new PrerequisiteCourses();
         prerequisiteCourse1.setCourseId(1);
@@ -26,8 +25,7 @@ public class PrerequisiteCoursesDAOMock implements IPrerequisiteCoursesDAO
         PrerequisiteCoursesList.add(prerequisiteCourse3);
     }
     @Override
-    public boolean addStudentCompletedPrereq(int studentId, List<Integer> completedCourses) 
-    {
+    public boolean addStudentCompletedPrereq(int studentId, List<Integer> completedCourses) {
         return false;
     }
 
@@ -35,6 +33,11 @@ public class PrerequisiteCoursesDAOMock implements IPrerequisiteCoursesDAO
     public List<PrerequisiteCourses> getPrerequisiteCourses(List<PrerequisiteCourses> preRequisiteList) 
     {
         return PrerequisiteCoursesList;
+    }
+
+    @Override
+    public boolean insertJobPrerequisiteCourses(int jobId, List<Integer> prerequisiteCourses) {
+        return false;
     }
 
 }

@@ -28,8 +28,11 @@ public class SelectHandler extends JdbcManager {
 			ProcedureParamLoader paramLoader = new ProcedureParamLoader();
 			paramLoader.fillInputParameters(callStatement, additionalParam);
 			result = callStatement.executeQuery();
+			if (result !=  null)
+			{
 			fillDTOObjectFromResultSet(mapperObjectName, result, dtoObject);
 			procResult.put("isObjectFilled", 1);
+			}
 		} catch (Exception ex) {
 			logger.error("Error Occurred in executeProc :" + ex.getMessage());
 		} finally {
@@ -47,8 +50,12 @@ public class SelectHandler extends JdbcManager {
 				if (result.next()) {
 					procResult.put("recordExist", 1);
 				}
+				else
+				{
+					procResult.put("recordExist", 0);
+				}
 			} catch (Exception ex) {
-
+				logger.error("Error Occurred in fillDTOObjectFromResultSet :" + ex.getMessage());
 			}
 
 		}
