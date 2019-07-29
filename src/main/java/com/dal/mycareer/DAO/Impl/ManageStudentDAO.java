@@ -5,12 +5,16 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.dal.mycareer.DAO.Interface.IManageStudentDAO;
 import com.dal.mycareer.DAO.Interface.IPrerequisiteCoursesDAO;
 import com.dal.mycareer.DBConnection.DatabaseConnection;
 import com.dal.mycareer.DTO.Student;
+import com.dal.mycareer.JDBC.JdbcManager;
+import com.dal.mycareer.JDBC.SelectHandler;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,6 +37,8 @@ public class ManageStudentDAO implements IManageStudentDAO {
         try 
         {
             con = DatabaseConnection.getConnection();
+            if(isNewStudent(studentDetails))
+            {
             callStatement = con.prepareCall("{call sp_insertStudent(?,?,?,?,?,?,?,?,?,?,?)}");
             callStatement.setString("fname", studentDetails.getFirstname());
             callStatement.setString("lname", studentDetails.getLastname());
@@ -56,6 +62,7 @@ public class ManageStudentDAO implements IManageStudentDAO {
             {
                 LOGGER.error("Error Occurred while registering student");
             }
+        }
         } 
         catch (Exception ex) 
         {
@@ -134,5 +141,34 @@ public class ManageStudentDAO implements IManageStudentDAO {
         }
 
         return isDeleteSuccess;
+    }
+
+    public boolean isNewStudent(Student studentDetails)
+    {
+
+        boolean isNewRecord = true;
+        try
+       {
+           JdbcManager jdbcManager = new SelectHandler();
+           Map<String, Object> inputParam = new HashMap<String, Object>();
+           inputParam.put("bnrId", studentDetails.getBannerid());
+           Map <String,Integer> output = jdbcManager.executeProcedure("{call checkDupicateStudent(?)}", null, null, inputParam);
+          if(output !=null && output.size() > 0)
+          {
+            if(output.get("recordExist") > 0)
+            {
+                isNewRecord = false;
+            }
+            else
+            {
+                isNewRecord = true;
+            }
+          }
+       }
+       catch(Exception ex)
+       {
+        LOGGER.error("Error Occurred in isNewStudent for BannerId :" + studentDetails.getBannerid() +"Exception Details-"+ ex.getMessage());
+       }
+        return isNewRecord;
     }
 }
