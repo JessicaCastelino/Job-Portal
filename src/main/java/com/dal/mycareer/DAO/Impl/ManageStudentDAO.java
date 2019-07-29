@@ -8,6 +8,7 @@ import java.util.Map;
 import com.dal.mycareer.DAO.Interface.IManageStudentDAO;
 import com.dal.mycareer.DAO.Interface.IPrerequisiteCoursesDAO;
 import com.dal.mycareer.DTO.Student;
+
 import com.dal.mycareer.JDBC.DeleteHandler;
 import com.dal.mycareer.JDBC.InsertHandler;
 import com.dal.mycareer.JDBC.JdbcManager;
@@ -97,5 +98,34 @@ public class ManageStudentDAO implements IManageStudentDAO {
             logger.error("Error Occurred in DeleteStudent :" + ex.getMessage());
         }
         return isDeleteSuccess;
+    }
+
+    public boolean isNewStudent(Student studentDetails)
+    {
+
+        boolean isNewRecord = true;
+        try
+       {
+           JdbcManager jdbcManager = new SelectHandler();
+           Map<String, Object> inputParam = new HashMap<String, Object>();
+           inputParam.put("bnrId", studentDetails.getBannerid());
+           Map <String,Integer> output = jdbcManager.executeProcedure("{call checkDupicateStudent(?)}", null, null, inputParam);
+          if(output !=null && output.size() > 0)
+          {
+            if(output.get("recordExist") > 0)
+            {
+                isNewRecord = false;
+            }
+            else
+            {
+                isNewRecord = true;
+            }
+          }
+       }
+       catch(Exception ex)
+       {
+        LOGGER.error("Error Occurred in isNewStudent for BannerId :" + studentDetails.getBannerid() +"Exception Details-"+ ex.getMessage());
+       }
+        return isNewRecord;
     }
 }

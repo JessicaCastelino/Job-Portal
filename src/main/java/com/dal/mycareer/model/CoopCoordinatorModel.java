@@ -102,14 +102,14 @@ public class CoopCoordinatorModel implements ICoopCoordinatorModel
 	@Override
 	public boolean deleteActiveRecruiter(int employerId) 
 	{
-		logger.debug("BL: deleteActiveRecruiter method started for-" + employerId);
+		logger.info("BL: CoopCoordinatorModel- deleteActiveRecruiter method started for-" + employerId);
 		return coopCordinatorDAO.deleteActiveRecruiter(employerId);
 	}
 
 	@Override
 	public List<RecruiterRequest> fetchActiveRecruiters() 
 	{
-		logger.debug("BL: fetchActiveRecruiters method started");
+		logger.info("BL: CoopCoordinatorModel- fetchActiveRecruiters method started");
 		return coopCordinatorDAO.fetchActiveRecruiters();
 	}
 }
