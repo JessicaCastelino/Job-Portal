@@ -2,7 +2,6 @@ package com.dal.mycareer.DAO.Impl;
 
 import java.sql.CallableStatement;
 import java.sql.Connection;
-import java.sql.ResultSet;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -41,8 +40,8 @@ public class EmployerJobsDAO implements IEmployerJobsDAO
 		{
 		Map<String, Object> additionalParam = new HashMap<>();
 		additionalParam.put("emailId", currentUser);
-		JdbcManager jdbcInsertOperation = new InsertHandler(); 
-		procResults = jdbcInsertOperation.executeProcedure("{call sp_insertjobdetails(?,?,?,?,?,?,?,?,?,?)}", "jobDetailsMapper", postedJobDetails, additionalParam);
+		JdbcManager jdbcManager = new InsertHandler(); 
+		procResults = jdbcManager.executeProcedure("{call sp_insertjobdetails(?,?,?,?,?,?,?,?,?,?)}", "jobDetailsMapper", postedJobDetails, additionalParam);
 		 if (procResults.get("rowsAffected") > 0)
 		 {
 		 int jobId = procResults.get("10");

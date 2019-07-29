@@ -14,6 +14,7 @@ public class StudentDetailsMapper implements IDTOMapper
     public int[] mapObjectToStatement(Object dtoObject, CallableStatement callStatement,
             Map<String, Object> additionalParam) 
     {
+        int[] outparamIndex = null;
         Student student = (Student) dtoObject;
         try
         {
@@ -28,12 +29,13 @@ public class StudentDetailsMapper implements IDTOMapper
             callStatement.setString("pswrd", student.getPassword());
             callStatement.registerOutParameter(10, java.sql.Types.INTEGER);
             callStatement.registerOutParameter(11, java.sql.Types.INTEGER);
+            outparamIndex = new int[] { 10, 11 };
         }
         catch(Exception ex)
         {
             
         }
-        return null;
+        return outparamIndex;
     }
 
     @Override

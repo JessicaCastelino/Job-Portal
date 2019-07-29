@@ -19,9 +19,20 @@ public abstract class JdbcManager
 	
     public Map<String, Integer> executeProcedure(String procedureName, String mapperObjectName, Object dtoObject, Map<String, Object> additionalParam)
     {
-        createDBConnection();
-        prepareProcedureCall(procedureName);
-		procResults = executeProc(callStatement, mapperObjectName, dtoObject, additionalParam);
+        try
+        {
+            createDBConnection();
+            prepareProcedureCall(procedureName);
+            procResults = executeProc(callStatement, mapperObjectName, dtoObject, additionalParam);
+        }
+        catch(Exception ex)
+        {
+            logger.error("Error occurred while executing the statement " + procedureName, ex.getMessage());
+        }
+        finally
+        {
+            DatabaseConnection.closeConnection(con);
+        }
 		return procResults;
 	}
 	 

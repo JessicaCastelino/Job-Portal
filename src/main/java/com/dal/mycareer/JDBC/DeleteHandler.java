@@ -5,13 +5,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.dal.mycareer.DBConnection.DatabaseConnection;
-import com.dal.mycareer.DTOMapper.DTOMapper;
-import com.dal.mycareer.DTOMapper.IDTOMapper;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class UpdateHandler extends JdbcManager 
+public class DeleteHandler extends JdbcManager 
 {
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
     private Map<String, Integer> procResult;
@@ -22,15 +20,8 @@ public class UpdateHandler extends JdbcManager
     {
         try
         {
-            if(mapperObjectName != null && !mapperObjectName.isEmpty())
-            {
-                IDTOMapper mapper = DTOMapper.dtoMap.get(mapperObjectName);
-                mapper.mapObjectToStatement(dtoObject, callStatement, additionalParam);
-            }
-
             ProcedureParamLoader paramLoader = new ProcedureParamLoader();
-            paramLoader.fillInputParameters(callStatement, additionalParam);
-            
+			paramLoader.fillInputParameters(callStatement, additionalParam);
             int rowsAffected = callStatement.executeUpdate();
             procResult = new HashMap<>();
             procResult.put("rowsAffected", rowsAffected);
