@@ -162,7 +162,7 @@ DELIMITER ;
 
 DROP procedure IF EXISTS `getAllJobList`;
 DELIMITER //
-CREATE PROCEDURE `getAllJobList`()
+CREATE PROCEDURE `getAllJobList`(IN studId INT(11), IN criteria VARCHAR(50))
 BEGIN
 IF (criteria = 'all') THEN
     select * from jobs j where j.jobStatus=1;
