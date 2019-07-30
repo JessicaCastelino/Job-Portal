@@ -79,7 +79,7 @@
                     <br>
                     <div>
                         <label class="col-sm-3">Phone Number</label>
-                        <input type="number" id="txtphone" />
+                        <input type="number" onkeypress="return event.target.value.length < 10" id="txtphone" />
                         <label class="col-sm-3">Degree</label>
                         <input type="text" id="txtdegree" />
                     </div>
