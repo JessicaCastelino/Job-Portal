@@ -15,8 +15,8 @@ import org.mockito.internal.matchers.apachecommons.ReflectionEquals;
 
 public class ManageStudentModelTest
 {
-    IManageStudentDAO manageStudentMockDAO;
-    IManageStudentModel manageStudentModel;
+    private IManageStudentDAO manageStudentMockDAO;
+    private IManageStudentModel manageStudentModel;
 
     @Before
     public void setUp ()

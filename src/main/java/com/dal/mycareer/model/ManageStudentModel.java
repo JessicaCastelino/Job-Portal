@@ -39,8 +39,7 @@ public class ManageStudentModel implements IManageStudentModel
     public List<Student> getRegisteredStudents()
     {
         List<Student> regStudents = null;
-        manageStudentDAO.populateRegisteredStudents(regStudents);
-        return regStudents; 
+        return manageStudentDAO.getRegisteredStudents(regStudents);
     }
     
 	@Override

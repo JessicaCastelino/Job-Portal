@@ -11,8 +11,8 @@ import org.junit.Test;
 
 public class JobsModelTest
 {
-    IJobsDAO jobsMockDAO;
-    IJobsModel jobsModel;
+    private IJobsDAO jobsMockDAO;
+    private IJobsModel jobsModel;
 
     @Before
     public void setUp ()

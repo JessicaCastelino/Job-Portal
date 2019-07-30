@@ -23,6 +23,7 @@ public class EmployerJobsDAO implements IEmployerJobsDAO
 {
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 	private Map <String, Integer> procResults;
+	
 	@Autowired
 	private IPrerequisiteCoursesDAO preReqDAO;
 	
@@ -43,7 +44,7 @@ public class EmployerJobsDAO implements IEmployerJobsDAO
 			JdbcManager jdbcManager = new InsertHandler(); 
 			procResults = jdbcManager.executeProcedure("{call sp_insertjobdetails(?,?,?,?,?,?,?,?,?,?)}",
 						"jobDetailsMapper", postedJobDetails, additionalParam);
-			if (procResults.get("rowsAffected") > 0) 
+			if(procResults.get("rowsAffected") > 0) 
 			{
 					int jobId = procResults.get("10");
 					preReqDAO.insertJobPrerequisiteCourses(jobId, postedJobDetails.getSelectedCourseIds());

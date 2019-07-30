@@ -18,8 +18,9 @@ public class EmployerJobsModel implements IEmployerJobsModel
 	@Autowired
 	private IEmployerJobsDAO employerJobsDAO;
 
-	List<Job> jobs = null; 
-	private final Logger logger = LoggerFactory.getLogger(this.getClass());	
+	private List<Job> jobs = null; 
+	private final Logger logger = LoggerFactory.getLogger(this.getClass());
+		
 	public EmployerJobsModel()
 	{
 

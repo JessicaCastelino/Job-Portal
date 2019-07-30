@@ -1,6 +1,5 @@
 package com.dal.mycareer.DAO.Impl;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -54,7 +53,7 @@ public class ManageStudentDAO implements IManageStudentDAO {
     }
 
     @Override
-    public void populateRegisteredStudents(List<Student> regStudents)
+    public List<Student> getRegisteredStudents(List<Student> regStudents)
     {
         try 
 		{
@@ -64,7 +63,8 @@ public class ManageStudentDAO implements IManageStudentDAO {
 		catch (Exception e) 
 		{
 			logger.error("Exception occurred at ManageStudentDAO:getRegisteredStudents " + e.getMessage());
-		}
+        }
+        return regStudents;
     }
 
     @Override
