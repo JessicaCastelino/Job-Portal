@@ -493,3 +493,11 @@ SELECT id, firstname, lastname, email, companyname FROM employers where id=reqID
 END$$
 
 DELIMITER ;
+
+DROP procedure IF EXISTS `checkDupicateStudent`;
+DELIMITER $$
+CREATE  PROCEDURE `checkDupicateStudent`(bnrId varchar(50))
+BEGIN
+SELECT bannerId FROM students where bannerid = bnrId;
+END$$
+DELIMITER ;
