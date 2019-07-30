@@ -7,6 +7,6 @@ import com.dal.mycareer.DTO.Student;
 public interface IManageStudentDAO 
 {
     public Student RegisterStudent(Student studentDetails);
-    public List<Student> getRegisteredStudents();
-	 public boolean DeleteStudent(int studentId);
+    public List<Student> getRegisteredStudents(List<Student> regStudents);
+    public boolean DeleteStudent(int studentId);
 }

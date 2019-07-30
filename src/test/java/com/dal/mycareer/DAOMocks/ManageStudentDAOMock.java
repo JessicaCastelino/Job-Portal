@@ -52,8 +52,9 @@ public class ManageStudentDAOMock implements IManageStudentDAO
     }
 
     @Override
-    public List<Student> getRegisteredStudents() 
+    public List<Student> getRegisteredStudents(List<Student> regStudents) 
     {
-        return lstRegisteredStudent;
+        regStudents = lstRegisteredStudent;
+        return regStudents;
     }
 }

@@ -12,13 +12,14 @@ import org.junit.Test;
 
 public class PrerequisiteCoursesModelTest
 {
-    IPrerequisiteCoursesDAO prerequisiteCoursesDAO;
+    private IPrerequisiteCoursesDAO prerequisiteCoursesDAO;
 
     @Before
     public void setUp()
     {
         prerequisiteCoursesDAO =  new PrerequisiteCoursesDAOMock();
     }
+
     @Test
     public void getPrerequisiteCourses()
     {
