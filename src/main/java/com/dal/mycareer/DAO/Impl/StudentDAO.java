@@ -60,7 +60,7 @@ public class StudentDAO implements IStudentDAO {
 					job.setApplicationDeadline(rs.getDate(8));
 					job.setJobDescription(rs.getString(9));
 					job.setEmployeeId((rs.getInt(12)));
-					job.setOrganization(rs.getString(13));
+					job.setOrganization(rs.getString(14));
 					jobs.add(job);
 				}
 				results = callableStatement.getMoreResults();

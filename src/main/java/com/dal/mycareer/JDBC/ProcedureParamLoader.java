@@ -3,8 +3,13 @@ package com.dal.mycareer.JDBC;
 import java.sql.CallableStatement;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public class ProcedureParamLoader
 {
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
+    
     public void fillInputParameters(CallableStatement callStatement, Map<String, Object> inputParams)
     {
         try 
@@ -26,9 +31,9 @@ public class ProcedureParamLoader
                 }
             }
         } 
-        catch (Exception e) 
+        catch (Exception ex) 
         {
-            
+            logger.error( "Error Occurred in fillInputParameters :" + ex.getMessage());
         }
     }
 }

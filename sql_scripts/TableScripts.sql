@@ -162,7 +162,7 @@ DELIMITER ;
 
 DROP procedure IF EXISTS `getAllJobList`;
 DELIMITER //
-CREATE PROCEDURE `getAllJobList`()
+CREATE PROCEDURE `getAllJobList`(IN studId INT(11), IN criteria VARCHAR(50))
 BEGIN
 IF (criteria = 'all') THEN
     select * from jobs j where j.jobStatus=1;
@@ -492,4 +492,12 @@ BEGIN
 SELECT id, firstname, lastname, email, companyname FROM employers where id=reqID;
 END$$
 
+DELIMITER ;
+
+DROP procedure IF EXISTS `checkDupicateStudent`;
+DELIMITER $$
+CREATE  PROCEDURE `checkDupicateStudent`(bnrId varchar(50))
+BEGIN
+SELECT bannerId FROM students where bannerid = bnrId;
+END$$
 DELIMITER ;

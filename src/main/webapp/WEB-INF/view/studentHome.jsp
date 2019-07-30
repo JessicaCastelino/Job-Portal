@@ -109,7 +109,7 @@
 						<c:forEach items="${jobs}" var="job">
 							<tr>
 								<td>${job.id}</td>
-								<td>${job.noOfPosition}</td>
+								<td>${job.jobTitle}</td>
 								<td>${job.organization}</td>
 								<td>${job.location}</td>
 								<td>${job.jobType}</td>
@@ -148,18 +148,31 @@
 						</tr>
 						<c:forEach items="${appliedJobs}" var="appliedJob">
 							<tr>
-								<td>${appliedJob.id}</td>
-								<td>${appliedJob.openPosition}</td>
+								<td>${appliedJob.jobId}</td>
+								<td>${appliedJob.jobTitle}</td>
 								<td>${appliedJob.organization}</td>
 								<td>${appliedJob.location}</td>
 								<td>${appliedJob.applicationStatus}</td>
+								
+								<c:if test = "${appliedJob.applicationStatus eq val}">
+								</c:if>
 								<td>
-									<!-- View button --> <!-- Apply button -->
+								<c:set var = "val1" value="Rejected"/>
+								<c:set var = "val2" value="Accepted"/>
+									<c:choose>
+									<c:when test = "${appliedJob.applicationStatus eq val1 || appliedJob.applicationStatus eq val2}">
+									<div class="form-input">
+										<a class="btn btn-info btn-block my-4" style="opacity: 0.5;">Withdraw</a>
+									</div>
+									</c:when>
+									<c:otherwise>
 									<div class="form-input">
 										<a class="btn btn-info btn-block my-4"
 											href="/withdraw?id=${appliedJob.id}">Withdraw</a>
-
 									</div>
+									</c:otherwise>
+									</c:choose>
+									
 								</td>
 							</tr>
 						</c:forEach>
