@@ -1,5 +1,6 @@
 package com.dal.mycareer.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.dal.mycareer.DAO.Interface.IManageStudentDAO;
@@ -38,7 +39,7 @@ public class ManageStudentModel implements IManageStudentModel
     @Override
     public List<Student> getRegisteredStudents()
     {
-        List<Student> regStudents = null;
+        List<Student> regStudents = new ArrayList<>();
         return manageStudentDAO.getRegisteredStudents(regStudents);
     }
     

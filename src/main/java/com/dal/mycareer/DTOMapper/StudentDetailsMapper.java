@@ -10,6 +10,7 @@ import com.dal.mycareer.DTO.Student;
 public class StudentDetailsMapper implements IDTOMapper 
 {
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
+    
     @Override
     public int[] mapObjectToStatement(Object dtoObject, CallableStatement callStatement,
             Map<String, Object> additionalParam) 
@@ -33,7 +34,7 @@ public class StudentDetailsMapper implements IDTOMapper
         }
         catch(Exception ex)
         {
-            
+            logger.error("Error Occurred in mapObjectToStatement for StudentDetails :" + ex.getMessage());
         }
         return outparamIndex;
     }
