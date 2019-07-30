@@ -81,6 +81,8 @@ public class StudentModel implements IStudentModel {
 			try {
 				inputStream = file.getInputStream();
 				int i = dao.applyForJob(inputStream,student.getId(),jobId);
+				appliedJobs = dao.getAppliedJobList(student.getId());
+				model.addAttribute("appliedJobs", appliedJobs);
 				if (i == 1) {
 					logger.debug("Job application successful.");
 				}

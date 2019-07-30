@@ -18,22 +18,26 @@ public class EmployerJobsModel implements IEmployerJobsModel
 	@Autowired
 	private IEmployerJobsDAO employerJobsDAO;
 
-	List<Job> jobs = null; 
-	private final Logger logger = LoggerFactory.getLogger(this.getClass());	
+	private List<Job> jobs = null; 
+	private final Logger logger = LoggerFactory.getLogger(this.getClass());
+		
 	public EmployerJobsModel()
 	{
 
 	}
+
 	public EmployerJobsModel(IEmployerJobsDAO employerJobsDAO)
 	{
 		this.employerJobsDAO = employerJobsDAO;
 	}
+
 	public List<Job> getActiveJobs(String username) 
 	{
 		logger.info("BL: getActiveJobs method started for user-" + username);
 		jobs = new ArrayList<>();
 		return employerJobsDAO.getActiveJobs(username, jobs);
 	}
+	
 	@Override
 	public JobDetails InsertJobDetails(JobDetails postedJobDetails,String currentUser) 
 	{

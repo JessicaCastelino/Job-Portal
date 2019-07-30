@@ -18,15 +18,16 @@ import org.mockito.internal.matchers.apachecommons.ReflectionEquals;
 
 public class EmployerJobsModelTest
 {
-    IEmployerJobsDAO employerJobsMockDAO;
-    IEmployerJobsModel employerJobsModel; 
+    private IEmployerJobsDAO employerJobsMockDAO;
+    private IEmployerJobsModel employerJobsModel; 
    
     @Before
     public void setUp ()
     {
          employerJobsMockDAO = new EmployerJobsDAOMock();
          employerJobsModel = new EmployerJobsModel(employerJobsMockDAO);
-    } 
+    }
+
     @Test
     public void viewPostedJobDetailsTest()
     {
@@ -41,6 +42,7 @@ public class EmployerJobsModelTest
         Job fetchedJobDetails = employerJobsModel.viewPostedJobDetails(1);
         Assert.assertTrue(new ReflectionEquals(expectedJobDetails).matches(fetchedJobDetails));
     }
+
     @Test
     public void updatejobDetailsTest ()
     {
@@ -72,6 +74,7 @@ public class EmployerJobsModelTest
         List<Job> lstActiveJobs = employerJobsModel.getActiveJobs("Steve");
         assertEquals(activeJobsCount,lstActiveJobs.size());
     }
+
     @Test
     public void getClosedJobsTest()
     {
@@ -79,6 +82,7 @@ public class EmployerJobsModelTest
         List<Job> lstClosedJobs = employerJobsModel.getClosedJobs("Michael");
         assertEquals(closedJobsCount,lstClosedJobs.size());
     }
+
     @Test
     public void InsertJobDetailsTest()
     {
@@ -95,11 +99,8 @@ public class EmployerJobsModelTest
         long milliSeconds=System.currentTimeMillis();  
         Date applicationDeadline=new Date(milliSeconds);
         postedJobDetails.setApplicationDeadline(applicationDeadline);
-        //jobDetails.setRequiredCourses(requiredCourses);
-        //jobDetails.setSelectedCourseIds(selectedCourseIds);
         String currentUser = "Steve Balmer";
         JobDetails postedJob = employerJobsModel.InsertJobDetails(postedJobDetails, currentUser);
         Assert.assertTrue("Job Registration failed", postedJob.getId() != 0);
-
     }
 }

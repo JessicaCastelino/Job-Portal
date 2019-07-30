@@ -3,12 +3,16 @@ package com.dal.mycareer.DAO.Impl;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import com.dal.mycareer.DAO.Interface.IPrerequisiteCoursesDAO;
 import com.dal.mycareer.DBConnection.DatabaseConnection;
 import com.dal.mycareer.DTO.PrerequisiteCourses;
+import com.dal.mycareer.JDBC.InsertHandler;
+import com.dal.mycareer.JDBC.JdbcManager;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,7 +22,9 @@ import org.springframework.stereotype.Repository;
 public class PrerequisiteCoursesDAO implements IPrerequisiteCoursesDAO 
 {
 	CallableStatement callStatement = null;
-	private final Logger logger = LoggerFactory.getLogger(this.getClass());	
+	private final Logger logger = LoggerFactory.getLogger(this.getClass());
+	private Map <String, Integer> procResults;
+
 	public List<PrerequisiteCourses> getPrerequisiteCourses(List <PrerequisiteCourses> lstPrerequisteCourses) 
 	{
 		Connection con= null;
@@ -83,22 +89,20 @@ public class PrerequisiteCoursesDAO implements IPrerequisiteCoursesDAO
 		}
 		return isSuccess;
 	}
+
 	public boolean insertJobPrerequisiteCourses(int jobId, List<Integer> prerequisiteCourses)
 	{
 		boolean isQuerySuccess = false;
-		CallableStatement callStatement = null;
-		Connection con= null;
 		logger.info("DL: insertJobRequirement method started");
 		try
 		{
-			con = DatabaseConnection.getConnection();
-			String courses = prerequisiteCourses.stream().map(n-> n.toString())
-			.collect(Collectors.joining(","));
-			callStatement = con.prepareCall("{call insertjobRequirementRecord(?,?)}");
-			callStatement.setString("courseIds",courses); 
-			callStatement.setString("jobRecordId", Integer.toString(jobId));
-			int rowAffected = callStatement.executeUpdate();
-			if (rowAffected > 0)
+			String courses = prerequisiteCourses.stream().map(n-> n.toString()).collect(Collectors.joining(","));
+			Map<String, Object> additionalParam = new HashMap<>();
+			additionalParam.put("courseIds", courses);
+			additionalParam.put("jobRecordId", Integer.toString(jobId));
+			JdbcManager jdbcManager = new InsertHandler(); 
+			procResults = jdbcManager.executeProcedure("{call insertjobRequirementRecord(?,?)}", null, null, additionalParam);
+			if(procResults.get("rowsAffected") > 0) 
 			{
 				isQuerySuccess= true;
 				logger.info( "Records inserted successfully in insertJobRequirement Method");
@@ -107,15 +111,11 @@ public class PrerequisiteCoursesDAO implements IPrerequisiteCoursesDAO
 		 	{
 				isQuerySuccess= false;
 				logger.error( "Error Occurred in insertJobRequirement method while inserting record");
-		 	}	 
-		 }
+		 	}
+		}
 		catch (Exception ex)
 		{
 			logger.error( "Error Occurred in insertJobRequirement :" + ex.getMessage());
-		}
-		finally
-		{
-			DatabaseConnection.closeDatabaseComponents(callStatement);
 		}
 		return isQuerySuccess;
 	}	

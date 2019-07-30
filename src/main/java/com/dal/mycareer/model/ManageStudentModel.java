@@ -30,16 +30,16 @@ public class ManageStudentModel implements IManageStudentModel
     @Override
     public Student RegisterStudent(Student studentDetails) 
 	{
-        Student studDetails = studentDetails;
         IPasswordGenerator passwordGen = new PasswordGenerator();
-        studDetails.setPassword(passwordGen.generatePassword());
+        studentDetails.setPassword(passwordGen.generatePassword());
         return manageStudentDAO.RegisterStudent(studentDetails);
     }
 
     @Override
     public List<Student> getRegisteredStudents()
     {
-        return manageStudentDAO.getRegisteredStudents();
+        List<Student> regStudents = null;
+        return manageStudentDAO.getRegisteredStudents(regStudents);
     }
     
 	@Override
