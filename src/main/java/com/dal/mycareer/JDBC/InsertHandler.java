@@ -19,9 +19,19 @@ public class InsertHandler extends JdbcManager
     public Map <String,Integer> executeProc(CallableStatement callStatement, String mapperObjectName, Object dtoObject, Map<String, Object> additionalParam) 
     {
         IDTOMapper mapper = DTOMapper.dtoMap.get(mapperObjectName);
-        int[] outParams = mapper.mapObjectToStatement(dtoObject, callStatement, additionalParam);
+        int[] outParams = null;
+        
         try
         {
+            if(mapper != null)
+            {
+                outParams = mapper.mapObjectToStatement(dtoObject, callStatement, additionalParam);
+            }
+            else
+            {
+                ProcedureParamLoader paramLoader = new ProcedureParamLoader();
+                paramLoader.fillInputParameters(callStatement, additionalParam);
+            }
            int rowsAffected = callStatement.executeUpdate();
            extractOutputParam(callStatement, outParams, rowsAffected);
         }
@@ -38,12 +48,15 @@ public class InsertHandler extends JdbcManager
         int outParamValue = 0;
         try
         {
-        for(int i = 0; i < outparamIndex.length; i++)
-        {
-            outParamValue = callStatement.getInt(outparamIndex[i]);
-            procResult.put(Integer.toString(outparamIndex[i]), outParamValue);
-        }
-        procResult.put("rowsAffected",rowsAffected);
+            if(outparamIndex != null)
+            {
+                for(int i = 0; i < outparamIndex.length; i++)
+                {
+                    outParamValue = callStatement.getInt(outparamIndex[i]);
+                    procResult.put(Integer.toString(outparamIndex[i]), outParamValue);
+                }
+            }
+            procResult.put("rowsAffected",rowsAffected);
         }
         catch(Exception ex)
         {
