@@ -42,7 +42,7 @@ public class StudentDAO implements IStudentDAO {
 		try {
 			callableStatement = con.prepareCall(CALL_GET_ALL_JOB_LIST);
 			callableStatement.setInt(1, studID);
-			callableStatement.setString(1, type);
+			callableStatement.setString(2, type);
 			boolean results = callableStatement.execute();
 			while (results) {
 				rs = callableStatement.getResultSet();
