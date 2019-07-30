@@ -428,7 +428,7 @@ DELIMITER $$
 CREATE PROCEDURE `updatejobdetails`(
 jobId int,
 jobTitle varchar (50),
-location varchar (50),
+jobLocation varchar (50),
 jobType varchar (50),
 noOfPosition int,
 rateOfPay int,
@@ -440,7 +440,7 @@ BEGIN
 UPDATE `jobs`
 SET
 `jobTitle` = jobTitle,
-`location` = location,
+`location` = jobLocation,
 `openPosition` = noOfPosition,
 `jobType` = jobType,
 `rateOfPay` = rateOfPay,
