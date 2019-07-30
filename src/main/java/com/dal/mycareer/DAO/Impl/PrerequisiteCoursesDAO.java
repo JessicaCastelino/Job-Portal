@@ -18,7 +18,8 @@ import org.springframework.stereotype.Repository;
 public class PrerequisiteCoursesDAO implements IPrerequisiteCoursesDAO 
 {
 	CallableStatement callStatement = null;
-	private final Logger logger = LoggerFactory.getLogger(this.getClass());	
+	private final Logger logger = LoggerFactory.getLogger(this.getClass());
+
 	public List<PrerequisiteCourses> getPrerequisiteCourses(List <PrerequisiteCourses> lstPrerequisteCourses) 
 	{
 		Connection con= null;
@@ -83,6 +84,7 @@ public class PrerequisiteCoursesDAO implements IPrerequisiteCoursesDAO
 		}
 		return isSuccess;
 	}
+
 	public boolean insertJobPrerequisiteCourses(int jobId, List<Integer> prerequisiteCourses)
 	{
 		boolean isQuerySuccess = false;
@@ -108,7 +110,7 @@ public class PrerequisiteCoursesDAO implements IPrerequisiteCoursesDAO
 				isQuerySuccess= false;
 				logger.error( "Error Occurred in insertJobRequirement method while inserting record");
 		 	}	 
-		 }
+		}
 		catch (Exception ex)
 		{
 			logger.error( "Error Occurred in insertJobRequirement :" + ex.getMessage());

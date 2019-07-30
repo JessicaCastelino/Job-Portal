@@ -24,16 +24,19 @@ public class EmployerJobsModel implements IEmployerJobsModel
 	{
 
 	}
+
 	public EmployerJobsModel(IEmployerJobsDAO employerJobsDAO)
 	{
 		this.employerJobsDAO = employerJobsDAO;
 	}
+
 	public List<Job> getActiveJobs(String username) 
 	{
 		logger.info("BL: getActiveJobs method started for user-" + username);
 		jobs = new ArrayList<>();
 		return employerJobsDAO.getActiveJobs(username, jobs);
 	}
+	
 	@Override
 	public JobDetails InsertJobDetails(JobDetails postedJobDetails,String currentUser) 
 	{

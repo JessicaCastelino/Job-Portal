@@ -54,19 +54,17 @@ public class ManageStudentDAO implements IManageStudentDAO {
     }
 
     @Override
-    public List<Student> getRegisteredStudents()
+    public void populateRegisteredStudents(List<Student> regStudents)
     {
-        List<Student> students = new ArrayList<>();
         try 
 		{
 			JdbcManager jdbcManager = new SelectHandler();
-			jdbcManager.executeProcedure("{call fetchRegisteredStudents()}", "studentsMapper", students, null);
+			jdbcManager.executeProcedure("{call fetchRegisteredStudents()}", "studentsMapper", regStudents, null);
 		} 
 		catch (Exception e) 
 		{
 			logger.error("Exception occurred at ManageStudentDAO:getRegisteredStudents " + e.getMessage());
 		}
-        return students;
     }
 
     @Override
@@ -99,32 +97,33 @@ public class ManageStudentDAO implements IManageStudentDAO {
         return isDeleteSuccess;
     }
 
-    public boolean isNewStudent(Student studentDetails)
+    public boolean isNewStudent(Student studentDetails) 
     {
-
         boolean isNewRecord = true;
-        try
-       {
-           JdbcManager jdbcManager = new SelectHandler();
-           Map<String, Object> inputParam = new HashMap<String, Object>();
-           inputParam.put("bnrId", studentDetails.getBannerid());
-           Map <String,Integer> output = jdbcManager.executeProcedure("{call checkDupicateStudent(?)}", null, null, inputParam);
-          if(output !=null && output.size() > 0)
-          {
-            if(output.get("recordExist") > 0)
+        try 
+        {
+            JdbcManager jdbcManager = new SelectHandler();
+            Map<String, Object> inputParam = new HashMap<String, Object>();
+            inputParam.put("bnrId", studentDetails.getBannerid());
+            Map<String, Integer> output = jdbcManager.executeProcedure("{call checkDupicateStudent(?)}", null, null,
+                    inputParam);
+            if (output != null && output.size() > 0) 
             {
-                isNewRecord = false;
+                if (output.get("recordExist") > 0) 
+                {
+                    isNewRecord = false;
+                } 
+                else 
+                {
+                    isNewRecord = true;
+                }
             }
-            else
-            {
-                isNewRecord = true;
-            }
-          }
-       }
-       catch(Exception ex)
-       {
-        logger.error("Error Occurred in isNewStudent for BannerId :" + studentDetails.getBannerid() +"Exception Details-"+ ex.getMessage());
-       }
+        } 
+        catch (Exception ex) 
+        {
+            logger.error("Error Occurred in isNewStudent for BannerId :" + studentDetails.getBannerid()
+                    + "Exception Details-" + ex.getMessage());
+        }
         return isNewRecord;
     }
 }

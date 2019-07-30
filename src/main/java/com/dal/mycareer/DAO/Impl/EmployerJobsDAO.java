@@ -27,34 +27,35 @@ public class EmployerJobsDAO implements IEmployerJobsDAO
 	private IPrerequisiteCoursesDAO preReqDAO;
 	
 	@Override
-	public List<Job> getActiveJobs(String username,List<Job> jobs) 
+	public List<Job> getActiveJobs(String username, List<Job> jobs) 
 	{
 		return fetchJobByStatus(username, true, jobs);
 	}
 	
 	@Override
-	public JobDetails InsertJobDetails(JobDetails postedJobDetails,String currentUser) 
+	public JobDetails InsertJobDetails(JobDetails postedJobDetails, String currentUser) 
 	{
 		logger.info("DL: InsertJobDetails method started");
 		try
 		{
-		Map<String, Object> additionalParam = new HashMap<>();
-		additionalParam.put("emailId", currentUser);
-		JdbcManager jdbcManager = new InsertHandler(); 
-		procResults = jdbcManager.executeProcedure("{call sp_insertjobdetails(?,?,?,?,?,?,?,?,?,?)}", "jobDetailsMapper", postedJobDetails, additionalParam);
-		 if (procResults.get("rowsAffected") > 0)
-		 {
-		 int jobId = procResults.get("10");
-		 preReqDAO.insertJobPrerequisiteCourses(jobId,postedJobDetails.getSelectedCourseIds());
-		 }
-		 else
-		 {
-			logger.error( "Error Occurred in InsertJobDetails while inserting record");
-		 }
-		}
-		catch(Exception ex)
+			Map<String, Object> additionalParam = new HashMap<>();
+			additionalParam.put("emailId", currentUser);
+			JdbcManager jdbcManager = new InsertHandler(); 
+			procResults = jdbcManager.executeProcedure("{call sp_insertjobdetails(?,?,?,?,?,?,?,?,?,?)}",
+						"jobDetailsMapper", postedJobDetails, additionalParam);
+			if (procResults.get("rowsAffected") > 0) 
+			{
+					int jobId = procResults.get("10");
+					preReqDAO.insertJobPrerequisiteCourses(jobId, postedJobDetails.getSelectedCourseIds());
+			} 
+			else 
+			{
+					logger.error("Error Occurred in InsertJobDetails while inserting record");
+			}
+		} 
+		catch (Exception ex) 
 		{
-			logger.error( "Error Occurred in InsertJobDetails :" + ex.getMessage());
+			logger.error("Error Occurred in InsertJobDetails :" + ex.getMessage());
 		}
 		return postedJobDetails;
 	}
