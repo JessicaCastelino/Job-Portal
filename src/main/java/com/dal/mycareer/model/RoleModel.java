@@ -47,12 +47,9 @@ public class RoleModel implements IRoleModel {
 			model.addAttribute(VIEW, REDIRECT_HOMEPAGE);
 		}
 
-		logger.info("Get base page : START");
+		logger.info("Get base page : END");
 		return model;
 	}
 
-	public RoleModel() {
-		super();
-	}
 
 }

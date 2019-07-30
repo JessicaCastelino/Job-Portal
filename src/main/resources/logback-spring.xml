@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
  
-    <property name="LOGS" value="../tmp/logs" />
+    <property name="LOGS" value="./tmp/logs" />
  
     <appender name="Console"
         class="ch.qos.logback.core.ConsoleAppender">
@@ -36,7 +36,7 @@
         class="ch.qos.logback.core.rolling.RollingFileAppender">
         <file>${LOGS}/severe-logger.log</file>
         <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
-            <level>WARN</level>
+            <level>DEBUG</level>
         </filter>
         <encoder
             class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
@@ -55,18 +55,38 @@
         </rollingPolicy>
     </appender>
 
-    <!-- LOG everything at INFO level -->
-    <root level="info">
+    <!-- LOG everything at DEBUG level -->
+    <root level="debug">
         <appender-ref ref="Console" />
     </root>
      
-    <!-- LOG "com.plantplaces.*" at TRACE level -->
-    <logger name="com.dal.mycareer.controller" level="trace" additivity="false">
+    <!-- LOG "com.plantplaces.*" at DEBUG level -->
+    <logger name="com.dal.mycareer.controller" level="debug" additivity="true">
         <appender-ref ref="RollingFile" />
         <appender-ref ref="Console" />
         <appender-ref ref="SevereRollingFile" />
     </logger>
-    <logger name="com.dal.mycareer.DBAConnection" level="trace" additivity="false">
+    <logger name="com.dal.mycareer.DBAConnection" level="debug" additivity="true">
+        <appender-ref ref="RollingFile" />
+        <appender-ref ref="Console" />
+        <appender-ref ref="SevereRollingFile" />
+    </logger>
+    <logger name="com.dal.mycareer.model" level="debug" additivity="true">
+        <appender-ref ref="RollingFile" />
+        <appender-ref ref="Console" />
+        <appender-ref ref="SevereRollingFile" />
+    </logger>
+    <logger name="com.dal.mycareer.DAO.Impl" level="debug" additivity="true">
+        <appender-ref ref="RollingFile" />
+        <appender-ref ref="Console" />
+        <appender-ref ref="SevereRollingFile" />
+    </logger>
+    <logger name="com.dal.mycareer.emaileingne" level="debug" additivity="true">
+        <appender-ref ref="RollingFile" />
+        <appender-ref ref="Console" />
+        <appender-ref ref="SevereRollingFile" />
+    </logger>
+    <logger name="com.dal.mycareer.JDBC" level="debug" additivity="true">
         <appender-ref ref="RollingFile" />
         <appender-ref ref="Console" />
         <appender-ref ref="SevereRollingFile" />
