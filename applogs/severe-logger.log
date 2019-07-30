@@ -1,0 +1,6 @@
+2019-07-30 01:23:05,648 INFO com.dal.mycareer.controller.RequestController [http-nio-8090-exec-2] Routed to Homepage
+2019-07-30 01:23:05,653 INFO com.dal.mycareer.model.RoleModel [http-nio-8090-exec-2] Get base page : START
+2019-07-30 01:23:05,653 INFO com.dal.mycareer.model.RoleModel [http-nio-8090-exec-2] Get base page : END
+2019-07-30 02:02:16,316 INFO com.dal.mycareer.controller.RequestController [http-nio-8090-exec-1] Routed to Homepage
+2019-07-30 02:02:16,319 INFO com.dal.mycareer.model.RoleModel [http-nio-8090-exec-1] Get base page : START
+2019-07-30 02:02:16,324 INFO com.dal.mycareer.model.RoleModel [http-nio-8090-exec-1] Get base page : END
