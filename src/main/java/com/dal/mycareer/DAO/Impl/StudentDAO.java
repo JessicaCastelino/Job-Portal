@@ -131,7 +131,7 @@ public class StudentDAO implements IStudentDAO {
 		con = DatabaseConnection.getConnection();
 		try {
 			callableStatement = con.prepareCall(CALL_APPLY_FOR_JOB);
-			callableStatement.setString(1, inputStream.toString());
+			callableStatement.setBinaryStream(1, inputStream);
 			callableStatement.setString(2, PROPERTY_MAP.get("Submitted").toString());
 			callableStatement.setInt(3, studentId);
 			callableStatement.setInt(4, jobId);
