@@ -5,6 +5,8 @@ import com.dal.mycareer.propertiesparser.PropertiesParser;
 
 public class PasswordGenerator implements IPasswordGenerator {
 	
+	private static final String PWD_MAX_LEN = "pwdMaxLen";
+
 	private static final String PSWD_SYMBOL = "pswdSymbol";
 
 	private static final String PSWD_UPPER_CASE = "pswdUpperCase";
@@ -15,7 +17,7 @@ public class PasswordGenerator implements IPasswordGenerator {
 
 	private static final Properties PROPERTY_MAP = PropertiesParser.getPropertyMap();
 	
-	private static final int MAX_LENGTH = Integer.parseInt(PROPERTY_MAP.getProperty(DIGITS_PROP).toString());
+	private static final int MAX_LENGTH = Integer.parseInt(PROPERTY_MAP.getProperty(PWD_MAX_LEN).toString());
 	
 	private static java.util.Random r = new java.util.Random();
 	
