@@ -103,9 +103,9 @@
 					</div>
 					<br>
 					<div>
-						<label class="col-sm-3">Rate of pay</label> <input type="text" id="txtRateofPay" /> <label
+						<label class="col-sm-3">Rate of pay</label> <input type="number" id="txtRateofPay" /> <label
 							class="col-sm-3">Hours per
-							week</label> <input type="text" id="txtHoursperweek" />
+							week</label> <input type="number" id="txtHoursperweek" />
 					</div>
 					<div>
 						<br> <label class="col-sm-3">Application deadline</label> <input type="text"
