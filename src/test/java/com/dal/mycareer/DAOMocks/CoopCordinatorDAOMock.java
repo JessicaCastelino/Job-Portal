@@ -37,11 +37,7 @@ public class CoopCordinatorDAOMock implements ICoopCordinatorDAO
         recruiter3.setDesignation("CEO");
         lstRecruiters.add(recruiter3);
     }
-    @Override
-    public int approveRequest(int requestId, String username, String password) 
-    {
-        return 0;
-    }
+ 
 
     @Override
     public boolean deleteActiveRecruiter(int employerId) 
@@ -53,24 +49,6 @@ public class CoopCordinatorDAOMock implements ICoopCordinatorDAO
     public List<RecruiterRequest> fetchActiveRecruiters() 
     {
         return lstRecruiters;
-    }
-
-    @Override
-    public RecruiterRequest fetchRecruiter(int reqID) 
-    {
-        return null;
-    }
-
-    @Override
-    public List<RecruiterRequest> fetchRecruiterRequests() 
-    {
-        return null;
-    }
-
-    @Override
-    public int rejectRequest(int requestId) 
-    {
-        return 0;
     }
     
 }

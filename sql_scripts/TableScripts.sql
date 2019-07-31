@@ -155,7 +155,7 @@ DROP procedure IF EXISTS `getAppliedJobList`;
 DELIMITER //
 CREATE PROCEDURE `getAppliedJobList`(IN studentId INT(11))
 BEGIN
-   select * from `CSCI5308_8_DEVINT`.`appliedJobs` aj inner join `CSCI5308_8_DEVINT`.`jobs` j on aj.id=j.id where aj.studentId=studentId;
+   select * from `CSCI5308_8_DEVINT`.`appliedJobs` aj inner join `CSCI5308_8_DEVINT`.`jobs` j on aj.jobId=j.id where aj.studentId=studentId;
 END//
 
 DELIMITER ;
