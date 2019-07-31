@@ -18,15 +18,17 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.dal.mycareer.DAO.Impl.CoopCordinatorDAO;
-import com.dal.mycareer.DAO.Interface.ICoopCordinatorDAO;
+import com.dal.mycareer.DAO.Impl.RecruiterRegistrationRequestDAO;
+import com.dal.mycareer.DAO.Interface.IRecruiterRegistrationRequestDAO;
 import com.dal.mycareer.DTO.RecruiterRequest;
 import com.dal.mycareer.emailengine.EmployerApprovalEmail;
 import com.dal.mycareer.emailengine.EmployerRejectionEmailImpl;
 import com.dal.mycareer.emailengine.IEmployerApprovalEmail;
 import com.dal.mycareer.emailengine.IEmployerRejectionEmail;
 import com.dal.mycareer.imodel.ICoopCoordinatorModel;
+import com.dal.mycareer.imodel.IRecruiterRegistrationRequestModel;
 import com.dal.mycareer.imodel.IRoleModel;
+import com.dal.mycareer.model.RecruiterRegistrationRequestModel;
 import com.dal.mycareer.model.RoleModel;
 import com.dal.mycareer.passwordgenerator.IPasswordGenerator;
 import com.dal.mycareer.passwordgenerator.PasswordGenerator;
@@ -40,7 +42,9 @@ public class CoopCoordinatorController
 	private IRoleModel roleModel = null;
 	@Autowired
 	private ICoopCoordinatorModel coopCordinatorModel;
-	private ICoopCordinatorDAO coopCordinatorDAO=new CoopCordinatorDAO();
+	
+	private IRecruiterRegistrationRequestDAO recruiterRequestDao = new RecruiterRegistrationRequestDAO();
+	private IRecruiterRegistrationRequestModel recruiterRequestModel = new RecruiterRegistrationRequestModel();
 	private IEmployerApprovalEmail approvalEmail = new EmployerApprovalEmail();
 	private IPasswordGenerator passwordGenerator =  new PasswordGenerator();
 	private IEmployerRejectionEmail rejectEmail = new EmployerRejectionEmailImpl();
@@ -52,7 +56,7 @@ public class CoopCoordinatorController
 		  model.addAttribute("reqPage", PROPERTY_MAP.get("adminHome").toString());
 		  model.addAttribute("role", "admin"); roleModel = new RoleModel(); 
 		  model = roleModel.getBasePage(model, request); 
-		  model = coopCordinatorModel.fetchRecruiterRequests(model, request, coopCordinatorDAO);
+		  model = recruiterRequestModel.fetchRecruiterRequests(model, request, recruiterRequestDao);
 		  logger.debug("CoopCoordinatorController: loadAdminHome method: Exit");
 		  return model.asMap().get("view").toString();
 	  }
@@ -65,7 +69,7 @@ public class CoopCoordinatorController
 			model.addAttribute("role", "admin");
 			roleModel = new RoleModel();
 			model = roleModel.getBasePage(model, request);
-			model = coopCordinatorModel.approveRecruiterRequest(model, request, recruiterRequestId, coopCordinatorDAO, approvalEmail, passwordGenerator);
+			model = recruiterRequestModel.approveRecruiterRequest(model, request, recruiterRequestId, recruiterRequestDao, approvalEmail, passwordGenerator);
 			logger.debug("CoopCoordinatorController: approveRequest method: Exit");
 			return model.asMap().get("view").toString();
 		}
@@ -78,7 +82,7 @@ public class CoopCoordinatorController
 			model.addAttribute("role", "admin");
 			roleModel = new RoleModel();
 			model = roleModel.getBasePage(model, request);
-			model = coopCordinatorModel.rejectRecruiterRequest(model, request, recruiterRequestId, coopCordinatorDAO, rejectEmail);
+			model = recruiterRequestModel.rejectRecruiterRequest(model, request, recruiterRequestId, recruiterRequestDao, rejectEmail);
 			logger.debug("CoopCoordinatorController: rejectRequest method: Entered");
 			return model.asMap().get("view").toString();
 		}
