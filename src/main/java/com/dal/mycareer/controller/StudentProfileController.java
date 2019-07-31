@@ -35,7 +35,7 @@ public class StudentProfileController {
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	@RequestMapping(value = "/studentProfile", method = RequestMethod.GET)
-	public String Login(Model model, HttpServletRequest request) {
+	public String getStudentProfile(Model model, HttpServletRequest request) {
 		
 		logger.info("Student controller : START");
 

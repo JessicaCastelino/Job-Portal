@@ -11,18 +11,18 @@ import org.slf4j.LoggerFactory;
 
 public class PropertiesParser {
 
+	private static final ClassLoader CLASS_LOADER = MethodHandles.lookup().lookupClass().getClassLoader();
 	static Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 	private static Properties prop;
 	private static InputStream inputStream;
 
 	static {
-
+		
 		try {
-
 			prop = new Properties();
 			String propFileName = "mycareer.properties";
 
-			inputStream = MethodHandles.lookup().lookupClass().getClassLoader().getResourceAsStream(propFileName);
+			inputStream = CLASS_LOADER.getResourceAsStream(propFileName);
 
 			if (inputStream != null) {
 				prop.load(inputStream);
