@@ -35,16 +35,17 @@ public class StudentApplicationModel implements IStudentApplicationModel
 			IStudentDetailsDAO studentDao, IStudentApplicationDAO studentApplicationDao, IStudentJobsDAO studentJobDao) throws SQLException, IOException
 	{
 		logger.debug("StudentApplicationModel: submitJobApplication method: Entered");
+		int submitted=0;
 		HttpSession session = request.getSession();
 		String userSessionName = (String) session.getAttribute(SESSION_NAME);
 		if(userSessionName!="" && userSessionName!=null)
 		{
 		student = studentDao.getStudentDetails(userSessionName);
 		if (file != null) {
-				int i = studentApplicationDao.submitJobApplication(file,student.getId(),jobId);
+				submitted = studentApplicationDao.submitJobApplication(file,student.getId(),jobId);
 				appliedJobs = studentJobDao.getAppliedJobList(student.getId());
 				model.addAttribute("appliedJobs", appliedJobs);
-				if (i == 1) {
+				if (submitted == 1) {
 					logger.debug("Job application successful.");
 				}
 			}
@@ -58,15 +59,19 @@ public class StudentApplicationModel implements IStudentApplicationModel
 	        throws SQLException
 	{
 		logger.debug("StudentApplicationModel: withdrawJobApplication method: Entered");
+		int withdrawn=0;
 		HttpSession session = request.getSession();
 		String userSessionName = (String) session.getAttribute(SESSION_NAME);
 		if(userSessionName!="" && userSessionName!=null)
 		{
 		student = studentDao.getStudentDetails(userSessionName);
-		studentApplicationDao.withdrawJobApplication(jobId);
+		withdrawn=studentApplicationDao.withdrawJobApplication(jobId);
 		appliedJobs = studentJobDao.getAppliedJobList(student.getId());
 		model.addAttribute("jobs", jobs);
 		model.addAttribute("appliedJobs", appliedJobs);
+		if (withdrawn == 1) {
+			logger.debug("Job application successfully withdrawn.");
+		}
 		}
 		logger.debug("StudentApplicationModel: withdrawJobApplication method: Exit");
 		return model;
@@ -77,13 +82,14 @@ public class StudentApplicationModel implements IStudentApplicationModel
 	        throws SQLException
 	{
 		logger.debug("StudentApplicationModel: checkApplicationExists method: Entered");
+		int exists=0;
 		HttpSession session = request.getSession();
 		String userSessionName = (String) session.getAttribute(SESSION_NAME);
 		if(userSessionName!="" && userSessionName!=null)
 		{
 			student = studentDao.getStudentDetails(userSessionName);
-			int i=studentApplicationDao.checkApplicationExists(student.getId(),jobId);
-			if(i==1)
+			exists=studentApplicationDao.checkApplicationExists(student.getId(),jobId);
+			if(exists==1)
 			{
 				model.addAttribute("reqPage", PropertiesParser.getPropertyMap().get("alreadyApplied").toString());
 			}

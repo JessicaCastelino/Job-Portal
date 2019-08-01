@@ -87,7 +87,7 @@ public class JobsModelTest
 			JobDetails returnedJob= (JobDetails)returnedModel.asMap().get("job");
 			
 			//Assertion
-			Assert.assertEquals(job.getLocation(), "Ontario");
+			Assert.assertEquals(returnedJob.getLocation(), "Ontario");
 			
 		} catch (SQLException e)
 		{
