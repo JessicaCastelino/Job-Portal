@@ -113,12 +113,9 @@ public class StudentApplicationModelTest
 					Model returnedModel = studentApplicationModel.withdrawJobApplication(mockModel, 1, req, mockStudentDao, mockStudentApplicationDao, mockStudentJobDao);
 							
 					//Fetch returned values
-					List<JobDetails> returnedJobs= (List<JobDetails>) returnedModel.asMap().get("jobs");
 					List<AppliedJob> returnedAppliedJobs =(List<AppliedJob>) returnedModel.asMap().get("appliedJobs");
 
-						
 					//Assertion
-					Assert.assertEquals(returnedJobs.get(0).getHourPerWeek().intValue(), 38);
 					Assert.assertEquals(returnedAppliedJobs.get(0).getOrganization(),"RBC");
 				}
 				catch (Exception e)
