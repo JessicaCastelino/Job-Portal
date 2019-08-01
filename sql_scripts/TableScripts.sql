@@ -155,7 +155,7 @@ DROP procedure IF EXISTS `getAppliedJobList`;
 DELIMITER //
 CREATE PROCEDURE `getAppliedJobList`(IN studentId INT(11))
 BEGIN
-   select * from `CSCI5308_8_DEVINT`.`appliedJobs` aj inner join `CSCI5308_8_DEVINT`.`jobs` j on aj.id=j.id where aj.studentId=studentId;
+   select * from `CSCI5308_8_DEVINT`.`appliedJobs` aj inner join `CSCI5308_8_DEVINT`.`jobs` j on aj.jobId=j.id where aj.studentId=studentId;
 END//
 
 DELIMITER ;
@@ -499,5 +499,13 @@ DELIMITER $$
 CREATE  PROCEDURE `checkDupicateStudent`(bnrId varchar(50))
 BEGIN
 SELECT bannerId FROM students where bannerid = bnrId;
+END$$
+DELIMITER ;
+
+DROP procedure IF EXISTS `fetchJob`;
+DELIMITER $$
+CREATE PROCEDURE fetchJob (IN jobId INT(11))
+BEGIN
+SELECT * FROM jobs where id=jobId;
 END$$
 DELIMITER ;

@@ -1,10 +1,12 @@
 package com.dal.mycareer.DAOMocks;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 import com.dal.mycareer.DAO.Interface.IJobsDAO;
 import com.dal.mycareer.DTO.Job;
+import com.dal.mycareer.DTO.JobDetails;
 
 public class JobsDAOMock implements IJobsDAO 
 {
@@ -48,5 +50,12 @@ public class JobsDAOMock implements IJobsDAO
         });
         return isUpdated;
     }
+
+	@Override
+	public JobDetails fetchJob(int jobId) throws SQLException
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 }

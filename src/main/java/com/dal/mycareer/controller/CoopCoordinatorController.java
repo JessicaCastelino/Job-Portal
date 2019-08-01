@@ -18,15 +18,17 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.dal.mycareer.DAO.Impl.CoopCordinatorDAO;
-import com.dal.mycareer.DAO.Interface.ICoopCordinatorDAO;
+import com.dal.mycareer.DAO.Impl.RecruiterRegistrationRequestDAO;
+import com.dal.mycareer.DAO.Interface.IRecruiterRegistrationRequestDAO;
 import com.dal.mycareer.DTO.RecruiterRequest;
 import com.dal.mycareer.emailengine.EmployerApprovalEmail;
 import com.dal.mycareer.emailengine.EmployerRejectionEmailImpl;
 import com.dal.mycareer.emailengine.IEmployerApprovalEmail;
 import com.dal.mycareer.emailengine.IEmployerRejectionEmail;
 import com.dal.mycareer.imodel.ICoopCoordinatorModel;
+import com.dal.mycareer.imodel.IRecruiterRegistrationRequestModel;
 import com.dal.mycareer.imodel.IRoleModel;
+import com.dal.mycareer.model.RecruiterRegistrationRequestModel;
 import com.dal.mycareer.model.RoleModel;
 import com.dal.mycareer.passwordgenerator.IPasswordGenerator;
 import com.dal.mycareer.passwordgenerator.PasswordGenerator;
@@ -35,53 +37,10 @@ import com.dal.mycareer.propertiesparser.PropertiesParser;
 @Controller
 public class CoopCoordinatorController 
 {
-	private static final Properties PROPERTY_MAP = PropertiesParser.getPropertyMap();
 	private static Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
-	private IRoleModel roleModel = null;
+	
 	@Autowired
-	private ICoopCoordinatorModel coopCordinatorModel;
-	private ICoopCordinatorDAO coopCordinatorDAO=new CoopCordinatorDAO();
-	private IEmployerApprovalEmail approvalEmail = new EmployerApprovalEmail();
-	private IPasswordGenerator passwordGenerator =  new PasswordGenerator();
-	private IEmployerRejectionEmail rejectEmail = new EmployerRejectionEmailImpl();
-
-	  @RequestMapping("/adminHome") 
-	  public String loadAdminHome(Model model,HttpServletRequest request) throws SQLException  
-	  { 
-		  logger.debug("CoopCoordinatorController: loadAdminHome method: Entered");
-		  model.addAttribute("reqPage", PROPERTY_MAP.get("adminHome").toString());
-		  model.addAttribute("role", "admin"); roleModel = new RoleModel(); 
-		  model = roleModel.getBasePage(model, request); 
-		  model = coopCordinatorModel.fetchRecruiterRequests(model, request, coopCordinatorDAO);
-		  logger.debug("CoopCoordinatorController: loadAdminHome method: Exit");
-		  return model.asMap().get("view").toString();
-	  }
-	 
-	  @RequestMapping(value = { "/approve" }, method = RequestMethod.GET)
-		public String approveRequest(@RequestParam("id") int recruiterRequestId, Model model, HttpServletRequest request) throws SQLException 
-		{
-		  	logger.debug("CoopCoordinatorController: approveRequest method: Entered");
-			model.addAttribute("reqPage", PROPERTY_MAP.get("adminHome").toString());
-			model.addAttribute("role", "admin");
-			roleModel = new RoleModel();
-			model = roleModel.getBasePage(model, request);
-			model = coopCordinatorModel.approveRecruiterRequest(model, request, recruiterRequestId, coopCordinatorDAO, approvalEmail, passwordGenerator);
-			logger.debug("CoopCoordinatorController: approveRequest method: Exit");
-			return model.asMap().get("view").toString();
-		}
-	  
-	  @RequestMapping(value = { "/reject" }, method = RequestMethod.GET)
-		public String rejectRequest(@RequestParam("id") int recruiterRequestId, Model model, HttpServletRequest request) throws SQLException 
-		{
-		  	logger.debug("CoopCoordinatorController: rejectRequest method: Entered");
-			model.addAttribute("reqPage", PROPERTY_MAP.get("adminHome").toString());
-			model.addAttribute("role", "admin");
-			roleModel = new RoleModel();
-			model = roleModel.getBasePage(model, request);
-			model = coopCordinatorModel.rejectRecruiterRequest(model, request, recruiterRequestId, coopCordinatorDAO, rejectEmail);
-			logger.debug("CoopCoordinatorController: rejectRequest method: Entered");
-			return model.asMap().get("view").toString();
-		}
+	private ICoopCoordinatorModel coopCordinatorModel;  
 
 	@ResponseBody
 	@RequestMapping(value = "/activeRecruiters", method = RequestMethod.GET)
