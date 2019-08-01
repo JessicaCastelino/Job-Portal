@@ -27,7 +27,7 @@ public class RecruiterRegistrationRequestDAO implements IRecruiterRegistrationRe
 	@Override
 	public List<RecruiterRequest> fetchAllRecruiterRequests() throws SQLException
 	{
-		logger.debug("CoopCoordinatorDAO: fetchRecruiterRequests method: Entered");
+		logger.debug("RecruiterRegistrationRequestDAO: fetchAllRecruiterRequests method: Entered");
 		con = DatabaseConnection.getConnection();
 		RecruiterRequest recruiterRequest = null;
 		ResultSet rs = null;
@@ -57,13 +57,13 @@ public class RecruiterRegistrationRequestDAO implements IRecruiterRegistrationRe
 		} 
 		catch (SQLException ex) 
 		{
-			logger.error("SQLException Occurred in CoopCoordinatorDAO: fetchRecruiterRequests method:" + ex.getMessage());
+			logger.error("SQLException Occurred in RecruiterRegistrationRequestDAO: fetchAllRecruiterRequests method:" + ex.getMessage());
 			throw new SQLException("Error in fetching recruiter requests.");
 		} 
 		finally 
 		{
 			DatabaseConnection.closeDatabaseComponents(rs, callableStatement, con);
-			logger.debug("CoopCoordinatorDAO: fetchRecruiterRequests method: Exit");
+			logger.debug("RecruiterRegistrationRequestDAO: fetchAllRecruiterRequests method: Exit");
 		}
 
 
@@ -73,7 +73,7 @@ public class RecruiterRegistrationRequestDAO implements IRecruiterRegistrationRe
 	@Override
 	public RecruiterRequest fetchRecruiterRequest(int reqID) throws SQLException
 	{
-		logger.debug("CoopCoordinatorDAO: fetchRecruiter method: Entered");
+		logger.debug("RecruiterRegistrationRequestDAO: fetchRecruiter method: Entered");
 		con = DatabaseConnection.getConnection();
 		RecruiterRequest recruiterRequest = null;
 		ResultSet rs = null;
@@ -97,20 +97,20 @@ public class RecruiterRegistrationRequestDAO implements IRecruiterRegistrationRe
 		} 
 		catch (SQLException e) 
 		{
-			logger.error("SQLException Occurred in CoopCoordinatorDAO: fetchRecruiter method:" + e.getMessage());
+			logger.error("SQLException Occurred in RecruiterRegistrationRequestDAO: fetchRecruiter method:" + e.getMessage());
 			throw new SQLException("Error while fetching the employer details.");
 		} 
 		finally 
 		{
 			DatabaseConnection.closeDatabaseComponents(rs, callableStatement, con);
-			logger.debug("CoopCoordinatorDAO: fetchRecruiter method: Exit");
+			logger.debug("RecruiterRegistrationRequestDAO: fetchRecruiter method: Exit");
 		}
 	}
 
 	@Override
 	public int approveRequest(int requestId, String username, String password) throws SQLException
 	{
-		logger.debug("CoopCoordinatorDAO: approveRequest method: Entered");
+		logger.debug("RecruiterRegistrationRequestDAO: approveRequest method: Entered");
 		con = DatabaseConnection.getConnection();
 		try 
 		{
@@ -124,20 +124,20 @@ public class RecruiterRegistrationRequestDAO implements IRecruiterRegistrationRe
 		} 
 		catch (SQLException ex) 
 		{
-			logger.error("SQLException Occurred in CoopCoordinatorDAO: approveRequest method:" + ex.getMessage());
+			logger.error("SQLException Occurred in RecruiterRegistrationRequestDAO: approveRequest method:" + ex.getMessage());
 			throw new SQLException("Error while approving employer's request.");
 		} 
 		finally 
 		{
 			DatabaseConnection.closeDatabaseComponents(callableStatement);
-			logger.debug("CoopCoordinatorDAO: approveRequest method: Exit");
+			logger.debug("RecruiterRegistrationRequestDAO: approveRequest method: Exit");
 		}
 	}
 
 	@Override
 	public int rejectRequest(int requestId) throws SQLException
 	{
-		logger.debug("CoopCoordinatorDAO: rejectRequest method: Entered");
+		logger.debug("RecruiterRegistrationRequestDAO: rejectRequest method: Entered");
 		con = DatabaseConnection.getConnection();
 		try 
 		{
@@ -149,13 +149,13 @@ public class RecruiterRegistrationRequestDAO implements IRecruiterRegistrationRe
 		} 
 		catch (SQLException e) 
 		{
-			logger.error("SQLException Occurred in CoopCoordinatorDAO: rejectRequest method:" + e.getMessage());
+			logger.error("SQLException Occurred in RecruiterRegistrationRequestDAO: rejectRequest method:" + e.getMessage());
 			throw new SQLException("Error while rejecting the employer's request.");
 		} 
 		finally 
 		{
 			DatabaseConnection.closeDatabaseComponents(callableStatement);
-			logger.debug("CoopCoordinatorDAO: rejectRequest method: Exit");
+			logger.debug("RecruiterRegistrationRequestDAO: rejectRequest method: Exit");
 		}
 	}
 

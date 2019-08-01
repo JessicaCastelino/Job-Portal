@@ -35,10 +35,10 @@ public class RecruiterRegistrationRequestModelTest
 	public void testFetchRecruiterRequests()
 	{
 		//Creating mock objects
-				HttpSession mockSession = mock(HttpSession.class);
-				HttpServletRequest req = mock(HttpServletRequest.class);
-				Model mockModel =  new ExtendedModelMap();
-				recruiterRequestDao = mock(RecruiterRegistrationRequestDAO.class);
+		HttpSession mockSession = mock(HttpSession.class);
+		HttpServletRequest req = mock(HttpServletRequest.class);
+		Model mockModel =  new ExtendedModelMap();
+		recruiterRequestDao = mock(RecruiterRegistrationRequestDAO.class);
 				
 				//Data Preparation
 				List<RecruiterRequest> requests = new ArrayList<RecruiterRequest>();
@@ -69,7 +69,7 @@ public class RecruiterRegistrationRequestModelTest
 				}
 				catch (Exception e)
 				{
-					logger.debug("Error during execution of CoopCoordinatorModelTest: testFetchRecruiterRequests()");
+					logger.debug("Error during execution of RecruiterRegistrationRequestModelTest: testFetchRecruiterRequests()");
 				}	
 	}
 
@@ -116,7 +116,7 @@ public class RecruiterRegistrationRequestModelTest
 				}
 				catch (Exception e)
 				{
-					logger.debug("Error during execution of CoopCoordinatorModelTest: testApproveRecruiterRequest()");
+					logger.debug("Error during execution of RecruiterRegistrationRequestModelTest: testApproveRecruiterRequest()");
 				}	
 	}
 
@@ -162,7 +162,7 @@ public class RecruiterRegistrationRequestModelTest
 				}
 				catch (Exception e)
 				{
-					logger.debug("Error during execution of CoopCoordinatorModelTest: testRejectRecruiterRequest()");
+					logger.debug("Error during execution of RecruiterRegistrationRequestModelTest: testRejectRecruiterRequest()");
 				}		
 	}
 

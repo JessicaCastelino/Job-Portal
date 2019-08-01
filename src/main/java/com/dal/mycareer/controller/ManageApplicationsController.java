@@ -2,6 +2,7 @@ package com.dal.mycareer.controller;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.sql.SQLException;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -43,17 +44,18 @@ public class ManageApplicationsController {
 	
 	
 	@RequestMapping(value = "/downloadFile", method = RequestMethod.GET)
-	public void downloadFile(ModelMap model, @RequestParam int id, HttpServletResponse response) {
-		
+	public void downloadApplicationDocument(ModelMap model, @RequestParam int id, HttpServletResponse response) throws SQLException, IOException {
 		try {
+			  logger.debug("ManageApplicationsController: downloadApplicationDocument method: Entered");
 		      ManageApplicationsDAO dao=new ManageApplicationsDAO();
 		      InputStream is = dao.fetchDocument(id);
-		      // copy it to response's OutputStream
+		      // copy InputStream to response's OutputStream
 		      org.apache.commons.io.IOUtils.copy(is, response.getOutputStream());
+		      logger.debug("ManageApplicationsController: downloadApplicationDocument method: Exit");
 		      response.flushBuffer();
 		    } catch (IOException ex) {
-		      logger.error("Error writing file to output stream. Filename was '{}'");
-		      throw new RuntimeException("IOError writing file to output stream");
+		      logger.error("Error in ManageApplicationsController: downloadApplicationDocument method while writing file to output stream for job application with ID: "+id);
+		      throw new IOException("Error while downloading document.");
 		    }
 		
 	}
