@@ -29,13 +29,22 @@ import com.dal.mycareer.propertiesparser.PropertiesParser;
 @Controller
 public class StudentJobsController {
 	private static final Properties PROPERTY_MAP = PropertiesParser.getPropertyMap();
-	private final Logger logger = LoggerFactory.getLogger(this.getClass());
-	private IRoleModel roleModel = null;
-	private IStudentJobsModel studentModel = null;
-	private IStudentDetailsDAO studentDetailsDao = new StudentDetailsDAO();
-	private IStudentJobsDAO studentJobsDao = new StudentJobsDAO();
-	IStudentApplicationDAO studentApplicationDao = new StudentApplicationDAO();
 	private static final String FILTER = "filter";
+	private final Logger logger = LoggerFactory.getLogger(this.getClass());
+	private IRoleModel roleModel;
+	private IStudentJobsModel studentModel;
+	private IStudentDetailsDAO studentDetailsDao;
+	private IStudentJobsDAO studentJobsDao;
+	IStudentApplicationDAO studentApplicationDao;
+
+	public StudentJobsController()
+	{
+		roleModel = new RoleModel();
+		studentModel = new StudentJobsModel();
+		studentDetailsDao = new StudentDetailsDAO();
+		studentJobsDao = new StudentJobsDAO();
+		studentApplicationDao = new StudentApplicationDAO();
+	}
 
 	@RequestMapping(value = { "/studentHome" }, method = RequestMethod.GET)
 	public String fetchAllStudentJobs(Model model, HttpServletRequest request) throws SQLException {
