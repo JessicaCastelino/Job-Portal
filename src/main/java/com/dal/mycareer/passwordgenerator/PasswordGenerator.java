@@ -49,21 +49,17 @@ public class PasswordGenerator implements IPasswordGenerator {
 	public String generatePassword() {
 		 StringBuilder sb = new StringBuilder();
 		 
-	        // get at least one lowercase letter
 	        sb.append(locaseArray[r.nextInt(locaseArray.length)]);
 	 
-	        // get at least one uppercase letter
 	        sb.append(upcaseArray[r.nextInt(upcaseArray.length)]);
 	 
-	        // get at least one digit
 	        sb.append(digitsArray[r.nextInt(digitsArray.length)]);
 	 
-	        // get at least one symbol
 	        sb.append(symbolsArray[r.nextInt(symbolsArray.length)]);
 	        
 	        if(MAX_LENGTH < DEF_LEN) {
 	        	MAX_LENGTH = DEF_LEN;
-	        }
+	        } 
 	 
 	        // fill in remaining with random letters
 	        for (int i = 0; i < MAX_LENGTH-4; i++) {
