@@ -581,3 +581,36 @@
 2019-08-01 20:11:49,210 DEBUG com.dal.mycareer.DAO.Impl.StudentJobsDAO [http-nio-8090-exec-6] StudentJobsDAO: getAppliedJobList method: Exit
 2019-08-01 20:11:49,212 DEBUG com.dal.mycareer.model.StudentModel [http-nio-8090-exec-6] StudentModel: fetchJobs method: Exit
 2019-08-01 20:11:49,213 DEBUG com.dal.mycareer.controller.StudentController [http-nio-8090-exec-6] StudentController: loadStudentHome method: Exit
+2019-08-01 20:53:23,107 INFO com.dal.mycareer.model.JobsModel [main] DL: updateJobStatus method started
+2019-08-01 20:53:27,009 INFO com.dal.mycareer.model.JobsModel [main] DL: updateJobStatus method started
+2019-08-01 20:53:28,813 DEBUG com.dal.mycareer.model.JobsModel [main] JobsModel: fetchJob method: Entered
+2019-08-01 20:53:28,814 DEBUG com.dal.mycareer.model.JobsModel [main] JobsModel: fetchJob method: Exit
+2019-08-01 20:53:29,043 DEBUG com.dal.mycareer.model.StudentJobsModel [main] StudentModel: fetchJobs method: Entered
+2019-08-01 20:53:29,044 DEBUG com.dal.mycareer.model.StudentJobsModel [main] StudentModel: fetchJobs method: Exit
+2019-08-01 20:53:29,045 DEBUG com.dal.mycareer.model.StudentJobsModel [main] StudentModel: filterStudentSpecificJobList method: Entered
+2019-08-01 20:53:29,045 DEBUG com.dal.mycareer.model.StudentJobsModel [main] StudentModel: filterStudentSpecificJobList method: Exit
+2019-08-01 20:53:29,059 INFO com.dal.mycareer.model.StudentProfileModel [main] Get student profile : START
+2019-08-01 20:53:29,060 INFO com.dal.mycareer.model.StudentProfileModel [main] Get student profile : END
+2019-08-01 20:53:29,080 DEBUG com.dal.mycareer.model.RecruiterRegistrationRequestModel [main] RecruiterRegistrationRequestModel: fetchRecruiterRequests method: Entered
+2019-08-01 20:53:29,082 DEBUG com.dal.mycareer.model.RecruiterRegistrationRequestModel [main] RecruiterRegistrationRequestModel: fetchRecruiterRequests method: Exit
+2019-08-01 20:53:29,104 DEBUG com.dal.mycareer.model.RecruiterRegistrationRequestModel [main] RecruiterRegistrationRequestModel: approveRecruiterRequest method: Entered
+2019-08-01 20:53:29,104 DEBUG com.dal.mycareer.model.RecruiterRegistrationRequestModel [main] RecruiterRegistrationRequestModel: approveRecruiterRequest method: Exit
+2019-08-01 20:53:29,114 DEBUG com.dal.mycareer.model.RecruiterRegistrationRequestModel [main] RecruiterRegistrationRequestModel: rejectRecruiterRequest method: Entered
+2019-08-01 20:53:29,115 DEBUG com.dal.mycareer.model.RecruiterRegistrationRequestModel [main] Recruiter request is rejected.
+2019-08-01 20:53:29,115 DEBUG com.dal.mycareer.model.RecruiterRegistrationRequestModel [main] RecruiterRegistrationRequestModel: rejectRecruiterRequest method: Exit
+2019-08-01 20:53:29,131 DEBUG com.dal.mycareer.model.StudentApplicationModel [main] StudentApplicationModel: withdrawJobApplication method: Entered
+2019-08-01 20:53:29,132 DEBUG com.dal.mycareer.model.StudentApplicationModel [main] Job application successfully withdrawn.
+2019-08-01 20:53:29,132 DEBUG com.dal.mycareer.model.StudentApplicationModel [main] StudentApplicationModel: withdrawJobApplication method: Exit
+2019-08-01 20:53:29,152 DEBUG com.dal.mycareer.model.StudentApplicationModel [main] StudentApplicationModel: submitJobApplication method: Entered
+2019-08-01 20:53:29,154 DEBUG com.dal.mycareer.model.StudentApplicationModel [main] Job application successful.
+2019-08-01 20:53:29,154 DEBUG com.dal.mycareer.model.StudentApplicationModel [main] StudentApplicationModel: submitJobApplication method: Exit
+2019-08-01 20:53:29,155 DEBUG com.dal.mycareer.model.StudentApplicationModel [main] StudentApplicationModel: checkApplicationExists method: Entered
+2019-08-01 20:53:29,156 DEBUG com.dal.mycareer.model.StudentApplicationModel [main] StudentApplicationModel: checkApplicationExists method: Exit
+2019-08-01 20:53:29,172 INFO com.dal.mycareer.model.RoleModel [main] Get base page : START
+2019-08-01 20:53:29,173 INFO com.dal.mycareer.model.RoleModel [main] Get base page : END
+2019-08-01 20:53:29,176 INFO com.dal.mycareer.model.EmployerJobsModel [main] BL: viewPostedJobDetails method started for jobId-1
+2019-08-01 20:53:29,179 INFO com.dal.mycareer.model.EmployerJobsModel [main] BL: updateJobDetails method started for jobId-2
+2019-08-01 20:53:29,181 INFO com.dal.mycareer.model.EmployerJobsModel [main] BL: viewPostedJobDetails method started for jobId-2
+2019-08-01 20:53:29,182 INFO com.dal.mycareer.model.EmployerJobsModel [main] BL: getActiveJobs method started for user-Steve
+2019-08-01 20:53:29,183 INFO com.dal.mycareer.model.EmployerJobsModel [main] BL: getClosedJobs method started for user-Michael
+2019-08-01 20:53:29,183 INFO com.dal.mycareer.model.EmployerJobsModel [main] BL: InsertJobDetails method started for user-Steve Balmer
