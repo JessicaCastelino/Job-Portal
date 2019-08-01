@@ -24,34 +24,7 @@
     
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-    <style>
-       /*  table {
-            border-collapse: collapse;
-            width: 100%;
-            border: 1px solid #ddd;
-        }
 
-        .tablehdr {
-            background-color: midnightblue;
-            color: white;
-        }
-
-        table th,
-        table td {
-            text-align: left;
-            padding: 12px;
-        } */
-
-       /*  .reopenJobBtn,
-        .viewApplicantsBtn {
-            background-color: #009933;
-            border-color: #00802b;
-            border-radius: 7px;
-            height: 60px;
-            color: white;
-            width: 100px;
-        } */
-    </style>
 </head>
 
 <body>

@@ -29,7 +29,7 @@ public class RecruiterRegistrationRequestModel implements IRecruiterRegistration
 	public Model fetchRecruiterRequests(Model model, HttpServletRequest request, IRecruiterRegistrationRequestDAO recruiterRequestDao)
 	        throws SQLException
 	{
-		logger.debug("CoopCoordinatorModel: fetchRecruiterRequests method: Entered");
+		logger.debug("RecruiterRegistrationRequestModel: fetchRecruiterRequests method: Entered");
 		HttpSession session = request.getSession();
 		String userSessionName = (String) session.getAttribute(SESSION_NAME);
 		if (userSessionName != "" && userSessionName != null) 
@@ -38,7 +38,7 @@ public class RecruiterRegistrationRequestModel implements IRecruiterRegistration
 			requests = recruiterRequestDao.fetchAllRecruiterRequests();	
 			model.addAttribute("recruiterRequests", requests);
 		}
-		logger.debug("CoopCoordinatorModel: fetchRecruiterRequests method: Exit");
+		logger.debug("RecruiterRegistrationRequestModel: fetchRecruiterRequests method: Exit");
 		return model;
 	}
 
@@ -47,7 +47,7 @@ public class RecruiterRegistrationRequestModel implements IRecruiterRegistration
 			IRecruiterRegistrationRequestDAO recruiterRequestDao, IEmployerApprovalEmail approvalEmail,
 	        IPasswordGenerator passwordGenerator) throws SQLException
 	{
-		logger.debug("CoopCoordinatorModel: approveRecruiterRequest method: Entered");
+		logger.debug("RecruiterRegistrationRequestModel: approveRecruiterRequest method: Entered");
 		HttpSession session = request.getSession();
 		String userSessionName = (String) session.getAttribute(SESSION_NAME);
 		
@@ -63,7 +63,7 @@ public class RecruiterRegistrationRequestModel implements IRecruiterRegistration
 			model.addAttribute("isValid", "approve");
 			model.addAttribute("recruiterRequests", requests);
 		}
-		logger.debug("CoopCoordinatorModel: approveRecruiterRequest method: Exit");
+		logger.debug("RecruiterRegistrationRequestModel: approveRecruiterRequest method: Exit");
 		return model;
 	}
 
@@ -71,7 +71,7 @@ public class RecruiterRegistrationRequestModel implements IRecruiterRegistration
 	public Model rejectRecruiterRequest(Model model, HttpServletRequest request, int recruiterRequestId,
 			IRecruiterRegistrationRequestDAO recruiterRequestDao, IEmployerRejectionEmail rejectEmail) throws SQLException
 	{
-		logger.debug("CoopCoordinatorModel: rejectRecruiterRequest method: Entered");
+		logger.debug("RecruiterRegistrationRequestModel: rejectRecruiterRequest method: Entered");
 		HttpSession session = request.getSession();
 		String userSessionName = (String) session.getAttribute(SESSION_NAME);
 		if (userSessionName != "" && userSessionName != null) 
@@ -84,7 +84,7 @@ public class RecruiterRegistrationRequestModel implements IRecruiterRegistration
 			model.addAttribute("isValid", "reject");
 			model.addAttribute("recruiterRequests", requests);
 		}
-		logger.debug("CoopCoordinatorModel: rejectRecruiterRequest method: Exit");
+		logger.debug("RecruiterRegistrationRequestModel: rejectRecruiterRequest method: Exit");
 		return model;
 	}
 

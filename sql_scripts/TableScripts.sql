@@ -501,3 +501,11 @@ BEGIN
 SELECT bannerId FROM students where bannerid = bnrId;
 END$$
 DELIMITER ;
+
+DROP procedure IF EXISTS `fetchJob`;
+DELIMITER $$
+CREATE PROCEDURE fetchJob (IN jobId INT(11))
+BEGIN
+SELECT * FROM jobs where id=jobId;
+END$$
+DELIMITER ;
