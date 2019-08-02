@@ -14,23 +14,25 @@ import com.dal.mycareer.DAO.Interface.IStudentJobsDAO;
 import com.dal.mycareer.DBConnection.DatabaseConnection;
 import com.dal.mycareer.DTO.AppliedJob;
 import com.dal.mycareer.DTO.JobDetails;
+import com.dal.mycareer.configlogic.ConfigLogicClassLoader;
 
 public class StudentJobsDAO implements IStudentJobsDAO {
 	private static final String CALL_GET_APPLIED_JOB_LIST = "{call getAppliedJobList(?)}";
-	private static final String CALL_GET_ALL_JOB_LIST = "{call getAllJobList(?,?)}";
 	private Connection con = null;
 	private CallableStatement callableStatement = null;
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());
-	
+
 	@Override
 	public List<JobDetails> getAllJobList(int studID, String type) throws SQLException {
+		
 		logger.debug("StudentJobsDAO: getAllJobList method: Entered");
 		con = DatabaseConnection.getConnection();
+		
 		JobDetails job = null;
 		ResultSet rs = null;
 		List<JobDetails> jobs = new ArrayList<JobDetails>();
 		try {
-			callableStatement = con.prepareCall(CALL_GET_ALL_JOB_LIST);
+			callableStatement = con.prepareCall(ConfigLogicClassLoader.getJobClass());
 			callableStatement.setInt(1, studID);
 			callableStatement.setString(2, type);
 			boolean results = callableStatement.execute();
@@ -40,7 +42,7 @@ public class StudentJobsDAO implements IStudentJobsDAO {
 				while (rs.next()) {
 					job = new JobDetails();
 					job.setId(rs.getInt(1));
-					logger.debug("ID: "+job.getId());
+					logger.debug("ID: " + job.getId());
 					job.setJobTitle(rs.getString(2));
 					job.setLocation(rs.getString(3));
 					job.setNoOfPosition((rs.getInt(4)));
@@ -57,12 +59,12 @@ public class StudentJobsDAO implements IStudentJobsDAO {
 			}
 			return jobs;
 		} catch (SQLException e) {
-			logger.error( "SQLException Occurred in StudentJobsDAO: getAllJobList method:" + e.getMessage());
+			logger.error("SQLException Occurred in StudentJobsDAO: getAllJobList method:" + e.getMessage());
 			throw new SQLException("Error in fetching the job list.");
 		} finally {
-				DatabaseConnection.closeDatabaseComponents(rs, callableStatement, con);
-				logger.debug("StudentJobsDAO: getAllJobList method: Exit");
-			
+			DatabaseConnection.closeDatabaseComponents(rs, callableStatement, con);
+			logger.debug("StudentJobsDAO: getAllJobList method: Exit");
+
 		}
 	}
 
@@ -71,7 +73,7 @@ public class StudentJobsDAO implements IStudentJobsDAO {
 		logger.debug("StudentJobsDAO: getAppliedJobList method: Entered");
 		con = DatabaseConnection.getConnection();
 		AppliedJob job = null;
-		ResultSet rs=null;
+		ResultSet rs = null;
 		List<AppliedJob> appliedJobs = new ArrayList<AppliedJob>();
 		try {
 			callableStatement = con.prepareCall(CALL_GET_APPLIED_JOB_LIST);
@@ -83,7 +85,7 @@ public class StudentJobsDAO implements IStudentJobsDAO {
 				while (rs.next()) {
 					job = new AppliedJob();
 					job.setId(Integer.toString(rs.getInt(1)));
-					logger.debug("ID: "+job.getId());
+					logger.debug("ID: " + job.getId());
 					job.setDocument(rs.getBinaryStream(2));
 					job.setApplicationStatus(rs.getString(3));
 					job.setStudentId(Integer.toString(rs.getInt(4)));
@@ -107,9 +109,9 @@ public class StudentJobsDAO implements IStudentJobsDAO {
 			}
 			return appliedJobs;
 		} catch (SQLException e) {
-			logger.error( "SQLException Occurred in StudentJobsDAO: getAppliedJobList method:" + e.getMessage());
+			logger.error("SQLException Occurred in StudentJobsDAO: getAppliedJobList method:" + e.getMessage());
 			throw new SQLException("Error in fetching the applied job list.");
-		}  finally {
+		} finally {
 			DatabaseConnection.closeDatabaseComponents(rs, callableStatement, con);
 			logger.debug("StudentJobsDAO: getAppliedJobList method: Exit");
 		}
