@@ -21,6 +21,7 @@ public class StudentJobsDAO implements IStudentJobsDAO {
 	private Connection con = null;
 	private CallableStatement callableStatement = null;
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());
+	ConfigLogicClassLoader config = new ConfigLogicClassLoader();
 
 	@Override
 	public List<JobDetails> getAllJobList(int studID, String type) throws SQLException {
@@ -32,7 +33,7 @@ public class StudentJobsDAO implements IStudentJobsDAO {
 		ResultSet rs = null;
 		List<JobDetails> jobs = new ArrayList<JobDetails>();
 		try {
-			callableStatement = con.prepareCall(ConfigLogicClassLoader.getJobClass());
+			callableStatement = con.prepareCall(config.getJobClass());
 			callableStatement.setInt(1, studID);
 			boolean results = callableStatement.execute();
 			logger.debug("Jobs fetched:");
