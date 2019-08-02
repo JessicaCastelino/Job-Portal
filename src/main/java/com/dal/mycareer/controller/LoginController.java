@@ -39,7 +39,7 @@ public class LoginController {
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public String Login(@Valid @ModelAttribute(USER_LOGIN) UserLogin ulogin, BindingResult result, Model model,
+	public String login(@Valid @ModelAttribute(USER_LOGIN) UserLogin ulogin, BindingResult result, Model model,
 			HttpServletRequest request) {
 
 		logger.info("Login request : Start");

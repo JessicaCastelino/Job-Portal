@@ -5,6 +5,18 @@ import com.dal.mycareer.propertiesparser.PropertiesParser;
 
 public class PasswordGenerator implements IPasswordGenerator {
 	
+	private static final String DEFAULT_SYMBOL = "&*";
+
+	private static final String DEFAULT_UPPER_CASE = "ABC";
+
+	private static final String DEFAULT_LOWER_CASE = "abc";
+
+	private static final String DEFAULT_NUM = "1234";
+
+	private static final String DEFAULT_LEN = "8";
+
+	private static final int DEF_LEN = Integer.parseInt(DEFAULT_LEN);
+
 	private static final String PWD_MAX_LEN = "pwdMaxLen";
 
 	private static final String PSWD_SYMBOL = "pswdSymbol";
@@ -17,15 +29,15 @@ public class PasswordGenerator implements IPasswordGenerator {
 
 	private static final Properties PROPERTY_MAP = PropertiesParser.getPropertyMap();
 	
-	private static final int MAX_LENGTH = Integer.parseInt(PROPERTY_MAP.getProperty(PWD_MAX_LEN).toString());
+	private int MAX_LENGTH = Integer.parseInt(PROPERTY_MAP.getProperty(PWD_MAX_LEN, DEFAULT_LEN).toString());
 	
 	private static java.util.Random r = new java.util.Random();
 	
     
-    private static final String DIGITS = PROPERTY_MAP.getProperty(DIGITS_PROP).toString();
-    private static final String LOCASE_CHARACTERS = PROPERTY_MAP.getProperty(PSWD_LOWER_CASE).toString();
-    private static final String UPCASE_CHARACTERS = PROPERTY_MAP.getProperty(PSWD_UPPER_CASE).toString();
-    private static final String SYMBOLS = PROPERTY_MAP.getProperty(PSWD_SYMBOL).toString();
+    private static final String DIGITS = PROPERTY_MAP.getProperty(DIGITS_PROP,DEFAULT_NUM).toString();
+    private static final String LOCASE_CHARACTERS = PROPERTY_MAP.getProperty(PSWD_LOWER_CASE,DEFAULT_LOWER_CASE).toString();
+    private static final String UPCASE_CHARACTERS = PROPERTY_MAP.getProperty(PSWD_UPPER_CASE,DEFAULT_UPPER_CASE).toString();
+    private static final String SYMBOLS = PROPERTY_MAP.getProperty(PSWD_SYMBOL,DEFAULT_SYMBOL).toString();
     private static final String ALL = DIGITS + LOCASE_CHARACTERS + UPCASE_CHARACTERS + SYMBOLS;
     private static final char[] upcaseArray = UPCASE_CHARACTERS.toCharArray();
     private static final char[] locaseArray = LOCASE_CHARACTERS.toCharArray();
@@ -37,20 +49,20 @@ public class PasswordGenerator implements IPasswordGenerator {
 	public String generatePassword() {
 		 StringBuilder sb = new StringBuilder();
 		 
-	        // get at least one lowercase letter
 	        sb.append(locaseArray[r.nextInt(locaseArray.length)]);
 	 
-	        // get at least one uppercase letter
 	        sb.append(upcaseArray[r.nextInt(upcaseArray.length)]);
 	 
-	        // get at least one digit
 	        sb.append(digitsArray[r.nextInt(digitsArray.length)]);
 	 
-	        // get at least one symbol
 	        sb.append(symbolsArray[r.nextInt(symbolsArray.length)]);
+	        
+	        if(MAX_LENGTH < DEF_LEN) {
+	        	MAX_LENGTH = DEF_LEN;
+	        } 
 	 
 	        // fill in remaining with random letters
-	        for (int i = 0; i < MAX_LENGTH - 4; i++) {
+	        for (int i = 0; i < MAX_LENGTH-4; i++) {
 	            sb.append(allArray[r.nextInt(allArray.length)]);
 	        }
 

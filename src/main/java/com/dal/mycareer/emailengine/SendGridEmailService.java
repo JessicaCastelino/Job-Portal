@@ -16,7 +16,8 @@ import com.sendgrid.SendGrid;
 
 public class SendGridEmailService implements EmailService {
 
-	private final Logger LOGGER = LoggerFactory.getLogger(this.getClass());
+	private static final String REPLYTO = "replyto";
+	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 	private SendGrid sendGridClient;
 
 	public SendGridEmailService() {
@@ -27,14 +28,14 @@ public class SendGridEmailService implements EmailService {
 	public void sendHTML(String to, String subject, String body) {
 		Response response = sendEmail(to, subject, new Content("text/html", body));
 
-		LOGGER.debug("Status Code: " + response.getStatusCode() + ", Body: " + response.getBody() + ", Headers: "
+		logger.debug("Status Code: " + response.getStatusCode() + ", Body: " + response.getBody() + ", Headers: "
 				+ response.getHeaders());
 	}
 
 	private Response sendEmail(String to, String subject, Content content) {
-		Mail mail = new Mail(new Email(PropertiesParser.getPropertyMap().get("replyto").toString()), subject,
+		Mail mail = new Mail(new Email(PropertiesParser.getPropertyMap().get(REPLYTO).toString()), subject,
 				new Email(to), content);
-		mail.setReplyTo(new Email(PropertiesParser.getPropertyMap().get("replyto").toString()));
+		mail.setReplyTo(new Email(PropertiesParser.getPropertyMap().get(REPLYTO).toString()));
 		Request request = new Request();
 		Response response = null;
 		try {
@@ -43,8 +44,8 @@ public class SendGridEmailService implements EmailService {
 			request.setBody(mail.build());
 			response = this.sendGridClient.api(request);
 		} catch (IOException ex) {
-			LOGGER.error("Error Sending email to:" + to);
-			LOGGER.error("Error Sending email -- Exception:" + ex);
+			logger.error("Error Sending email to:" + to);
+			logger.error("Error Sending email -- Exception:" + ex);
 		}
 		return response;
 	}
