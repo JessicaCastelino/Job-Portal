@@ -8,18 +8,17 @@ import java.util.Properties;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.ui.Model;
-
 import com.dal.mycareer.DAO.Interface.IStudentDetailsDAO;
 import com.dal.mycareer.DAO.Interface.IStudentJobsDAO;
 import com.dal.mycareer.DTO.AppliedJob;
-import com.dal.mycareer.DTO.Job;
 import com.dal.mycareer.DTO.JobDetails;
 import com.dal.mycareer.DTO.Student;
 import com.dal.mycareer.imodel.IStudentJobsModel;
 import com.dal.mycareer.propertiesparser.PropertiesParser;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.ui.Model;
 
 public class StudentJobsModel implements IStudentJobsModel {
 	private static final Properties PROPERTY_MAP = PropertiesParser.getPropertyMap();

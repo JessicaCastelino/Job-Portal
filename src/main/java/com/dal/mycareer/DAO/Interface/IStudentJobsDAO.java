@@ -5,7 +5,6 @@ import java.util.List;
 
 import com.dal.mycareer.DTO.AppliedJob;
 import com.dal.mycareer.DTO.JobDetails;
-import com.dal.mycareer.DTO.Student;
 
 public interface IStudentJobsDAO {
 	

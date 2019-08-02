@@ -1,18 +1,13 @@
 package com.dal.mycareer.model;
 
-import com.dal.mycareer.DAO.Interface.IJobsDAO;
-import com.dal.mycareer.DAO.Interface.IStudentJobsDAO;
-import com.dal.mycareer.DTO.AppliedJob;
-import com.dal.mycareer.DTO.Job;
-import com.dal.mycareer.DTO.JobDetails;
-import com.dal.mycareer.imodel.IJobsModel;
-
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+
+import com.dal.mycareer.DAO.Interface.IJobsDAO;
+import com.dal.mycareer.DTO.JobDetails;
+import com.dal.mycareer.imodel.IJobsModel;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
