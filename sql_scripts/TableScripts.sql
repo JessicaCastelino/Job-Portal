@@ -162,18 +162,20 @@ DELIMITER ;
 
 DROP procedure IF EXISTS `getAllJobList`;
 DELIMITER //
-CREATE PROCEDURE `getAllJobList`(IN studId INT(11), IN criteria VARCHAR(50))
+CREATE PROCEDURE `getAllJobList`(IN studId INT(11))
 BEGIN
-IF (criteria = 'all') THEN
     select * from jobs j where j.jobStatus=1;
-ELSE
-    select * from jobs j where j.jobStatus=1 and j.id IN(select distinct(jr.jobId) from jobRequirement jr left join studentRegisteredCourses src on jr.courseId=src.courseId where studentId=studId);
-END IF;
 END//
 
 DELIMITER ;
 
-
+DROP procedure IF EXISTS `getCompletePrerequisiteJobList`;
+DELIMITER //
+CREATE PROCEDURE `getCompletePrerequisiteJobList` (IN studId INT(11))
+BEGIN
+	select * from jobs j where j.jobStatus=1 and j.id IN(select distinct(jr.jobId) from jobRequirement jr left join studentRegisteredCourses src on jr.courseId=src.courseId where studentId=studId);
+END//
+DELIMITER ;
 DROP procedure IF EXISTS `fetchStudentDetails`;
 
 DELIMITER //
