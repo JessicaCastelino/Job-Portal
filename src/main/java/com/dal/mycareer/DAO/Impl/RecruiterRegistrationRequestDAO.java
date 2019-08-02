@@ -24,6 +24,7 @@ public class RecruiterRegistrationRequestDAO implements IRecruiterRegistrationRe
 	private Connection con = null;
 	private CallableStatement callableStatement = null;
 	
+	
 	@Override
 	public List<RecruiterRequest> fetchAllRecruiterRequests() throws SQLException
 	{
