@@ -3,6 +3,7 @@ package com.dal.mycareer.model;
 import com.dal.mycareer.DAO.Impl.JobsDAO;
 import com.dal.mycareer.DAO.Impl.RecruiterRegistrationRequestDAO;
 import com.dal.mycareer.DAO.Interface.IJobsDAO;
+import com.dal.mycareer.DAOMocks.JobsDAOMock;
 import com.dal.mycareer.DTO.JobDetails;
 import com.dal.mycareer.DTO.RecruiterRequest;
 import com.dal.mycareer.imodel.IJobsModel;
@@ -38,7 +39,7 @@ public class JobsModelTest
     @Before
     public void setUp ()
     {
-        jobsMockDAO = new JobsDAO();
+        jobsMockDAO = new JobsDAOMock();
         jobsModel = new JobsModel(jobsMockDAO);
     }
 
@@ -52,7 +53,7 @@ public class JobsModelTest
     @Test
     public void updateJobStatusToClosedTest()
     {
-        boolean isUpdated = jobsModel.updateJobStatus(2, true);
+        boolean isUpdated = jobsModel.updateJobStatus(2, false);
         Assert.assertTrue("Updating job status to 'closed' test failed", isUpdated);
     }
     
