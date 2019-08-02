@@ -155,21 +155,27 @@ DROP procedure IF EXISTS `getAppliedJobList`;
 DELIMITER //
 CREATE PROCEDURE `getAppliedJobList`(IN studentId INT(11))
 BEGIN
-   select * from `CSCI5308_8_DEVINT`.`appliedJobs` aj inner join `CSCI5308_8_DEVINT`.`jobs` j on aj.id=j.id where aj.studentId=studentId;
+   select * from `CSCI5308_8_DEVINT`.`appliedJobs` aj inner join `CSCI5308_8_DEVINT`.`jobs` j on aj.jobId=j.id where aj.studentId=studentId;
 END//
 
 DELIMITER ;
 
 DROP procedure IF EXISTS `getAllJobList`;
 DELIMITER //
-CREATE PROCEDURE `getAllJobList`()
+CREATE PROCEDURE `getAllJobList`(IN studId INT(11))
 BEGIN
-select * from jobs j where j.jobStatus=1 and j.id IN(select distinct(jr.jobId) from jobRequirement jr left join studentRegisteredCourses src on jr.courseId=src.courseId where studentId=1);
+    select * from jobs j where j.jobStatus=1;
 END//
 
 DELIMITER ;
 
-
+DROP procedure IF EXISTS `getCompletePrerequisiteJobList`;
+DELIMITER //
+CREATE PROCEDURE `getCompletePrerequisiteJobList` (IN studId INT(11))
+BEGIN
+	select * from jobs j where j.jobStatus=1 and j.id IN(select distinct(jr.jobId) from jobRequirement jr left join studentRegisteredCourses src on jr.courseId=src.courseId where studentId=studId);
+END//
+DELIMITER ;
 DROP procedure IF EXISTS `fetchStudentDetails`;
 
 DELIMITER //
@@ -185,7 +191,7 @@ DROP procedure IF EXISTS `withdrawApplication`;
 DELIMITER //
 CREATE PROCEDURE `withdrawApplication` (IN studentId INT(11), IN jobId INT(11))
 BEGIN
-delete from `CSCI5308_8_DEVINT`.`students` where studentId=studentId and jobId=jobId;
+delete from `CSCI5308_8_DEVINT`.`appliedJobs` where id=jId;
 END //
 DELIMITER ;
 
@@ -237,9 +243,9 @@ DELIMITER ;
 
 DROP procedure IF EXISTS `getAllJobList`;
 DELIMITER $$
-CREATE PROCEDURE `getAllJobList`()
+CREATE PROCEDURE `getAllJobList`(IN studId INT(11))
 BEGIN
-select * from jobs j where j.jobStatus=1 and j.id IN(select distinct(jr.jobId) from jobRequirement jr left join studentRegisteredCourses src on jr.courseId=src.courseId where studentId=1);
+select * from jobs j where j.jobStatus=1 and j.id IN(select distinct(jr.jobId) from jobRequirement jr left join studentRegisteredCourses src on jr.courseId=src.courseId where studentId=studId);
 END$$
 DELIMITER ;
 
@@ -445,5 +451,63 @@ SET
 `jobDescription` = jobDescription
 WHERE `id` =jobId;
 
+END$$
+DELIMITER ;
+
+
+DROP procedure IF EXISTS `fetchRecruiterRequests`;
+DELIMITER $$
+
+CREATE PROCEDURE `fetchRecruiterRequests` ()
+BEGIN
+SELECT id, firstname, lastname, email, companyname FROM employers where isActive=0;
+END$$
+
+DELIMITER ;
+
+DROP procedure IF EXISTS `makeEmployerActive`;
+DELIMITER $$
+CREATE PROCEDURE `makeEmployerActive` (IN reqID INT(11), IN name VARCHAR(50), IN password VARCHAR(100))
+BEGIN
+UPDATE employers SET isActive = 1 WHERE id=reqID;
+INSERT INTO userlogin (userName,pwd,role) VALUES (name, password, 'employer');
+UPDATE employers SET userid = (SELECT id from userlogin where userName=name) WHERE id=reqID;
+END$$
+
+DELIMITER ;
+
+
+DROP procedure IF EXISTS `rejectEmployer`;
+DELIMITER $$
+CREATE PROCEDURE `rejectEmployer` (IN reqID INT(11))
+BEGIN
+DELETE FROM employers where id=reqID;
+END$$
+DELIMITER ;
+
+
+DROP procedure IF EXISTS `fetchRecruiter`;
+
+DELIMITER $$
+CREATE PROCEDURE `fetchRecruiter` (IN reqID INT(11))
+BEGIN
+SELECT id, firstname, lastname, email, companyname FROM employers where id=reqID;
+END$$
+
+DELIMITER ;
+
+DROP procedure IF EXISTS `checkDupicateStudent`;
+DELIMITER $$
+CREATE  PROCEDURE `checkDupicateStudent`(bnrId varchar(50))
+BEGIN
+SELECT bannerId FROM students where bannerid = bnrId;
+END$$
+DELIMITER ;
+
+DROP procedure IF EXISTS `fetchJob`;
+DELIMITER $$
+CREATE PROCEDURE fetchJob (IN jobId INT(11))
+BEGIN
+SELECT * FROM jobs where id=jobId;
 END$$
 DELIMITER ;

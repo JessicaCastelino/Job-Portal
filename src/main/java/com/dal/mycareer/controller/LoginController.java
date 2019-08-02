@@ -22,46 +22,61 @@ import com.dal.mycareer.model.LoginModel;
 @Controller
 public class LoginController {
 
+	// Class level constants
+	private static final String ERROR = "error";
+	private static final String NEXT_PAGE = "nextPage";
+	private static final String ROLE = "role";
+	private static final String TRUE = "true";
+	private static final String IS_VALID_USER = "isValidUser";
+	private static final String VIEW = "view";
+	private static final String HOME = "home";
+	private static final String HOMEPAGE = "homepage";
 	private static final String USERNAME = "username";
 	private static final String SESSION_NAME = "sessionName";
 
 	private static final String USER_LOGIN = "userLogin";
 
-	private final Logger LOGGER = LoggerFactory.getLogger(this.getClass());
+	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public String Login(@Valid @ModelAttribute(USER_LOGIN) UserLogin ulogin, BindingResult result, Model model,
+	public String login(@Valid @ModelAttribute(USER_LOGIN) UserLogin ulogin, BindingResult result, Model model,
 			HttpServletRequest request) {
 
-		LOGGER.info("Login request -- Start");
+		logger.info("Login request : Start");
 
 		if (result.hasErrors()) {
 
-			return "homepage";
+			logger.error("Incorrect from data entered by user");
+
+			return HOMEPAGE;
 
 		} else {
 
+			
 			ILoginModel loginModel = new LoginModel();
 			ILoginDAO loginDAO = new LoginDAO();
 
 			model = loginModel.verifyLogin(model, ulogin, loginDAO, request);
 			String page = null;
 
-			if (model.asMap().get("isValidUser").toString().equalsIgnoreCase("true")) {
+			if (model.asMap().get(IS_VALID_USER).toString().equalsIgnoreCase(TRUE)) {
 				String userSessionName = request.getParameter(USERNAME);
 				HttpSession session = request.getSession();
 				session.setAttribute(SESSION_NAME, userSessionName);
-				session.setAttribute("home", model.asMap().get("view").toString());
-				session.setAttribute("role", model.asMap().get("role").toString());
-				session.setAttribute("nextPage", model.asMap().get("nextPage").toString());
+				session.setAttribute(HOME, model.asMap().get(VIEW).toString());
+				session.setAttribute(ROLE, model.asMap().get(ROLE).toString());
+				session.setAttribute(NEXT_PAGE, model.asMap().get(NEXT_PAGE).toString());
 			}
-			if(model.containsAttribute("error")) {
-				page = "homepage";
-			}else {
-				page = model.asMap().get("nextPage").toString();
+			if (model.containsAttribute(ERROR)) {
+
+				logger.error("Incorrect URL entered by user");
+				page = HOMEPAGE;
+
+			} else {
+				page = model.asMap().get(NEXT_PAGE).toString();
 			}
-			
-			LOGGER.info("Login request -- END");
+
+			logger.info("Login request : END");
 			return page;
 
 		}

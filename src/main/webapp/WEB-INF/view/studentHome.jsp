@@ -109,7 +109,7 @@
 						<c:forEach items="${jobs}" var="job">
 							<tr>
 								<td>${job.id}</td>
-								<td>${job.noOfPosition}</td>
+								<td>${job.jobTitle}</td>
 								<td>${job.organization}</td>
 								<td>${job.location}</td>
 								<td>${job.jobType}</td>
@@ -148,18 +148,20 @@
 						</tr>
 						<c:forEach items="${appliedJobs}" var="appliedJob">
 							<tr>
-								<td>${appliedJob.id}</td>
-								<td>${appliedJob.openPosition}</td>
+								<td>${appliedJob.jobId}</td>
+								<td>${appliedJob.jobTitle}</td>
 								<td>${appliedJob.organization}</td>
 								<td>${appliedJob.location}</td>
 								<td>${appliedJob.applicationStatus}</td>
+								
+								
 								<td>
-									<!-- View button --> <!-- Apply button -->
+								
 									<div class="form-input">
 										<a class="btn btn-info btn-block my-4"
-											href="/withdraw?id=${job.id}">Withdraw</a>
-
+											href="/withdraw?id=${appliedJob.id}">Withdraw</a>
 									</div>
+								
 								</td>
 							</tr>
 						</c:forEach>

@@ -1,5 +1,6 @@
 package com.dal.mycareer.DAO.Impl;
 
+import java.io.InputStream;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -17,7 +18,8 @@ import com.dal.mycareer.DTO.Application;
 
 @Repository
 public class ManageApplicationsDAO implements IManageApplicationsDAO {
-	private final Logger LOGGER = LoggerFactory.getLogger(this.getClass());
+	private static final String CALL_FETCH_DOCUMENT = "{call fetchDocument(?)}";
+	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	@Override
 	public List<Application> getApplications(int jobRecordId) {
@@ -42,7 +44,7 @@ public class ManageApplicationsDAO implements IManageApplicationsDAO {
 				applicants.add(applicant);
 			}
 		} catch (SQLException e) {
-			LOGGER.error("Exception occurred at ManageApplicantsDAO: getApplicants " + e.getMessage());
+			logger.error("Exception occurred at ManageApplicantsDAO: getApplicants " + e.getMessage());
 			e.printStackTrace();
 		}
 		return applicants;
@@ -65,9 +67,34 @@ public class ManageApplicationsDAO implements IManageApplicationsDAO {
 				isUpdateSuccess = false;
 			}
 		} catch (Exception ex) {
-			LOGGER.error("Error Occurred in ManageApplicationsDAO: updateApplicationStatus" + ex.getMessage());
+			logger.error("Error Occurred in ManageApplicationsDAO: updateApplicationStatus" + ex.getMessage());
 		}
 
 		return isUpdateSuccess;
+	}
+	
+	@Override
+	public InputStream fetchDocument(int applicationId) throws SQLException {
+		logger.debug("ManageApplicationsDAO: fetchDocument method: Entered");
+		Connection con = DatabaseConnection.getConnection();
+		try {
+	
+			CallableStatement callableStatement = con.prepareCall(CALL_FETCH_DOCUMENT);
+			callableStatement.setInt(1, applicationId);
+			callableStatement.execute();
+			ResultSet rs = callableStatement.getResultSet();
+			rs.next();
+			InputStream is =rs.getBinaryStream(1);
+			rs.close();
+			logger.debug("Document fetched for job application with ID: "+applicationId);
+			return is;
+
+		} catch (SQLException e) {
+			logger.error( "SQLException Occurred in ManageApplicationsDAO: fetchDocument method:" + e.getMessage());
+			throw new SQLException("Error while downloading the document.");
+		}
+		finally {
+			DatabaseConnection.closeConnection(con);
+		}
 	}
 }

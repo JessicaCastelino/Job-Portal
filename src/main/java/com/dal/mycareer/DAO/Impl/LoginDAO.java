@@ -25,7 +25,7 @@ public class LoginDAO implements ILoginDAO {
 		try {
 			CallableStatement myStmt = dbConn.prepareCall("{call isValidLogin(?, ?, ?, ?)}");
 
-			//Set the parameters
+			// Set the parameters
 			myStmt.setString(1, user.getUsername());
 			myStmt.setString(2, user.getPassword());
 			myStmt.setString(3, user.getRole());
@@ -38,6 +38,10 @@ public class LoginDAO implements ILoginDAO {
 
 		} catch (SQLException e) {
 			LOGGER.error(e.getMessage());
+		}
+
+		finally {
+			DatabaseConnection.closeConnection(dbConn);
 		}
 
 		return validUserFlag;

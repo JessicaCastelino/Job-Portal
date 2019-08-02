@@ -36,7 +36,7 @@
 		</nav>
 	</div>
 	<div class="home-heading">
-		<h1>Welcome to My Career</h1>
+		<h1>Welcome to My Career .</h1>
 		${name}
 	</div>
 	<div class="container">

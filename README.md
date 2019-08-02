@@ -1,5 +1,5 @@
 # Group8
-Group 8 Project Repo
+Group 8 Project Repository
 
 * Abinaya Raja (B00799562)
 

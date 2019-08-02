@@ -1,5 +1,7 @@
 package com.dal.mycareer.controller;
 
+import java.util.Properties;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
@@ -15,14 +17,15 @@ import com.dal.mycareer.propertiesparser.PropertiesParser;
 @Controller
 public class RequestController {
 
-	private final Logger LOGGER = LoggerFactory.getLogger(this.getClass());
+	private static final Properties PROPERTY_MAP = PropertiesParser.getPropertyMap();
+	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	@RequestMapping("/homepage")
 	public String loadHome(Model model, HttpServletRequest request) {
 
-		LOGGER.info("Routed to Homepage");
+		logger.info("Routed to Homepage");
 
-		model.addAttribute("reqPage", PropertiesParser.getPropertyMap().get("homepage").toString());
+		model.addAttribute("reqPage", PROPERTY_MAP.get("homepage").toString());
 		model.addAttribute("role", "guest");
 
 		IRoleModel roleModel = new RoleModel();
@@ -36,40 +39,25 @@ public class RequestController {
 	@RequestMapping("/employerHome")
 	public String employerHome(Model model, HttpServletRequest request) {
 
-		LOGGER.info("Routed to EmployerHome");
+		logger.info("Routed to EmployerHome");
 
-		model.addAttribute("reqPage", PropertiesParser.getPropertyMap().get("employerHome").toString());
+		model.addAttribute("reqPage", PROPERTY_MAP.get("employerHome").toString());
 		model.addAttribute("role", "employer");
 
 		IRoleModel roleModel = new RoleModel();
 
 		model = roleModel.getBasePage(model, request);
-		model.addAttribute("jobTypes", PropertiesParser.getPropertyMap().get("jobTypes").toString().split(","));
+		model.addAttribute("jobTypes", PROPERTY_MAP.get("jobTypes").toString().split(","));
 		return model.asMap().get("view").toString();
 
 	}
 
-	@RequestMapping("/adminHome")
-	public String adminHome(Model model, HttpServletRequest request) {
-
-		LOGGER.info("Routed to AdminHome");
-
-		model.addAttribute("reqPage", PropertiesParser.getPropertyMap().get("adminHome").toString());
-		model.addAttribute("role", "admin");
-
-		IRoleModel roleModel = new RoleModel();
-
-		model = roleModel.getBasePage(model, request);
-
-		return model.asMap().get("view").toString();
-	}
-	
 	@RequestMapping("/logout")
 	public String logout(Model model, HttpServletRequest request) {
 
-		LOGGER.info("Routed to Logout");
+		logger.info("Routed to Logout");
 
-		model.addAttribute("reqPage", PropertiesParser.getPropertyMap().get("logout").toString());
+		model.addAttribute("reqPage", PROPERTY_MAP.get("logout").toString());
 		model.addAttribute("role", "guest");
 
 		IRoleModel roleModel = new RoleModel();
@@ -78,7 +66,7 @@ public class RequestController {
 		
 		//Invalidate Session
 		request.getSession().invalidate();
-		LOGGER.info("Session Invalidated and Logged out");
+		logger.info("Session Invalidated and Logged out");
 
 		return model.asMap().get("view").toString();
 	}

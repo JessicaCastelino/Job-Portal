@@ -1,5 +1,7 @@
 package com.dal.mycareer.DTO;
 
+import java.io.InputStream;
+
 public class Application 
 {
     int applicationId;
@@ -9,9 +11,19 @@ public class Application
     String completedCourses;
     String email;
     int jobId;
+    InputStream document;
     String studentId;
 
-    public int getApplicationId() 
+    
+    public InputStream getDocument() {
+		return document;
+	}
+
+	public void setDocument(InputStream document) {
+		this.document = document;
+	}
+
+	public int getApplicationId() 
     {
         return applicationId;
     }
