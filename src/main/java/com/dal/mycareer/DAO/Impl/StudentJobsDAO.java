@@ -34,7 +34,6 @@ public class StudentJobsDAO implements IStudentJobsDAO {
 		try {
 			callableStatement = con.prepareCall(ConfigLogicClassLoader.getJobClass());
 			callableStatement.setInt(1, studID);
-			callableStatement.setString(2, type);
 			boolean results = callableStatement.execute();
 			logger.debug("Jobs fetched:");
 			while (results) {
