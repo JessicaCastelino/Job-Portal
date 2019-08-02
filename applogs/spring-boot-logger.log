@@ -1,0 +1,222 @@
+2019-08-01 21:39:07,766 INFO com.dal.mycareer.controller.RequestController [http-nio-8090-exec-1] Routed to Homepage
+2019-08-01 21:39:07,769 INFO com.dal.mycareer.model.RoleModel [http-nio-8090-exec-1] Get base page : START
+2019-08-01 21:39:08,471 INFO com.dal.mycareer.model.RoleModel [http-nio-8090-exec-1] Get base page : END
+2019-08-01 21:39:12,828 INFO com.dal.mycareer.controller.LoginController [http-nio-8090-exec-3] Login request : Start
+2019-08-01 21:39:12,834 INFO com.dal.mycareer.model.LoginModel [http-nio-8090-exec-3] Verify Login : START
+2019-08-01 21:39:13,523 DEBUG com.dal.mycareer.model.LoginModel [http-nio-8090-exec-3] hg@yopmail.com is loggedIn as Student
+2019-08-01 21:39:13,525 INFO com.dal.mycareer.model.LoginModel [http-nio-8090-exec-3] Verify Login : END
+2019-08-01 21:39:13,527 INFO com.dal.mycareer.controller.LoginController [http-nio-8090-exec-3] Login request : END
+2019-08-01 21:39:13,543 DEBUG com.dal.mycareer.controller.StudentJobsController [http-nio-8090-exec-4] StudentJobsController: fetchAllStudentJobs method: Entered
+2019-08-01 21:39:13,545 INFO com.dal.mycareer.model.RoleModel [http-nio-8090-exec-4] Get base page : START
+2019-08-01 21:39:13,545 INFO com.dal.mycareer.model.RoleModel [http-nio-8090-exec-4] Get base page : END
+2019-08-01 21:39:13,546 DEBUG com.dal.mycareer.model.StudentJobsModel [http-nio-8090-exec-4] StudentModel: fetchJobs method: Entered
+2019-08-01 21:39:13,547 DEBUG com.dal.mycareer.DAO.Impl.StudentDetailsDAO [http-nio-8090-exec-4] StudentDetailsDAO: getStudentDetails method: Entered
+2019-08-01 21:39:13,889 DEBUG com.dal.mycareer.DAO.Impl.StudentDetailsDAO [http-nio-8090-exec-4] Details for student with session name: hg@yopmail.com and ID: 38 successfully fetched
+2019-08-01 21:39:13,891 DEBUG com.dal.mycareer.DAO.Impl.StudentDetailsDAO [http-nio-8090-exec-4] StudentDetailsDAO: getStudentDetails method: Exit
+2019-08-01 21:39:13,891 DEBUG com.dal.mycareer.DAO.Impl.StudentJobsDAO [http-nio-8090-exec-4] StudentJobsDAO: getAllJobList method: Entered
+2019-08-01 21:39:14,274 DEBUG com.dal.mycareer.DAO.Impl.StudentJobsDAO [http-nio-8090-exec-4] Jobs fetched:
+2019-08-01 21:39:14,277 DEBUG com.dal.mycareer.DAO.Impl.StudentJobsDAO [http-nio-8090-exec-4] ID: 179
+2019-08-01 21:39:14,284 DEBUG com.dal.mycareer.DAO.Impl.StudentJobsDAO [http-nio-8090-exec-4] ID: 180
+2019-08-01 21:39:14,286 DEBUG com.dal.mycareer.DAO.Impl.StudentJobsDAO [http-nio-8090-exec-4] ID: 181
+2019-08-01 21:39:14,288 DEBUG com.dal.mycareer.DAO.Impl.StudentJobsDAO [http-nio-8090-exec-4] StudentJobsDAO: getAllJobList method: Exit
+2019-08-01 21:39:14,291 DEBUG com.dal.mycareer.DAO.Impl.StudentJobsDAO [http-nio-8090-exec-4] StudentJobsDAO: getAppliedJobList method: Entered
+2019-08-01 21:39:14,719 DEBUG com.dal.mycareer.DAO.Impl.StudentJobsDAO [http-nio-8090-exec-4] Applied jobs fetched:
+2019-08-01 21:39:14,721 DEBUG com.dal.mycareer.DAO.Impl.StudentJobsDAO [http-nio-8090-exec-4] StudentJobsDAO: getAppliedJobList method: Exit
+2019-08-01 21:39:14,724 DEBUG com.dal.mycareer.model.StudentJobsModel [http-nio-8090-exec-4] StudentModel: fetchJobs method: Exit
+2019-08-01 21:39:14,725 DEBUG com.dal.mycareer.controller.StudentJobsController [http-nio-8090-exec-4] StudentJobsController: fetchAllStudentJobs method: Exit
+2019-08-01 21:42:45,809 INFO com.dal.mycareer.controller.RequestController [http-nio-8090-exec-7] Routed to Logout
+2019-08-01 21:42:45,810 INFO com.dal.mycareer.model.RoleModel [http-nio-8090-exec-7] Get base page : START
+2019-08-01 21:42:45,811 INFO com.dal.mycareer.model.RoleModel [http-nio-8090-exec-7] Get base page : END
+2019-08-01 21:42:45,812 INFO com.dal.mycareer.controller.RequestController [http-nio-8090-exec-7] Session Invalidated and Logged out
+2019-08-01 21:42:47,919 INFO com.dal.mycareer.controller.RequestController [http-nio-8090-exec-8] Routed to Homepage
+2019-08-01 21:42:47,922 INFO com.dal.mycareer.model.RoleModel [http-nio-8090-exec-8] Get base page : START
+2019-08-01 21:42:47,924 INFO com.dal.mycareer.model.RoleModel [http-nio-8090-exec-8] Get base page : END
+2019-08-01 21:42:56,465 INFO com.dal.mycareer.controller.LoginController [http-nio-8090-exec-1] Login request : Start
+2019-08-01 21:42:56,467 INFO com.dal.mycareer.model.LoginModel [http-nio-8090-exec-1] Verify Login : START
+2019-08-01 21:42:56,817 DEBUG com.dal.mycareer.model.LoginModel [http-nio-8090-exec-1] coop@dal.ca is loggedIn as Co-op Admin
+2019-08-01 21:42:56,818 INFO com.dal.mycareer.model.LoginModel [http-nio-8090-exec-1] Verify Login : END
+2019-08-01 21:42:56,819 INFO com.dal.mycareer.controller.LoginController [http-nio-8090-exec-1] Login request : END
+2019-08-01 21:42:56,831 DEBUG com.dal.mycareer.controller.RecruiterRequestsController [http-nio-8090-exec-2] RecruiterRequestsController: loadAdminHome method: Entered
+2019-08-01 21:42:56,831 INFO com.dal.mycareer.model.RoleModel [http-nio-8090-exec-2] Get base page : START
+2019-08-01 21:42:56,832 INFO com.dal.mycareer.model.RoleModel [http-nio-8090-exec-2] Get base page : END
+2019-08-01 21:42:56,833 DEBUG com.dal.mycareer.model.RecruiterRegistrationRequestModel [http-nio-8090-exec-2] RecruiterRegistrationRequestModel: fetchRecruiterRequests method: Entered
+2019-08-01 21:42:56,833 DEBUG com.dal.mycareer.DAO.Impl.RecruiterRegistrationRequestDAO [http-nio-8090-exec-2] RecruiterRegistrationRequestDAO: fetchAllRecruiterRequests method: Entered
+2019-08-01 21:42:57,200 DEBUG com.dal.mycareer.DAO.Impl.RecruiterRegistrationRequestDAO [http-nio-8090-exec-2] Recruiter Requests fetched:
+2019-08-01 21:42:57,201 DEBUG com.dal.mycareer.DAO.Impl.RecruiterRegistrationRequestDAO [http-nio-8090-exec-2] RecruiterRegistrationRequestDAO: fetchAllRecruiterRequests method: Exit
+2019-08-01 21:42:57,201 DEBUG com.dal.mycareer.model.RecruiterRegistrationRequestModel [http-nio-8090-exec-2] RecruiterRegistrationRequestModel: fetchRecruiterRequests method: Exit
+2019-08-01 21:42:57,202 DEBUG com.dal.mycareer.controller.RecruiterRequestsController [http-nio-8090-exec-2] RecruiterRequestsController: loadAdminHome method: Exit
+2019-08-01 21:43:00,424 ERROR com.dal.mycareer.JDBC.ProcedureParamLoader [http-nio-8090-exec-3] Error Occurred in fillInputParameters :null
+2019-08-01 21:43:05,632 INFO com.dal.mycareer.controller.PrerequisiteCoursesController [http-nio-8090-exec-5] Controller: Inside getPrerequisitCourses method
+2019-08-01 21:43:05,634 INFO com.dal.mycareer.model.PrerequisiteCoursesModel [http-nio-8090-exec-5] BL: getPrerequisiteCourses method started
+2019-08-01 21:43:05,635 INFO com.dal.mycareer.DAO.Impl.PrerequisiteCoursesDAO [http-nio-8090-exec-5] DL: getPrerequisiteCourses method started
+2019-08-01 21:43:43,433 ERROR com.dal.mycareer.JDBC.ProcedureParamLoader [http-nio-8090-exec-8] Error Occurred in fillInputParameters :null
+2019-08-01 21:43:44,520 INFO com.dal.mycareer.DAO.Impl.PrerequisiteCoursesDAO [http-nio-8090-exec-7] DL: addStudentCompletedPrereq method started
+2019-08-01 21:43:51,224 ERROR com.dal.mycareer.JDBC.ProcedureParamLoader [http-nio-8090-exec-10] Error Occurred in fillInputParameters :null
+2019-08-01 21:44:18,675 INFO com.dal.mycareer.controller.RequestController [http-nio-8090-exec-3] Routed to Logout
+2019-08-01 21:44:18,677 INFO com.dal.mycareer.model.RoleModel [http-nio-8090-exec-3] Get base page : START
+2019-08-01 21:44:18,679 INFO com.dal.mycareer.model.RoleModel [http-nio-8090-exec-3] Get base page : END
+2019-08-01 21:44:18,680 INFO com.dal.mycareer.controller.RequestController [http-nio-8090-exec-3] Session Invalidated and Logged out
+2019-08-01 21:44:23,221 INFO com.dal.mycareer.controller.RequestController [http-nio-8090-exec-7] Routed to Homepage
+2019-08-01 21:44:23,223 INFO com.dal.mycareer.model.RoleModel [http-nio-8090-exec-7] Get base page : START
+2019-08-01 21:44:23,225 INFO com.dal.mycareer.model.RoleModel [http-nio-8090-exec-7] Get base page : END
+2019-08-01 21:44:33,773 INFO com.dal.mycareer.controller.LoginController [http-nio-8090-exec-1] Login request : Start
+2019-08-01 21:44:33,775 INFO com.dal.mycareer.model.LoginModel [http-nio-8090-exec-1] Verify Login : START
+2019-08-01 21:44:35,800 DEBUG com.dal.mycareer.model.LoginModel [http-nio-8090-exec-1] coop@dal.ca is loggedIn as Co-op Admin
+2019-08-01 21:44:35,802 INFO com.dal.mycareer.model.LoginModel [http-nio-8090-exec-1] Verify Login : END
+2019-08-01 21:44:35,802 INFO com.dal.mycareer.controller.LoginController [http-nio-8090-exec-1] Login request : END
+2019-08-01 21:44:35,818 DEBUG com.dal.mycareer.controller.RecruiterRequestsController [http-nio-8090-exec-2] RecruiterRequestsController: loadAdminHome method: Entered
+2019-08-01 21:44:35,818 INFO com.dal.mycareer.model.RoleModel [http-nio-8090-exec-2] Get base page : START
+2019-08-01 21:44:35,819 INFO com.dal.mycareer.model.RoleModel [http-nio-8090-exec-2] Get base page : END
+2019-08-01 21:44:35,820 DEBUG com.dal.mycareer.model.RecruiterRegistrationRequestModel [http-nio-8090-exec-2] RecruiterRegistrationRequestModel: fetchRecruiterRequests method: Entered
+2019-08-01 21:44:35,821 DEBUG com.dal.mycareer.DAO.Impl.RecruiterRegistrationRequestDAO [http-nio-8090-exec-2] RecruiterRegistrationRequestDAO: fetchAllRecruiterRequests method: Entered
+2019-08-01 21:44:38,107 DEBUG com.dal.mycareer.DAO.Impl.RecruiterRegistrationRequestDAO [http-nio-8090-exec-2] Recruiter Requests fetched:
+2019-08-01 21:44:38,109 DEBUG com.dal.mycareer.DAO.Impl.RecruiterRegistrationRequestDAO [http-nio-8090-exec-2] RecruiterRegistrationRequestDAO: fetchAllRecruiterRequests method: Exit
+2019-08-01 21:44:38,109 DEBUG com.dal.mycareer.model.RecruiterRegistrationRequestModel [http-nio-8090-exec-2] RecruiterRegistrationRequestModel: fetchRecruiterRequests method: Exit
+2019-08-01 21:44:38,110 DEBUG com.dal.mycareer.controller.RecruiterRequestsController [http-nio-8090-exec-2] RecruiterRequestsController: loadAdminHome method: Exit
+2019-08-01 21:44:49,442 DEBUG com.dal.mycareer.controller.RecruiterRequestsController [http-nio-8090-exec-5] RecruiterRequestsController: loadAdminHome method: Entered
+2019-08-01 21:44:49,443 INFO com.dal.mycareer.model.RoleModel [http-nio-8090-exec-5] Get base page : START
+2019-08-01 21:44:49,444 INFO com.dal.mycareer.model.RoleModel [http-nio-8090-exec-5] Get base page : END
+2019-08-01 21:44:49,445 DEBUG com.dal.mycareer.model.RecruiterRegistrationRequestModel [http-nio-8090-exec-5] RecruiterRegistrationRequestModel: fetchRecruiterRequests method: Entered
+2019-08-01 21:44:49,446 DEBUG com.dal.mycareer.DAO.Impl.RecruiterRegistrationRequestDAO [http-nio-8090-exec-5] RecruiterRegistrationRequestDAO: fetchAllRecruiterRequests method: Entered
+2019-08-01 21:44:53,674 DEBUG com.dal.mycareer.DAO.Impl.RecruiterRegistrationRequestDAO [http-nio-8090-exec-5] Recruiter Requests fetched:
+2019-08-01 21:44:53,674 DEBUG com.dal.mycareer.DAO.Impl.RecruiterRegistrationRequestDAO [http-nio-8090-exec-5] RecruiterRegistrationRequestDAO: fetchAllRecruiterRequests method: Exit
+2019-08-01 21:44:53,675 DEBUG com.dal.mycareer.model.RecruiterRegistrationRequestModel [http-nio-8090-exec-5] RecruiterRegistrationRequestModel: fetchRecruiterRequests method: Exit
+2019-08-01 21:44:53,675 DEBUG com.dal.mycareer.controller.RecruiterRequestsController [http-nio-8090-exec-5] RecruiterRequestsController: loadAdminHome method: Exit
+2019-08-01 21:45:53,076 DEBUG com.dal.mycareer.controller.RecruiterRequestsController [http-nio-8090-exec-7] RecruiterRequestsController: loadAdminHome method: Entered
+2019-08-01 21:45:53,077 INFO com.dal.mycareer.model.RoleModel [http-nio-8090-exec-7] Get base page : START
+2019-08-01 21:45:53,078 INFO com.dal.mycareer.model.RoleModel [http-nio-8090-exec-7] Get base page : END
+2019-08-01 21:45:53,079 DEBUG com.dal.mycareer.model.RecruiterRegistrationRequestModel [http-nio-8090-exec-7] RecruiterRegistrationRequestModel: fetchRecruiterRequests method: Entered
+2019-08-01 21:45:53,080 DEBUG com.dal.mycareer.DAO.Impl.RecruiterRegistrationRequestDAO [http-nio-8090-exec-7] RecruiterRegistrationRequestDAO: fetchAllRecruiterRequests method: Entered
+2019-08-01 21:45:54,627 DEBUG com.dal.mycareer.DAO.Impl.RecruiterRegistrationRequestDAO [http-nio-8090-exec-7] Recruiter Requests fetched:
+2019-08-01 21:45:54,631 DEBUG com.dal.mycareer.DAO.Impl.RecruiterRegistrationRequestDAO [http-nio-8090-exec-7] ID: 126
+2019-08-01 21:45:54,635 DEBUG com.dal.mycareer.DAO.Impl.RecruiterRegistrationRequestDAO [http-nio-8090-exec-7] RecruiterRegistrationRequestDAO: fetchAllRecruiterRequests method: Exit
+2019-08-01 21:45:54,637 DEBUG com.dal.mycareer.model.RecruiterRegistrationRequestModel [http-nio-8090-exec-7] RecruiterRegistrationRequestModel: fetchRecruiterRequests method: Exit
+2019-08-01 21:45:54,639 DEBUG com.dal.mycareer.controller.RecruiterRequestsController [http-nio-8090-exec-7] RecruiterRequestsController: loadAdminHome method: Exit
+2019-08-01 21:45:56,402 DEBUG com.dal.mycareer.controller.RecruiterRequestsController [http-nio-8090-exec-10] RecruiterRequestsController: approveRequest method: Entered
+2019-08-01 21:45:56,403 INFO com.dal.mycareer.model.RoleModel [http-nio-8090-exec-10] Get base page : START
+2019-08-01 21:45:56,405 INFO com.dal.mycareer.model.RoleModel [http-nio-8090-exec-10] Get base page : END
+2019-08-01 21:45:56,406 DEBUG com.dal.mycareer.model.RecruiterRegistrationRequestModel [http-nio-8090-exec-10] RecruiterRegistrationRequestModel: approveRecruiterRequest method: Entered
+2019-08-01 21:45:56,407 DEBUG com.dal.mycareer.DAO.Impl.RecruiterRegistrationRequestDAO [http-nio-8090-exec-10] RecruiterRegistrationRequestDAO: fetchRecruiter method: Entered
+2019-08-01 21:46:05,258 DEBUG com.dal.mycareer.DAO.Impl.RecruiterRegistrationRequestDAO [http-nio-8090-exec-10] Recruiter details for ID: 126 is fetched
+2019-08-01 21:46:05,262 DEBUG com.dal.mycareer.DAO.Impl.RecruiterRegistrationRequestDAO [http-nio-8090-exec-10] RecruiterRegistrationRequestDAO: fetchRecruiter method: Exit
+2019-08-01 21:46:05,264 DEBUG com.dal.mycareer.DAO.Impl.RecruiterRegistrationRequestDAO [http-nio-8090-exec-10] RecruiterRegistrationRequestDAO: approveRequest method: Entered
+2019-08-01 21:46:26,785 DEBUG com.dal.mycareer.DAO.Impl.RecruiterRegistrationRequestDAO [http-nio-8090-exec-10] Recruiter Requests with ID: 126 has been approved
+2019-08-01 21:46:26,786 DEBUG com.dal.mycareer.DAO.Impl.RecruiterRegistrationRequestDAO [http-nio-8090-exec-10] RecruiterRegistrationRequestDAO: approveRequest method: Exit
+2019-08-01 21:46:27,439 DEBUG com.dal.mycareer.DAO.Impl.RecruiterRegistrationRequestDAO [http-nio-8090-exec-10] RecruiterRegistrationRequestDAO: fetchAllRecruiterRequests method: Entered
+2019-08-01 21:46:30,085 DEBUG com.dal.mycareer.DAO.Impl.RecruiterRegistrationRequestDAO [http-nio-8090-exec-10] Recruiter Requests fetched:
+2019-08-01 21:46:30,087 DEBUG com.dal.mycareer.DAO.Impl.RecruiterRegistrationRequestDAO [http-nio-8090-exec-10] RecruiterRegistrationRequestDAO: fetchAllRecruiterRequests method: Exit
+2019-08-01 21:46:30,088 DEBUG com.dal.mycareer.model.RecruiterRegistrationRequestModel [http-nio-8090-exec-10] Recruiter Request approved.
+2019-08-01 21:46:30,089 DEBUG com.dal.mycareer.model.RecruiterRegistrationRequestModel [http-nio-8090-exec-10] RecruiterRegistrationRequestModel: approveRecruiterRequest method: Exit
+2019-08-01 21:46:30,089 DEBUG com.dal.mycareer.controller.RecruiterRequestsController [http-nio-8090-exec-10] RecruiterRequestsController: approveRequest method: Exit
+2019-08-01 21:46:41,079 INFO com.dal.mycareer.controller.RequestController [http-nio-8090-exec-1] Routed to Logout
+2019-08-01 21:46:41,082 INFO com.dal.mycareer.model.RoleModel [http-nio-8090-exec-1] Get base page : START
+2019-08-01 21:46:41,083 INFO com.dal.mycareer.model.RoleModel [http-nio-8090-exec-1] Get base page : END
+2019-08-01 21:46:41,084 INFO com.dal.mycareer.controller.RequestController [http-nio-8090-exec-1] Session Invalidated and Logged out
+2019-08-01 21:47:00,530 INFO com.dal.mycareer.controller.RequestController [http-nio-8090-exec-4] Routed to Homepage
+2019-08-01 21:47:00,532 INFO com.dal.mycareer.model.RoleModel [http-nio-8090-exec-4] Get base page : START
+2019-08-01 21:47:00,533 INFO com.dal.mycareer.model.RoleModel [http-nio-8090-exec-4] Get base page : END
+2019-08-01 21:47:13,830 INFO com.dal.mycareer.controller.LoginController [http-nio-8090-exec-6] Login request : Start
+2019-08-01 21:47:13,831 INFO com.dal.mycareer.model.LoginModel [http-nio-8090-exec-6] Verify Login : START
+2019-08-01 21:47:16,139 DEBUG com.dal.mycareer.model.LoginModel [http-nio-8090-exec-6] vison@yopmail.comis loggedIn asEmployer
+2019-08-01 21:47:16,141 INFO com.dal.mycareer.model.LoginModel [http-nio-8090-exec-6] Verify Login : END
+2019-08-01 21:47:16,142 INFO com.dal.mycareer.controller.LoginController [http-nio-8090-exec-6] Login request : END
+2019-08-01 21:47:16,163 INFO com.dal.mycareer.controller.RequestController [http-nio-8090-exec-7] Routed to EmployerHome
+2019-08-01 21:47:16,164 INFO com.dal.mycareer.model.RoleModel [http-nio-8090-exec-7] Get base page : START
+2019-08-01 21:47:16,165 INFO com.dal.mycareer.model.RoleModel [http-nio-8090-exec-7] Get base page : END
+2019-08-01 21:47:16,734 INFO com.dal.mycareer.controller.EmployerJobsController [http-nio-8090-exec-10] Controller: Inside getActiveJobs for user-vison@yopmail.com
+2019-08-01 21:47:16,735 INFO com.dal.mycareer.model.EmployerJobsModel [http-nio-8090-exec-10] BL: getActiveJobs method started for user-vison@yopmail.com
+2019-08-01 21:47:16,736 INFO com.dal.mycareer.DAO.Impl.EmployerJobsDAO [http-nio-8090-exec-10] fetchJobByStatus method started
+2019-08-01 21:47:16,739 INFO com.dal.mycareer.DAO.Impl.EmployerJobsDAO [http-nio-8090-exec-10] Setting the procedure name for getting Active jobs -fetchJobByStatus Method
+2019-08-01 21:47:19,840 INFO com.dal.mycareer.controller.PrerequisiteCoursesController [http-nio-8090-exec-9] Controller: Inside getPrerequisitCourses method
+2019-08-01 21:47:19,843 INFO com.dal.mycareer.model.PrerequisiteCoursesModel [http-nio-8090-exec-9] BL: getPrerequisiteCourses method started
+2019-08-01 21:47:19,844 INFO com.dal.mycareer.DAO.Impl.PrerequisiteCoursesDAO [http-nio-8090-exec-9] DL: getPrerequisiteCourses method started
+2019-08-01 21:47:41,085 INFO com.dal.mycareer.controller.EmployerJobsController [http-nio-8090-exec-3] Controller: Inside saveJob method for user-vison@yopmail.com
+2019-08-01 21:47:41,087 INFO com.dal.mycareer.model.EmployerJobsModel [http-nio-8090-exec-3] BL: InsertJobDetails method started for user-vison@yopmail.com
+2019-08-01 21:47:41,089 INFO com.dal.mycareer.DAO.Impl.EmployerJobsDAO [http-nio-8090-exec-3] DL: InsertJobDetails method started
+2019-08-01 21:47:41,094 INFO com.dal.mycareer.controller.RequestController [http-nio-8090-exec-4] Routed to EmployerHome
+2019-08-01 21:47:41,096 INFO com.dal.mycareer.model.RoleModel [http-nio-8090-exec-4] Get base page : START
+2019-08-01 21:47:41,097 INFO com.dal.mycareer.model.RoleModel [http-nio-8090-exec-4] Get base page : END
+2019-08-01 21:47:41,527 INFO com.dal.mycareer.controller.EmployerJobsController [http-nio-8090-exec-8] Controller: Inside getActiveJobs for user-vison@yopmail.com
+2019-08-01 21:47:41,527 INFO com.dal.mycareer.model.EmployerJobsModel [http-nio-8090-exec-8] BL: getActiveJobs method started for user-vison@yopmail.com
+2019-08-01 21:47:41,528 INFO com.dal.mycareer.DAO.Impl.EmployerJobsDAO [http-nio-8090-exec-8] fetchJobByStatus method started
+2019-08-01 21:47:41,529 INFO com.dal.mycareer.DAO.Impl.EmployerJobsDAO [http-nio-8090-exec-8] Setting the procedure name for getting Active jobs -fetchJobByStatus Method
+2019-08-01 21:47:42,360 INFO com.dal.mycareer.DAO.Impl.PrerequisiteCoursesDAO [http-nio-8090-exec-3] DL: insertJobRequirement method started
+2019-08-01 21:47:43,252 INFO com.dal.mycareer.DAO.Impl.PrerequisiteCoursesDAO [http-nio-8090-exec-3] Records inserted successfully in insertJobRequirement Method
+2019-08-01 21:47:49,489 INFO com.dal.mycareer.controller.RequestController [http-nio-8090-exec-5] Routed to Logout
+2019-08-01 21:47:49,490 INFO com.dal.mycareer.model.RoleModel [http-nio-8090-exec-5] Get base page : START
+2019-08-01 21:47:49,492 INFO com.dal.mycareer.model.RoleModel [http-nio-8090-exec-5] Get base page : END
+2019-08-01 21:47:49,493 INFO com.dal.mycareer.controller.RequestController [http-nio-8090-exec-5] Session Invalidated and Logged out
+2019-08-01 21:47:51,799 INFO com.dal.mycareer.controller.RequestController [http-nio-8090-exec-10] Routed to Homepage
+2019-08-01 21:47:51,803 INFO com.dal.mycareer.model.RoleModel [http-nio-8090-exec-10] Get base page : START
+2019-08-01 21:47:51,804 INFO com.dal.mycareer.model.RoleModel [http-nio-8090-exec-10] Get base page : END
+2019-08-01 21:48:55,135 INFO com.dal.mycareer.controller.LoginController [http-nio-8090-exec-1] Login request : Start
+2019-08-01 21:48:55,137 INFO com.dal.mycareer.model.LoginModel [http-nio-8090-exec-1] Verify Login : START
+2019-08-01 21:49:11,296 DEBUG com.dal.mycareer.model.LoginModel [http-nio-8090-exec-1] Invalid login for : ullu@yopmail
+2019-08-01 21:49:11,299 INFO com.dal.mycareer.model.LoginModel [http-nio-8090-exec-1] Verify Login : END
+2019-08-01 21:49:11,299 ERROR com.dal.mycareer.controller.LoginController [http-nio-8090-exec-1] Incorrect URL entered by user
+2019-08-01 21:49:11,300 INFO com.dal.mycareer.controller.LoginController [http-nio-8090-exec-1] Login request : END
+2019-08-01 21:49:35,030 INFO com.dal.mycareer.controller.LoginController [http-nio-8090-exec-3] Login request : Start
+2019-08-01 21:49:35,032 INFO com.dal.mycareer.model.LoginModel [http-nio-8090-exec-3] Verify Login : START
+2019-08-01 21:49:35,424 DEBUG com.dal.mycareer.model.LoginModel [http-nio-8090-exec-3] Invalid login for : ullu@yopmail
+2019-08-01 21:49:35,425 INFO com.dal.mycareer.model.LoginModel [http-nio-8090-exec-3] Verify Login : END
+2019-08-01 21:49:35,426 ERROR com.dal.mycareer.controller.LoginController [http-nio-8090-exec-3] Incorrect URL entered by user
+2019-08-01 21:49:35,427 INFO com.dal.mycareer.controller.LoginController [http-nio-8090-exec-3] Login request : END
+2019-08-01 21:49:46,008 INFO com.dal.mycareer.controller.LoginController [http-nio-8090-exec-10] Login request : Start
+2019-08-01 21:49:46,011 INFO com.dal.mycareer.model.LoginModel [http-nio-8090-exec-10] Verify Login : START
+2019-08-01 21:49:46,456 DEBUG com.dal.mycareer.model.LoginModel [http-nio-8090-exec-10] Invalid login for : ullu@yopmail.com
+2019-08-01 21:49:46,458 INFO com.dal.mycareer.model.LoginModel [http-nio-8090-exec-10] Verify Login : END
+2019-08-01 21:49:46,460 ERROR com.dal.mycareer.controller.LoginController [http-nio-8090-exec-10] Incorrect URL entered by user
+2019-08-01 21:49:46,461 INFO com.dal.mycareer.controller.LoginController [http-nio-8090-exec-10] Login request : END
+2019-08-01 21:49:57,123 INFO com.dal.mycareer.controller.LoginController [http-nio-8090-exec-4] Login request : Start
+2019-08-01 21:49:57,125 INFO com.dal.mycareer.model.LoginModel [http-nio-8090-exec-4] Verify Login : START
+2019-08-01 21:50:03,488 DEBUG com.dal.mycareer.model.LoginModel [http-nio-8090-exec-4] ullu@yopmail.com is loggedIn as Student
+2019-08-01 21:50:03,489 INFO com.dal.mycareer.model.LoginModel [http-nio-8090-exec-4] Verify Login : END
+2019-08-01 21:50:03,490 INFO com.dal.mycareer.controller.LoginController [http-nio-8090-exec-4] Login request : END
+2019-08-01 21:50:03,500 DEBUG com.dal.mycareer.controller.StudentJobsController [http-nio-8090-exec-8] StudentJobsController: fetchAllStudentJobs method: Entered
+2019-08-01 21:50:03,501 INFO com.dal.mycareer.model.RoleModel [http-nio-8090-exec-8] Get base page : START
+2019-08-01 21:50:03,501 INFO com.dal.mycareer.model.RoleModel [http-nio-8090-exec-8] Get base page : END
+2019-08-01 21:50:03,502 DEBUG com.dal.mycareer.model.StudentJobsModel [http-nio-8090-exec-8] StudentModel: fetchJobs method: Entered
+2019-08-01 21:50:03,502 DEBUG com.dal.mycareer.DAO.Impl.StudentDetailsDAO [http-nio-8090-exec-8] StudentDetailsDAO: getStudentDetails method: Entered
+2019-08-01 21:50:05,514 DEBUG com.dal.mycareer.DAO.Impl.StudentDetailsDAO [http-nio-8090-exec-8] Details for student with session name: ullu@yopmail.com and ID: 39 successfully fetched
+2019-08-01 21:50:05,516 DEBUG com.dal.mycareer.DAO.Impl.StudentDetailsDAO [http-nio-8090-exec-8] StudentDetailsDAO: getStudentDetails method: Exit
+2019-08-01 21:50:05,517 DEBUG com.dal.mycareer.DAO.Impl.StudentJobsDAO [http-nio-8090-exec-8] StudentJobsDAO: getAllJobList method: Entered
+2019-08-01 21:50:07,274 DEBUG com.dal.mycareer.DAO.Impl.StudentJobsDAO [http-nio-8090-exec-8] Jobs fetched:
+2019-08-01 21:50:07,275 DEBUG com.dal.mycareer.DAO.Impl.StudentJobsDAO [http-nio-8090-exec-8] ID: 179
+2019-08-01 21:50:07,276 DEBUG com.dal.mycareer.DAO.Impl.StudentJobsDAO [http-nio-8090-exec-8] ID: 180
+2019-08-01 21:50:07,279 DEBUG com.dal.mycareer.DAO.Impl.StudentJobsDAO [http-nio-8090-exec-8] StudentJobsDAO: getAllJobList method: Exit
+2019-08-01 21:50:07,280 DEBUG com.dal.mycareer.DAO.Impl.StudentJobsDAO [http-nio-8090-exec-8] StudentJobsDAO: getAppliedJobList method: Entered
+2019-08-01 21:50:08,837 DEBUG com.dal.mycareer.DAO.Impl.StudentJobsDAO [http-nio-8090-exec-8] Applied jobs fetched:
+2019-08-01 21:50:08,841 DEBUG com.dal.mycareer.DAO.Impl.StudentJobsDAO [http-nio-8090-exec-8] StudentJobsDAO: getAppliedJobList method: Exit
+2019-08-01 21:50:08,842 DEBUG com.dal.mycareer.model.StudentJobsModel [http-nio-8090-exec-8] StudentModel: fetchJobs method: Exit
+2019-08-01 21:50:08,843 DEBUG com.dal.mycareer.controller.StudentJobsController [http-nio-8090-exec-8] StudentJobsController: fetchAllStudentJobs method: Exit
+2019-08-01 21:51:39,269 INFO com.dal.mycareer.controller.RequestController [http-nio-8090-exec-1] Routed to Logout
+2019-08-01 21:51:39,270 INFO com.dal.mycareer.model.RoleModel [http-nio-8090-exec-1] Get base page : START
+2019-08-01 21:51:39,959 INFO com.dal.mycareer.model.RoleModel [http-nio-8090-exec-1] Get base page : END
+2019-08-01 21:51:39,961 INFO com.dal.mycareer.controller.RequestController [http-nio-8090-exec-1] Session Invalidated and Logged out
+2019-08-01 21:51:39,997 INFO com.dal.mycareer.controller.RequestController [http-nio-8090-exec-2] Routed to Homepage
+2019-08-01 21:51:39,999 INFO com.dal.mycareer.model.RoleModel [http-nio-8090-exec-2] Get base page : START
+2019-08-01 21:51:40,002 INFO com.dal.mycareer.model.RoleModel [http-nio-8090-exec-2] Get base page : END
+2019-08-01 21:51:43,805 INFO com.dal.mycareer.controller.LoginController [http-nio-8090-exec-3] Login request : Start
+2019-08-01 21:51:43,808 INFO com.dal.mycareer.model.LoginModel [http-nio-8090-exec-3] Verify Login : START
+2019-08-01 21:51:45,158 DEBUG com.dal.mycareer.model.LoginModel [http-nio-8090-exec-3] ullu@yopmail.com is loggedIn as Student
+2019-08-01 21:51:45,159 INFO com.dal.mycareer.model.LoginModel [http-nio-8090-exec-3] Verify Login : END
+2019-08-01 21:51:45,160 INFO com.dal.mycareer.controller.LoginController [http-nio-8090-exec-3] Login request : END
+2019-08-01 21:51:45,174 DEBUG com.dal.mycareer.controller.StudentJobsController [http-nio-8090-exec-4] StudentJobsController: fetchAllStudentJobs method: Entered
+2019-08-01 21:51:45,174 INFO com.dal.mycareer.model.RoleModel [http-nio-8090-exec-4] Get base page : START
+2019-08-01 21:51:45,176 INFO com.dal.mycareer.model.RoleModel [http-nio-8090-exec-4] Get base page : END
+2019-08-01 21:51:45,176 DEBUG com.dal.mycareer.model.StudentJobsModel [http-nio-8090-exec-4] StudentModel: fetchJobs method: Entered
+2019-08-01 21:51:45,176 DEBUG com.dal.mycareer.DAO.Impl.StudentDetailsDAO [http-nio-8090-exec-4] StudentDetailsDAO: getStudentDetails method: Entered
+2019-08-01 21:51:46,365 DEBUG com.dal.mycareer.DAO.Impl.StudentDetailsDAO [http-nio-8090-exec-4] Details for student with session name: ullu@yopmail.com and ID: 39 successfully fetched
+2019-08-01 21:51:46,366 DEBUG com.dal.mycareer.DAO.Impl.StudentDetailsDAO [http-nio-8090-exec-4] StudentDetailsDAO: getStudentDetails method: Exit
+2019-08-01 21:51:46,366 DEBUG com.dal.mycareer.DAO.Impl.StudentJobsDAO [http-nio-8090-exec-4] StudentJobsDAO: getAllJobList method: Entered
+2019-08-01 21:51:47,447 DEBUG com.dal.mycareer.DAO.Impl.StudentJobsDAO [http-nio-8090-exec-4] Jobs fetched:
+2019-08-01 21:51:47,450 DEBUG com.dal.mycareer.DAO.Impl.StudentJobsDAO [http-nio-8090-exec-4] ID: 179
+2019-08-01 21:51:47,452 DEBUG com.dal.mycareer.DAO.Impl.StudentJobsDAO [http-nio-8090-exec-4] ID: 180
+2019-08-01 21:51:47,455 DEBUG com.dal.mycareer.DAO.Impl.StudentJobsDAO [http-nio-8090-exec-4] ID: 181
+2019-08-01 21:51:47,455 DEBUG com.dal.mycareer.DAO.Impl.StudentJobsDAO [http-nio-8090-exec-4] ID: 182
+2019-08-01 21:51:47,456 DEBUG com.dal.mycareer.DAO.Impl.StudentJobsDAO [http-nio-8090-exec-4] StudentJobsDAO: getAllJobList method: Exit
+2019-08-01 21:51:47,458 DEBUG com.dal.mycareer.DAO.Impl.StudentJobsDAO [http-nio-8090-exec-4] StudentJobsDAO: getAppliedJobList method: Entered
+2019-08-01 21:51:48,866 DEBUG com.dal.mycareer.DAO.Impl.StudentJobsDAO [http-nio-8090-exec-4] Applied jobs fetched:
+2019-08-01 21:51:48,869 DEBUG com.dal.mycareer.DAO.Impl.StudentJobsDAO [http-nio-8090-exec-4] StudentJobsDAO: getAppliedJobList method: Exit
+2019-08-01 21:51:48,870 DEBUG com.dal.mycareer.model.StudentJobsModel [http-nio-8090-exec-4] StudentModel: fetchJobs method: Exit
+2019-08-01 21:51:48,871 DEBUG com.dal.mycareer.controller.StudentJobsController [http-nio-8090-exec-4] StudentJobsController: fetchAllStudentJobs method: Exit

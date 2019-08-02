@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.sql.SQLException;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.dal.mycareer.DAO.Impl.ManageApplicationsDAO;
@@ -50,12 +51,12 @@ public class ManageApplicationsController
 	}
 
 	@RequestMapping(value = "/downloadFile", method = RequestMethod.GET)
-	public void downloadApplicationDocument(ModelMap model, @RequestParam int id, HttpServletResponse response)
+	public void downloadApplicationDocument(ModelMap model, @RequestParam int id, HttpServletRequest request, HttpServletResponse response)
 	        throws SQLException, IOException
 	{
 		logger.debug("ManageApplicationsController: downloadApplicationDocument method: Entered");
 		IManageApplicationsModel manageApplicationModel = new ManageApplicationsModel();
-		manageApplicationModel.downloadFile(id, response);
+		manageApplicationModel.downloadFile(id, request, response);
 		logger.debug("ManageApplicationsController: downloadApplicationDocument method: Exit");
 
 	}

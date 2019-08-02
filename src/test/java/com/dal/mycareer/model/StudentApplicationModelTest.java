@@ -1,6 +1,5 @@
 package com.dal.mycareer.model;
 
-import static org.junit.Assert.*;
 import static org.mockito.Mockito.mock;
 
 import java.io.InputStream;
@@ -26,7 +25,6 @@ import com.dal.mycareer.DAO.Interface.IStudentApplicationDAO;
 import com.dal.mycareer.DAO.Interface.IStudentDetailsDAO;
 import com.dal.mycareer.DAO.Interface.IStudentJobsDAO;
 import com.dal.mycareer.DTO.AppliedJob;
-import com.dal.mycareer.DTO.JobDetails;
 import com.dal.mycareer.DTO.Student;
 
 public class StudentApplicationModelTest
@@ -145,7 +143,7 @@ public class StudentApplicationModelTest
 					Mockito.when(mockStudentDao.getStudentDetails("mock@dal.ca")).thenReturn(mockStudent);
 					Mockito.when(mockStudentApplicationDao.checkApplicationExists(1,2)).thenReturn(1);
 					Mockito.when(mockStudent.getId()).thenReturn(1);
-				
+
 					// Class object creation
 					StudentApplicationModel studentApplicationModel =new StudentApplicationModel();
 					Model returnedModel = studentApplicationModel.checkApplicationExists(mockModel, req, 2, mockStudentDao, mockStudentApplicationDao);
