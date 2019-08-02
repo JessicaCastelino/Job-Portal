@@ -8,19 +8,18 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.ui.Model;
-import org.springframework.web.multipart.MultipartFile;
-
 import com.dal.mycareer.DAO.Interface.IStudentApplicationDAO;
 import com.dal.mycareer.DAO.Interface.IStudentDetailsDAO;
 import com.dal.mycareer.DAO.Interface.IStudentJobsDAO;
 import com.dal.mycareer.DTO.AppliedJob;
-import com.dal.mycareer.DTO.JobDetails;
 import com.dal.mycareer.DTO.Student;
 import com.dal.mycareer.imodel.IStudentApplicationModel;
 import com.dal.mycareer.propertiesparser.PropertiesParser;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.ui.Model;
+import org.springframework.web.multipart.MultipartFile;
 
 public class StudentApplicationModel implements IStudentApplicationModel
 {

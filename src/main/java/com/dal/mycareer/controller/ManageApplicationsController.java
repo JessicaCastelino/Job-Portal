@@ -1,16 +1,13 @@
 package com.dal.mycareer.controller;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.sql.SQLException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.dal.mycareer.DAO.Impl.ManageApplicationsDAO;
 import com.dal.mycareer.imodel.IManageApplicationsModel;
 import com.dal.mycareer.model.ManageApplicationsModel;
-import com.dal.mycareer.model.StudentApplicationModel;
 import com.dal.mycareer.propertiesparser.PropertiesParser;
 
 import org.slf4j.Logger;

@@ -13,7 +13,7 @@ public class JobsDAOMock implements IJobsDAO
     private List<Job> jobs;
     private boolean isUpdated;
     
-    JobsDAOMock()
+    public JobsDAOMock()
     {
         jobs = new ArrayList<>();
         Job job = new Job();
@@ -54,7 +54,6 @@ public class JobsDAOMock implements IJobsDAO
 	@Override
 	public JobDetails fetchJob(int jobId) throws SQLException
 	{
-		// TODO Auto-generated method stub
 		return null;
 	}
 
