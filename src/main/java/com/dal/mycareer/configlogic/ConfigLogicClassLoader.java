@@ -17,7 +17,7 @@ public class ConfigLogicClassLoader {
 
 	public ConfigLogicClassLoader() {
 		configMap.put(ALL, new FetchAllJobs());
-		configMap.put(PREREQUISITE, new FetchPrerequsiteCourseJobs());
+		configMap.put(PREREQUISITE, new FetchPrerequisiteCourseJobs());
 	}
 
 	public String getJobClass() {
