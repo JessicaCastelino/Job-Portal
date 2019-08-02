@@ -1,5 +1,6 @@
 package com.dal.mycareer.model;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,7 +30,7 @@ public class ManageStudentModel implements IManageStudentModel
     }
 
     @Override
-    public Student RegisterStudent(Student studentDetails) 
+    public Student RegisterStudent(Student studentDetails) throws SQLException
 	{
         IPasswordGenerator passwordGen = new PasswordGenerator();
         studentDetails.setPassword(passwordGen.generatePassword());
@@ -37,14 +38,14 @@ public class ManageStudentModel implements IManageStudentModel
     }
 
     @Override
-    public List<Student> getRegisteredStudents()
+    public List<Student> getRegisteredStudents() throws SQLException
     {
         List<Student> regStudents = new ArrayList<>();
         return manageStudentDAO.getRegisteredStudents(regStudents);
     }
     
 	@Override
-    public boolean DeleteStudent(int studentId) 
+    public boolean DeleteStudent(int studentId) throws SQLException
     {
         return manageStudentDAO.DeleteStudent(studentId);
     }

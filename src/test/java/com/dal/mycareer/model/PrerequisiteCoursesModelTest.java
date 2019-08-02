@@ -1,5 +1,6 @@
 package com.dal.mycareer.model;
 
+import java.sql.SQLException;
 import java.util.List;
 import static org.junit.Assert.assertEquals;
 import com.dal.mycareer.DAO.Interface.IPrerequisiteCoursesDAO;
@@ -21,7 +22,7 @@ public class PrerequisiteCoursesModelTest
     }
 
     @Test
-    public void getPrerequisiteCourses()
+    public void getPrerequisiteCourses() throws SQLException
     {
     int expectedCoursesCount =3;
     PrerequisiteCoursesModel prerequisiteCoursesModel =  new PrerequisiteCoursesModel(prerequisiteCoursesDAO);

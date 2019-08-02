@@ -1,5 +1,6 @@
 package com.dal.mycareer.controller;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -38,7 +39,7 @@ public class EmployerJobsController
 	
 	@ResponseBody
 	@RequestMapping(value="/activejobs", method=RequestMethod.GET, produces="application/json")
-	public List<Job> getActiveJobs(HttpServletRequest request) 
+	public List<Job> getActiveJobs(HttpServletRequest request) throws SQLException
 	{
 		String currentUser = (String) request.getSession().getAttribute("sessionName");
 		logger.info("Controller: Inside getActiveJobs for user-" + currentUser);
@@ -46,7 +47,7 @@ public class EmployerJobsController
 	}
 	
 	@RequestMapping(value="/closedjobs", method=RequestMethod.GET, produces="application/json")
-	public String getClosedJobs(ModelMap model, HttpServletRequest request) 
+	public String getClosedJobs(ModelMap model, HttpServletRequest request) throws SQLException
 	{
 		String currentUser = (String) request.getSession().getAttribute("sessionName");
 		logger.info("Controller: Inside getClosedJobs for user-" + currentUser);
@@ -63,7 +64,7 @@ public class EmployerJobsController
 	
 	@ResponseBody
 	@RequestMapping( value="/saveJob", method=RequestMethod.POST)
-	public JobDetails saveJob(@RequestBody JobDetails postedjobDetails, HttpServletRequest request ) 
+	public JobDetails saveJob(@RequestBody JobDetails postedjobDetails, HttpServletRequest request ) throws SQLException
 	{
 		String currentUser = (String) request.getSession().getAttribute("sessionName");
 		logger.info("Controller: Inside saveJob method for user-" + currentUser);
@@ -71,7 +72,7 @@ public class EmployerJobsController
 	}
 
 	@RequestMapping("/viewPostedJob")
-	public String viewPostedJob(ModelMap model, @RequestParam(name ="jobId") int jobId) 
+	public String viewPostedJob(ModelMap model, @RequestParam(name ="jobId") int jobId) throws SQLException
 	{
 		logger.info("Controller: Inside viewPostedJob method for jobId-" + jobId);
 		model.addAttribute("jobDetails", employerJobs.viewPostedJobDetails(jobId));
@@ -79,7 +80,7 @@ public class EmployerJobsController
 		return "viewpostedjobdetails";
 	}
 	@RequestMapping("/editPostedJob")
-	public String editPostedJob(ModelMap model, @RequestParam(name ="jobId") int jobId) 
+	public String editPostedJob(ModelMap model, @RequestParam(name ="jobId") int jobId) throws SQLException
 	{		
 		logger.info("Controller: Inside editPostedJob method for jobId-" + jobId);
 		model.addAttribute("jobDetails", employerJobs.viewPostedJobDetails(jobId));
@@ -89,7 +90,7 @@ public class EmployerJobsController
 	}
 	@ResponseBody
 	@RequestMapping(value ="/updateJobDetails", method=RequestMethod.PUT)
-	public boolean updateJobDetails(@RequestBody JobDetails updatedJobDetails)
+	public boolean updateJobDetails(@RequestBody JobDetails updatedJobDetails) throws SQLException
 	{
 		logger.info("Controller: Inside updateJobDetails method for jobId-" + updatedJobDetails.getId());
 		return employerJobs.updateJobDetails(updatedJobDetails) ;

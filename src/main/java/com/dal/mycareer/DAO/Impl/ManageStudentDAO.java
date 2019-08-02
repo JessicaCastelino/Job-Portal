@@ -1,5 +1,6 @@
 package com.dal.mycareer.DAO.Impl;
 
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -53,7 +54,7 @@ public class ManageStudentDAO implements IManageStudentDAO {
     }
 
     @Override
-    public List<Student> getRegisteredStudents(List<Student> regStudents)
+    public List<Student> getRegisteredStudents(List<Student> regStudents) throws SQLException
     {
         try 
 		{
@@ -63,6 +64,7 @@ public class ManageStudentDAO implements IManageStudentDAO {
 		catch (Exception e) 
 		{
 			logger.error("Exception occurred at ManageStudentDAO:getRegisteredStudents " + e.getMessage());
+            throw new SQLException("Error in getRegisteredStudents");
         }
         return regStudents;
     }
@@ -96,8 +98,8 @@ public class ManageStudentDAO implements IManageStudentDAO {
         }
         return isDeleteSuccess;
     }
-
-    public boolean isNewStudent(Student studentDetails) 
+    @Override
+    public boolean isNewStudent(Student studentDetails) throws SQLException
     {
         boolean isNewRecord = true;
         try 
@@ -123,6 +125,7 @@ public class ManageStudentDAO implements IManageStudentDAO {
         {
             logger.error("Error Occurred in isNewStudent for BannerId :" + studentDetails.getBannerid()
                     + "Exception Details-" + ex.getMessage());
+            throw new SQLException("Error in isNewStudent");
         }
         return isNewRecord;
     }
