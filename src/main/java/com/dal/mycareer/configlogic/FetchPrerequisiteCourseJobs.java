@@ -1,6 +1,6 @@
 package com.dal.mycareer.configlogic;
 
-public class FetchPrerequsiteCourseJobs extends FetchJobs {
+public class FetchPrerequisiteCourseJobs extends FetchJobs {
 
 	private static final String CALL_GET_PREQUSITE_JOBS = "{call getCompletePrerequisiteJobList(?)}";
 
