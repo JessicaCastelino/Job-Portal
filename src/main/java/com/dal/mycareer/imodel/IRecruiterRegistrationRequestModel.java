@@ -6,7 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.ui.Model;
 
-import com.dal.mycareer.DAO.Interface.ICoopCordinatorDAO;
+
 import com.dal.mycareer.DAO.Interface.IRecruiterRegistrationRequestDAO;
 import com.dal.mycareer.emailengine.IEmployerApprovalEmail;
 import com.dal.mycareer.emailengine.IEmployerRejectionEmail;

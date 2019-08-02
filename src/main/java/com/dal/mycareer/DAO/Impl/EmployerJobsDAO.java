@@ -1,5 +1,6 @@
 package com.dal.mycareer.DAO.Impl;
 
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -28,15 +29,15 @@ public class EmployerJobsDAO implements IEmployerJobsDAO
 	private IPrerequisiteCoursesDAO preReqDAO;
 	
 	@Override
-	public List<Job> getActiveJobs(String username, List<Job> jobs) 
+	public List<Job> getActiveJobs(String username, List<Job> jobs) throws SQLException
 	{
 		return fetchJobByStatus(username, true, jobs);
 	}
 	
 	@Override
-	public JobDetails InsertJobDetails(JobDetails postedJobDetails, String currentUser) 
+	public JobDetails InsertJobDetails(JobDetails postedJobDetails, String currentUser) throws SQLException
 	{
-		logger.info("DL: InsertJobDetails method started");
+		logger.debug("DL: InsertJobDetails method started");
 		try
 		{
 			Map<String, Object> additionalParam = new HashMap<>();
@@ -53,39 +54,43 @@ public class EmployerJobsDAO implements IEmployerJobsDAO
 			{
 					logger.error("Error Occurred in InsertJobDetails while inserting record");
 			}
+			logger.debug("DL: InsertJobDetails method ended");
 		} 
 		catch (Exception ex) 
 		{
 			logger.error("Error Occurred in InsertJobDetails :" + ex.getMessage());
+			throw new SQLException("Error in InsertJobDetails");
 		}
 		return postedJobDetails;
 	}
 
-	public JobDetails viewPostedJobDetails(JobDetails jobDetails)
+	public JobDetails viewPostedJobDetails(JobDetails jobDetails) throws SQLException
 	{
-		logger.info("DL: viewPostedJobDetails method started");
+		logger.debug("DL: viewPostedJobDetails method started");
 		try
 		{
 			JdbcManager jdbcManager = new SelectHandler();
 			Map<String, Object> inputParameters = new HashMap<>();
 			inputParameters.put("jobId", jobDetails.getId());
 			jdbcManager.executeProcedure("{CALL getPostedJobDetails(?)}", "jobDetailsMapper", jobDetails, inputParameters);
+			logger.info("DL: viewPostedJobDetails method ended");
 		}
 		catch(Exception ex)
 		{
 			logger.error( "Error Occurred in viewPostedJob :" + ex.getMessage());
+			throw new SQLException("Error in viewPostedJobDetails");
 		}
 		return jobDetails;
 	}
 
 	@Override
-	public List<Job> getClosedJobs(String username, List<Job> jobs) 
+	public List<Job> getClosedJobs(String username, List<Job> jobs) throws SQLException
 	{
 		logger.info("DL: getClosedJobs method started");
 		return fetchJobByStatus(username, false, jobs);		
 	}
 
-	private List<Job> fetchJobByStatus(String username, boolean isActive, List<Job> jobs) 
+	private List<Job> fetchJobByStatus(String username, boolean isActive, List<Job> jobs)  throws SQLException
 	{
 		String procedureName = "";
 		logger.info("fetchJobByStatus method started");
@@ -109,15 +114,16 @@ public class EmployerJobsDAO implements IEmployerJobsDAO
 		catch (Exception e) 
 		{
 			logger.error("Exception occurred at EmployerJobsDAO:fetchJobByStatus " + e.getMessage());
+			throw new SQLException("Error in fetchJobByStatus");
 		}
 		return jobs;
 	}
 
 	@Override
-	public boolean updatejobDetails(JobDetails updatedJobDetails) 
+	public boolean updatejobDetails(JobDetails updatedJobDetails) throws SQLException
 	{
 		boolean isJobDetailsUpdated = false;
-		logger.info("DL: updatejobDetails method started");
+		logger.debug("DL: updatejobDetails method started");
 		try
 		{
 			JdbcManager jdbcManager = new UpdateHandler();
@@ -133,11 +139,13 @@ public class EmployerJobsDAO implements IEmployerJobsDAO
 		 	{
 				isJobDetailsUpdated = false;
 				logger.error( "Error Occurred in updatejobDetails while updating record");
-		 	}
+			 }
+			 logger.debug("DL: updatejobDetails method ended");
 		}
 		catch(Exception ex)
 		{
 			logger.error( "Error Occurred in updatejobDetails :" + ex.getMessage());
+			throw new SQLException("Error in updatejobDetails");
 		}
 		return isJobDetailsUpdated;
 	}

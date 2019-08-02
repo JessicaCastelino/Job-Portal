@@ -1,5 +1,6 @@
 package com.dal.mycareer.model;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,7 +32,7 @@ public class EmployerJobsModel implements IEmployerJobsModel
 		this.employerJobsDAO = employerJobsDAO;
 	}
 
-	public List<Job> getActiveJobs(String username) 
+	public List<Job> getActiveJobs(String username) throws SQLException
 	{
 		logger.info("BL: getActiveJobs method started for user-" + username);
 		jobs = new ArrayList<>();
@@ -39,14 +40,14 @@ public class EmployerJobsModel implements IEmployerJobsModel
 	}
 	
 	@Override
-	public JobDetails InsertJobDetails(JobDetails postedJobDetails,String currentUser) 
+	public JobDetails InsertJobDetails(JobDetails postedJobDetails,String currentUser) throws SQLException
 	{
 		logger.info("BL: InsertJobDetails method started for user-" + currentUser);
 		return employerJobsDAO.InsertJobDetails(postedJobDetails, currentUser);
 	}
 
 	@Override
-	public List<Job> getClosedJobs(String username) 
+	public List<Job> getClosedJobs(String username) throws SQLException
 	{
 		logger.info("BL: getClosedJobs method started for user-" + username);
 		jobs = new ArrayList<>();
@@ -54,7 +55,7 @@ public class EmployerJobsModel implements IEmployerJobsModel
 	}
 	
 	@Override
-	public JobDetails viewPostedJobDetails(int jobId) 
+	public JobDetails viewPostedJobDetails(int jobId) throws SQLException
 	{
 		logger.info("BL: viewPostedJobDetails method started for jobId-" + jobId);
 		JobDetails jobDetails = new JobDetails();
@@ -63,7 +64,7 @@ public class EmployerJobsModel implements IEmployerJobsModel
 	}
 
 	@Override
-	public boolean updateJobDetails(JobDetails updatedJobDetails)
+	public boolean updateJobDetails(JobDetails updatedJobDetails) throws SQLException
 	{
 		logger.info("BL: updateJobDetails method started for jobId-" + updatedJobDetails.getId());
 		return employerJobsDAO.updatejobDetails(updatedJobDetails);

@@ -1,15 +1,15 @@
 package com.dal.mycareer.DAOMocks;
+
 import java.util.ArrayList;
 import java.util.List;
 
-import com.dal.mycareer.DAO.Interface.ICoopCordinatorDAO;
+import com.dal.mycareer.DAO.Interface.IManageActiveRecruitersDAO;
 import com.dal.mycareer.DTO.RecruiterRequest;
 
-public class CoopCordinatorDAOMock implements ICoopCordinatorDAO 
+public class ManageActiveRecruitersDAOMock implements IManageActiveRecruitersDAO
 {
-
     ArrayList<RecruiterRequest> lstRecruiters;
-    public CoopCordinatorDAOMock ()
+    public ManageActiveRecruitersDAOMock ()
     {
         lstRecruiters = new ArrayList<RecruiterRequest>();
         RecruiterRequest recruiter1 = new RecruiterRequest();
@@ -50,5 +50,4 @@ public class CoopCordinatorDAOMock implements ICoopCordinatorDAO
     {
         return lstRecruiters;
     }
-    
 }

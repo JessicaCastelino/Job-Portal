@@ -1,6 +1,7 @@
 package com.dal.mycareer.controller;
 
 import java.lang.invoke.MethodHandles;
+import java.sql.SQLException;
 import java.util.List;
 
 import com.dal.mycareer.DTO.PrerequisiteCourses;
@@ -23,7 +24,7 @@ public class PrerequisiteCoursesController
 
 	@ResponseBody
 	@RequestMapping(value = "/getPrerequisiteCourses", method = RequestMethod.GET)
-	public List<PrerequisiteCourses> getPrerequisitCourses() 
+	public List<PrerequisiteCourses> getPrerequisitCourses() throws SQLException
 	{
 		logger.info("Controller: Inside getPrerequisitCourses method");
 		return prerequisiteCoursesModel.getPrerequisiteCourses();

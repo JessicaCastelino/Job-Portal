@@ -18,7 +18,6 @@ public class Job
 
 	public Job() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	public Job(int id, String jobTitle, String location, String jobType, Date applicationDeadline, String organization,

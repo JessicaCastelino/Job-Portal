@@ -1,5 +1,6 @@
 package com.dal.mycareer.model;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import com.dal.mycareer.DAO.Interface.IManageStudentDAO;
@@ -26,7 +27,7 @@ public class ManageStudentModelTest
     }
 
     @Test
-    public void RegisterStudentSuccessfulRegistrationTest()
+    public void RegisterStudentSuccessfulRegistrationTest() throws SQLException
     {
         Student stdnt = new Student();
         stdnt.setFirstname("Abc");
@@ -42,7 +43,7 @@ public class ManageStudentModelTest
     }
 
     @Test
-    public void getRegisteredStudentsCountTest()
+    public void getRegisteredStudentsCountTest() throws SQLException
     {
         int expectedResult = 1;
         List<Student> students = manageStudentModel.getRegisteredStudents();
@@ -51,7 +52,7 @@ public class ManageStudentModelTest
     }
 
     @Test
-    public void getRegisteredStudentsAfterRegistrationTest()
+    public void getRegisteredStudentsAfterRegistrationTest() throws SQLException
     {
         Student newStdnt = new Student();
         newStdnt.setFirstname("Ccc");
@@ -70,14 +71,14 @@ public class ManageStudentModelTest
     }
 
     @Test
-    public void DeleteStudentTest()
+    public void DeleteStudentTest() throws SQLException
     {
         Boolean studentDeleted = manageStudentModel.DeleteStudent(1);
         Assert.assertEquals("Test by count of registered students", studentDeleted, true);
     }
 
     @Test
-    public void DeleteStudentCountTest()
+    public void DeleteStudentCountTest() throws SQLException
     {
         int expectedResult = 0;
         manageStudentModel.DeleteStudent(1);
@@ -87,7 +88,7 @@ public class ManageStudentModelTest
     }
 
     @Test
-    public void DeleteStudentAndFindTest()
+    public void DeleteStudentAndFindTest() throws SQLException
     {
         Student newStdnt = new Student();
         newStdnt.setFirstname("Eee");

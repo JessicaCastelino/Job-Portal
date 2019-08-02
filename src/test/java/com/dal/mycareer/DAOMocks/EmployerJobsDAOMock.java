@@ -1,5 +1,6 @@
 package com.dal.mycareer.DAOMocks;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -69,38 +70,60 @@ public class EmployerJobsDAOMock implements IEmployerJobsDAO
     }
 
     @Override
-    public JobDetails InsertJobDetails(JobDetails postedJobDetails, String currentUser) 
+    public JobDetails InsertJobDetails(JobDetails postedJobDetails, String currentUser) throws SQLException
     {
+       try
+       {
         postedJobDetails.setId(jobDetailsList.size() + 1);
         jobDetailsList.add(postedJobDetails);
+       }
+       catch (Exception ex)
+       {
+           throw new SQLException("Error in InsertJobDetails mock method");
+       }
         return postedJobDetails;
     }
 
     @Override
-    public List<Job> getClosedJobs(String username, List<Job> lstClosedJobs) 
+    public List<Job> getClosedJobs(String username, List<Job> lstClosedJobs) throws SQLException
     {
         lstClosedJobs = new ArrayList<Job>(); 
-        for (Job job : jobDetailsList)
+        try
         {
-            if(job.getJobStatus() == true)
+            for (Job job : jobDetailsList)
             {
-                lstClosedJobs.add(job);              
+                if(job.getJobStatus() == true)
+                {
+                    lstClosedJobs.add(job);              
+                }
             }
         }
+        catch (Exception sqlEx)
+        {
+            throw new SQLException("Error in viewPostedJobDetails mock method");
+        }
+
         return lstClosedJobs;
     }
 
     @Override
-    public JobDetails viewPostedJobDetails(JobDetails expectedJobDetails) 
+    public JobDetails viewPostedJobDetails(JobDetails expectedJobDetails) throws SQLException
     {
         
+        try
+        {
         for (JobDetails job : jobDetailsList)
         {
             if(job.getId() == expectedJobDetails.getId())
             {
                 return (job);
             }
-        }    
+        }
+    }
+    catch (Exception sqlEx)
+    {
+        throw new SQLException("Error in viewPostedJobDetails mock method");
+    }    
         return null;
     }
 

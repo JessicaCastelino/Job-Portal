@@ -2,6 +2,7 @@ package com.dal.mycareer.model;
 import static org.junit.Assert.assertEquals;
 
 import java.sql.Date;
+import java.sql.SQLException;
 import java.util.List;
 
 import com.dal.mycareer.DAO.Interface.IEmployerJobsDAO;
@@ -29,7 +30,7 @@ public class EmployerJobsModelTest
     }
 
     @Test
-    public void viewPostedJobDetailsTest()
+    public void viewPostedJobDetailsTest() throws SQLException
     {
         JobDetails expectedJobDetails = new JobDetails();
         expectedJobDetails.setId(1);
@@ -44,7 +45,7 @@ public class EmployerJobsModelTest
     }
 
     @Test
-    public void updatejobDetailsTest ()
+    public void updatejobDetailsTest () throws SQLException
     {
         JobDetails expectedJobDetails = new JobDetails();
         expectedJobDetails.setId(2);
@@ -68,7 +69,7 @@ public class EmployerJobsModelTest
     }
 
     @Test
-    public void getActiveJobsTest()
+    public void getActiveJobsTest() throws SQLException
     {
         int activeJobsCount = 2;
         List<Job> lstActiveJobs = employerJobsModel.getActiveJobs("Steve");
@@ -76,7 +77,7 @@ public class EmployerJobsModelTest
     }
 
     @Test
-    public void getClosedJobsTest()
+    public void getClosedJobsTest() throws SQLException
     {
         int closedJobsCount = 2;       
         List<Job> lstClosedJobs = employerJobsModel.getClosedJobs("Michael");
@@ -84,7 +85,7 @@ public class EmployerJobsModelTest
     }
 
     @Test
-    public void InsertJobDetailsTest()
+    public void InsertJobDetailsTest() throws SQLException
     {
         JobDetails postedJobDetails = new JobDetails();
         postedJobDetails.setJobTitle("Technical Architect");
