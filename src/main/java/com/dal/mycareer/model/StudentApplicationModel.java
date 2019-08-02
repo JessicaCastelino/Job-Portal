@@ -67,7 +67,6 @@ public class StudentApplicationModel implements IStudentApplicationModel
 		student = studentDao.getStudentDetails(userSessionName);
 		withdrawn=studentApplicationDao.withdrawJobApplication(jobId);
 		appliedJobs = studentJobDao.getAppliedJobList(student.getId());
-		model.addAttribute("jobs", jobs);
 		model.addAttribute("appliedJobs", appliedJobs);
 		if (withdrawn == 1) {
 			logger.debug("Job application successfully withdrawn.");

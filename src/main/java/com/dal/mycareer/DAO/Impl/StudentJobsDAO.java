@@ -36,9 +36,9 @@ public class StudentJobsDAO implements IStudentJobsDAO {
 			callableStatement.setInt(1, studID);
 			callableStatement.setString(2, type);
 			boolean results = callableStatement.execute();
+			logger.debug("Jobs fetched:");
 			while (results) {
 				rs = callableStatement.getResultSet();
-				logger.debug("Jobs fetched:");
 				while (rs.next()) {
 					job = new JobDetails();
 					job.setId(rs.getInt(1));
@@ -79,9 +79,9 @@ public class StudentJobsDAO implements IStudentJobsDAO {
 			callableStatement = con.prepareCall(CALL_GET_APPLIED_JOB_LIST);
 			callableStatement.setInt(1, studentId);
 			boolean results = callableStatement.execute();
+			logger.debug("Applied jobs fetched:");
 			while (results) {
 				rs = callableStatement.getResultSet();
-				logger.debug("Applied jobs fetched:");
 				while (rs.next()) {
 					job = new AppliedJob();
 					job.setId(Integer.toString(rs.getInt(1)));
