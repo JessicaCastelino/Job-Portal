@@ -113,7 +113,7 @@ public class StudentJobsModelTest
 							
 				// Class object creation
 				StudentJobsModel studentJobsModel =new StudentJobsModel();
-				Model returnedModel = studentJobsModel.filterStudentSpecificJobList(mockModel, req, "Mock Location 1", "");
+				Model returnedModel = studentJobsModel.filterStudentSpecificJobList(mockModel, req, "Non-existent Mock Location", "");
 						
 				//Fetch returned values
 				List<JobDetails> returnedJobs= (List<JobDetails>) returnedModel.asMap().get("jobs");
