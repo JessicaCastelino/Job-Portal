@@ -4,11 +4,10 @@ import java.sql.SQLException;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.springframework.ui.Model;
-import org.springframework.web.multipart.MultipartFile;
-
 import com.dal.mycareer.DAO.Interface.IStudentDetailsDAO;
 import com.dal.mycareer.DAO.Interface.IStudentJobsDAO;
+
+import org.springframework.ui.Model;
 
 public interface IStudentJobsModel {
 

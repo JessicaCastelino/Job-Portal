@@ -1,24 +1,20 @@
 package com.dal.mycareer.model;
 
-import com.dal.mycareer.DAO.Impl.JobsDAO;
-import com.dal.mycareer.DAO.Impl.RecruiterRegistrationRequestDAO;
-import com.dal.mycareer.DAO.Interface.IJobsDAO;
-import com.dal.mycareer.DTO.JobDetails;
-import com.dal.mycareer.DTO.RecruiterRequest;
-import com.dal.mycareer.imodel.IJobsModel;
-import com.dal.mycareer.model.JobsModel;
-
-import static org.junit.Assert.fail;
 import static org.mockito.Mockito.mock;
 
 import java.sql.Date;
 import java.sql.SQLException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+
+import com.dal.mycareer.DAO.Impl.JobsDAO;
+import com.dal.mycareer.DAO.Interface.IJobsDAO;
+import com.dal.mycareer.DAOMocks.JobsDAOMock;
+import com.dal.mycareer.DTO.JobDetails;
+import com.dal.mycareer.imodel.IJobsModel;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -38,7 +34,7 @@ public class JobsModelTest
     @Before
     public void setUp ()
     {
-        jobsMockDAO = new JobsDAO();
+        jobsMockDAO = new JobsDAOMock();
         jobsModel = new JobsModel(jobsMockDAO);
     }
 
@@ -52,7 +48,7 @@ public class JobsModelTest
     @Test
     public void updateJobStatusToClosedTest()
     {
-        boolean isUpdated = jobsModel.updateJobStatus(2, true);
+        boolean isUpdated = jobsModel.updateJobStatus(2, false);
         Assert.assertTrue("Updating job status to 'closed' test failed", isUpdated);
     }
     
