@@ -11,9 +11,9 @@ public class JobDetails extends Job
 	public String jobDescription;
 
 	
-	public JobDetails() {
+	public JobDetails() 
+	{
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	

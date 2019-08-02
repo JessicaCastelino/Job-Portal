@@ -3,6 +3,7 @@ package com.dal.mycareer.DAO.Impl;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -25,7 +26,7 @@ public class PrerequisiteCoursesDAO implements IPrerequisiteCoursesDAO
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 	private Map <String, Integer> procResults;
 
-	public List<PrerequisiteCourses> getPrerequisiteCourses(List <PrerequisiteCourses> lstPrerequisteCourses) 
+	public List<PrerequisiteCourses> getPrerequisiteCourses(List <PrerequisiteCourses> lstPrerequisteCourses) throws SQLException
 	{
 		Connection con= null;
 		PrerequisiteCourses prerequisiteCourse = null;
@@ -47,6 +48,7 @@ public class PrerequisiteCoursesDAO implements IPrerequisiteCoursesDAO
 		catch (Exception ex)
 		{
 			logger.error( "Error Occurred in getPrerequisiteCourses :" + ex.getMessage());
+			throw new SQLException("Error in getPrerequisiteCourses");
 		}
 		finally
 		{
@@ -90,7 +92,7 @@ public class PrerequisiteCoursesDAO implements IPrerequisiteCoursesDAO
 		return isSuccess;
 	}
 
-	public boolean insertJobPrerequisiteCourses(int jobId, List<Integer> prerequisiteCourses)
+	public boolean insertJobPrerequisiteCourses(int jobId, List<Integer> prerequisiteCourses) throws SQLException
 	{
 		boolean isQuerySuccess = false;
 		logger.info("DL: insertJobRequirement method started");
@@ -116,6 +118,7 @@ public class PrerequisiteCoursesDAO implements IPrerequisiteCoursesDAO
 		catch (Exception ex)
 		{
 			logger.error( "Error Occurred in insertJobRequirement :" + ex.getMessage());
+			throw new SQLException("Error in insertJobRequirement");
 		}
 		return isQuerySuccess;
 	}	

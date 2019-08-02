@@ -1,6 +1,7 @@
 package com.dal.mycareer.controller;
 
 import java.lang.invoke.MethodHandles;
+import java.sql.SQLException;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -29,7 +30,7 @@ public class ManageStudentController
     static Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 
     @RequestMapping("/students")
-	public String getRegisteredStudents(ModelMap model)
+	public String getRegisteredStudents(ModelMap model) throws SQLException
 	{
         model.addAttribute("registeredStudents", manageStudentModel.getRegisteredStudents());
         return "students";
@@ -37,7 +38,7 @@ public class ManageStudentController
     
     @ResponseBody
 	@RequestMapping( value="/registerstudent", method=RequestMethod.POST)
-    public Student RegisterStudent(@RequestBody Student studentDetails, HttpServletRequest request)
+    public Student RegisterStudent(@RequestBody Student studentDetails, HttpServletRequest request) throws SQLException
     {
         Student student = manageStudentModel.RegisterStudent(studentDetails);
         IStudentOnboardEmail onboardEmail = new StudentOnboardEmailImpl();
@@ -46,8 +47,8 @@ public class ManageStudentController
     }
 
     @ResponseBody
-	@RequestMapping( value="/deletestudent", method=RequestMethod.DELETE)
-    public boolean DeleteStudent(@RequestParam(name = "id") int studentId, HttpServletRequest request)
+	@RequestMapping( value="/deletestudent", method=RequestMethod.DELETE) 
+    public boolean DeleteStudent(@RequestParam(name = "id") int studentId, HttpServletRequest request) throws SQLException
     {
 		return manageStudentModel.DeleteStudent(studentId);
     }
