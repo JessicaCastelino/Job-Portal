@@ -26,7 +26,6 @@ public class StudentApplicationModel implements IStudentApplicationModel
 {
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 	private Student student = null;
-	private static List<JobDetails> jobs = new ArrayList<JobDetails>();
 	private static List<AppliedJob> appliedJobs = new ArrayList<AppliedJob>();
 	private static final String SESSION_NAME = "sessionName";
 	
